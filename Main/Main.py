@@ -1,10 +1,10 @@
 import psutil, json
 
-print("-----")
+print("---------------------------------")
 print("Program menu | Select and option")
-print("-----\n\n")
+print("---------------------------------\n")
 
-system_menu = input("[1] Commence Monitoring\n[2] Show Current Monitoring Activity\n[3] Configure Alerts\n[4] Alert List\n[5] Commence Monitoring Mode")
+system_menu = input("[1] Commence Monitoring\n[2] Show Current Monitoring Activity\n[3] Configure Alerts\n[4] Alert List\n[5] Commence Monitoring Mode\n")
 
 match system_menu:
     
