@@ -24,3 +24,4 @@
 - 2025-09-29
 
     Lecture about more data variables and functions, separate notes and documentation in Google Docs
+    Feel a bit overwhelmed by the final hand in of this course, need to sit down and tackle each obstacle one by one
