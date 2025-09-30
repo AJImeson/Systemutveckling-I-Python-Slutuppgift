@@ -8,4 +8,4 @@
 
   Experimented and started constructing some classes and functions which will be implemented in the main menu
 
-  
+  Managed to start the function that show current monitoring of the system. Will improve this 

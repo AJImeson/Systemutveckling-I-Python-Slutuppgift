@@ -29,4 +29,5 @@
 - 2025-09-30
 
     Learnt how to properly Import Classes and it's functions to a Main from other Folders and files 
+    Ran into problems with <modules>. Occured due to root folder issues when trying to import classes and functions. Double check this in the future 
     
