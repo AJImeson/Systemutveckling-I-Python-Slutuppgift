@@ -25,3 +25,8 @@
 
     Lecture about more data variables and functions, separate notes and documentation in Google Docs
     Feel a bit overwhelmed by the final hand in of this course, need to sit down and tackle each obstacle one by one
+
+- 2025-09-30
+
+    Learnt how to properly Import Classes and it's functions to a Main from other Folders and files 
+    
