@@ -1,4 +1,4 @@
-# from Monitoring import"
+
 from Main.Menu_Functions import clear_screen
 from Monitoring.Monitoring_Class_Functions import Monitor
 
@@ -83,6 +83,6 @@ while True:
                 print("Invalid input - Choose between 1-6") # Default case 
                 continue
                 
-    except ValueError(Exception): # Error handling 
+    except ValueError: # Error handling 
         print("Unknown error occured")
         continue 
