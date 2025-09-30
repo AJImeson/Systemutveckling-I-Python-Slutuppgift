@@ -1,5 +1,6 @@
 import psutil 
-import time 
+import time
+from Main.General_Functions import clear_screen
 
 
 class Monitor:
@@ -11,11 +12,9 @@ class Monitor:
             cpu_usage = psutil.cpu_percent(interval=2) # CPU Check
             ram_usage = psutil.virtual_memory().percent # RAM Check
             disk_usage = psutil.disk_usage('/').percent # Disk Usage 
-    
-            print(f"CPU Usage: {cpu_usage}% | RAM Usage: {ram_usage}% | Disk Usage: {disk_usage}%")
-    
-            time.sleep(2) # Interval check for total monitor 
             
+            clear_screen()
+            print(f"CPU Usage: {cpu_usage}% | RAM Usage: {ram_usage}% | Disk Usage: {disk_usage}%")
     
     def Monitoring_Mode(): # Automatic monitoring mode initialisation 
     

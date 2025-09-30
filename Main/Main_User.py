@@ -1,5 +1,5 @@
 
-from Main.Menu_Functions import clear_screen
+from Main.General_Functions import clear_screen
 from Monitoring.Monitoring_Class_Functions import Monitor
 
 while True: 
