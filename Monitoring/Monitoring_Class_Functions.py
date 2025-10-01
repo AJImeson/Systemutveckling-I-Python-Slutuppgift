@@ -20,7 +20,6 @@ class Monitor: # Functions for monitoring tasks
             self.running = True
             self.thread = threading.Thread(target=self.Monitor_Running, daemon=True)
             self.thread.start()
-        pass
         
     def Monitor_Running(self):
         
@@ -33,7 +32,7 @@ class Monitor: # Functions for monitoring tasks
     def Monitor_Print(self): # Prints latest value monitored 
         General_Functions.clear_screen(self)
         if self.timecheck is None:
-            print("No monitoring has started as of yet")
+            print("No monitoring history documented\n")
             return
         
         print(f"CPU Usage: {self.cpu_usage}% | RAM Usage: {self.ram_usage}% | Disk Usage: {self.disk_usage}% | {self.timecheck}")
