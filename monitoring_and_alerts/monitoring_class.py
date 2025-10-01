@@ -1,7 +1,7 @@
 import psutil 
 import threading
 from datetime import datetime
-from Main.General_Functions import General_Functions
+from main.general_func import GeneralFunctions
 
 
 class Monitor: # Functions for monitoring tasks
@@ -31,7 +31,7 @@ class Monitor: # Functions for monitoring tasks
             self.timecheck = datetime.now().strftime("%H:%M:%S") # Shows time 
             
     def Monitor_Print(self): # Prints latest value monitored 
-        General_Functions.clear_screen(self)
+        GeneralFunctions.clear_screen(self)
         if self.timecheck is None:
             print("No monitoring history documented\n")
             return
