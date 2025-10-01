@@ -7,7 +7,7 @@ class General_Functions: # General functions for menu and system
         os.system('cls' if os.name == 'nt' else 'clear')
     
     @staticmethod
-    def end_task(self): # Ends processes when called upon 
-        self.running = False
+    def end_task(): # Ends processes when called upon 
+        running = False
         
     
