@@ -1,6 +1,6 @@
 import os 
 
-class General_Functions: # General functions for menu and system
+class GeneralFunctions: # General functions for menu and system
      
     @staticmethod
     def clear_screen(): # Clears screens at input

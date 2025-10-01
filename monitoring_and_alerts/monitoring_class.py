@@ -12,7 +12,8 @@ class Monitor: # Functions for monitoring tasks
         self.disk_usage = 0
         self.timecheck = None
         self.running = False
-        self.thread = None 
+        self.thread = None
+        self.alerts = {"CPU":[5], "RAM":[5], "Disk":[5]}
     
     def Initialise_Monitoring(self): # Starts monitoring by user in background
         
@@ -36,7 +37,10 @@ class Monitor: # Functions for monitoring tasks
             return
         
         print(f"CPU Usage: {self.cpu_usage}% | RAM Usage: {self.ram_usage}% | Disk Usage: {self.disk_usage}% | {self.timecheck}")
-            
+    
+    def Configure_Alert(self, alert_type, alert_threshold):
+        
+        pass
     
     def Monitoring_Mode(): # Automatic monitoring mode initialisation 
     

@@ -14,5 +14,5 @@
 
 - 2025-10-01 
 
-  Constructed several functions within different classes that can be called upon each other depending on it's purpose
-  
+  Constructed several functions within different classes that can be called upon each other depending on it's purpose. Try usin parameters within functions rather than several 
+

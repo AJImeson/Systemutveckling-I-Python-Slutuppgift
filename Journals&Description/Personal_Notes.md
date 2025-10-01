@@ -36,4 +36,4 @@
     Lecture on functions and refractoring code when "messy" and unstructured 
     Noticed my frustration with error handling and trouble shooting, need to work with being able to "pass" or comment out code and move to next task within a project when "stuck"
 
- 
+    Note: Use a dict in my monitor_running for alerts, different keys depending on alerts needed 

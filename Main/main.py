@@ -1,11 +1,8 @@
-try:
-    from Main.General_Functions import General_Functions
-except ImportError:
-    from General_Functions import General_Functions
-    
-from Monitoring.Monitoring_Class_Functions import Monitor
 
-General = General_Functions() # Object for General_Functions Class
+from main.general_func import GeneralFunctions   
+from monitoring_and_alerts.monitoring_class import Monitor
+
+General = GeneralFunctions() # Object for General_Functions Class
 monitor = Monitor() # Object for Monitor Class 
 
 while True: 
@@ -35,8 +32,8 @@ while True:
             
             case "3": # Configure different alerts 
                
-                configure_menu_bool = True
-                while configure_menu_bool:
+                is_configuring_alerts = True
+                while is_configuring_alerts:
                     
                     General.clear_screen()
                     print("----------------------------")
@@ -53,13 +50,15 @@ while True:
                             
                         
                         case "1":
-                            pass
+                            alert_level = input("Set threshold percentage\n")
+                            monitor.Configure_Alert("CPU", alert_level)
+                            
                                 
                         case "2":
                             pass
                 
                         case "3":
-                            pass # User main screen
+                            pass 
                         
                         case "4": # End loop and return to Main Menu 
                             
