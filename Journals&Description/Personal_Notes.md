@@ -30,4 +30,10 @@
 
     Learnt how to properly Import Classes and it's functions to a Main from other Folders and files 
     Ran into problems with <modules>. Occured due to root folder issues when trying to import classes and functions. Double check this in the future 
-    
+
+- 2025-10-01
+
+    Lecture on functions and refractoring code when "messy" and unstructured 
+    Noticed my frustration with error handling and trouble shooting, need to work with being able to "pass" or comment out code and move to next task within a project when "stuck"
+
+ 

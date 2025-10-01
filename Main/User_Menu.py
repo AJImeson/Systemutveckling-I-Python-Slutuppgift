@@ -4,6 +4,7 @@ except ImportError:
     from General_Functions import General_Functions
     
 from Monitoring.Monitoring_Class_Functions import Monitor
+import threading
 
 General = General_Functions() # Object for General_Functions Class
 monitor = Monitor() # Object for Monitor Class 
@@ -25,17 +26,10 @@ while True:
             case "1": # Start Monitoring 
                 General.clear_screen()
                 monitor.Initialise_Monitoring()
+                print("Monitoring started...")
+                input("Press enter to return to menu")
                 
-                user_input = input("\nPress E to end monitoring").lower()
-                if user_input == "e":
-                    General.end_task(monitor)
-                    print("Monitoring exiting...")
-                    break
-                    
-                else:
-                    print("Invalid input")
-                    continue
-            
+                            
             case "2": # Monitoring Activity 
                 General.clear_screen()
                 pass 

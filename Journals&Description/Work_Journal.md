@@ -12,6 +12,7 @@
 
   For some reason VS-Code is not finding my Modules, spent a bit too much time handling this but i don't want to restructure or reorganise my code and its sub folders for only this reason
 
-  - 2025-10-01 
+- 2025-10-01 
 
+  Constructed several functions within different classes that can be called upon each other depending on it's purpose
   
