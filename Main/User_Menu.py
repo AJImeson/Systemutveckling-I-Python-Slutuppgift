@@ -25,7 +25,16 @@ while True:
             case "1": # Start Monitoring 
                 General.clear_screen()
                 monitor.Initialise_Monitoring()
-              
+                
+                user_input = input("\nPress E to end monitoring").lower()
+                if user_input == "e":
+                    General.end_task(monitor)
+                    print("Monitoring exiting...")
+                    break
+                    
+                else:
+                    print("Invalid input")
+                    continue
             
             case "2": # Monitoring Activity 
                 General.clear_screen()
