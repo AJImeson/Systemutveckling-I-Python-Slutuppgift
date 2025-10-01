@@ -1,12 +1,18 @@
-
-from Main.General_Functions import clear_screen
+try:
+    from Main.General_Functions import General_Functions
+except ImportError:
+    from General_Functions import General_Functions
+    
 from Monitoring.Monitoring_Class_Functions import Monitor
+
+General = General_Functions() # Object for General_Functions Class
+monitor = Monitor() # Object for Monitor Class 
 
 while True: 
     
     # User Main Menu start up screen
      
-    clear_screen()
+    General.clear_screen()
     print("---------------------------------") 
     print("Program menu | Select and option")
     print("---------------------------------\n")
@@ -16,13 +22,13 @@ while True:
     
         match main_system_menu:
             
-            case "1":
-                clear_screen()
-                Monitor.Initialise_Monitoring() 
-                pass
+            case "1": # Start Monitoring 
+                General.clear_screen()
+                monitor.Initialise_Monitoring()
+              
             
-            case "2":
-                clear_screen()
+            case "2": # Monitoring Activity 
+                General.clear_screen()
                 pass 
             
             case "3": # Configure different alerts 
@@ -30,7 +36,7 @@ while True:
                 configure_menu_bool = True
                 while configure_menu_bool:
                     
-                    clear_screen()
+                    General.clear_screen()
                     print("----------------------------")
                     print("Choose an Alert to configure")
                     print("----------------------------\n")
@@ -55,7 +61,7 @@ while True:
                         
                         case "4": # End loop and return to Main Menu 
                             
-                            clear_screen()
+                            General.clear_screen()
                             print("Exiting back to main menu")
                             configure_menu_bool = False                
 
@@ -65,12 +71,12 @@ while True:
                     
             
             case "4":
-                clear_screen()
+                General.clear_screen()
                 pass 
                     
             
             case "5":
-                clear_screen()
+                General.clear_screen()
                 pass
             
             case "6": # Closes the program 

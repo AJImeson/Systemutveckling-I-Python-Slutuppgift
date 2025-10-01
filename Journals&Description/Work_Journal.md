@@ -9,3 +9,9 @@
   Experimented and started constructing some classes and functions which will be implemented in the main menu
 
   Managed to start the function that show current monitoring of the system. Will improve this 
+
+  For some reason VS-Code is not finding my Modules, spent a bit too much time handling this but i don't want to restructure or reorganise my code and its sub folders for only this reason
+
+  - 2025-10-01 
+
+  
