@@ -1,5 +1,5 @@
 
-from main.general_func import GeneralFunctions   
+from general_func import GeneralFunctions   
 from monitoring_and_alerts.monitoring_class import Monitor
 
 functions = GeneralFunctions() # Object for General_Functions Class
