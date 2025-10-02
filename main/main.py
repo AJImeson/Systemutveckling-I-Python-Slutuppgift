@@ -1,5 +1,5 @@
 
-import time
+import sys, select, time 
 from main.general_func import GeneralFunctions   
 from monitoring_and_alerts.monitoring_class import Monitor
 
@@ -11,9 +11,9 @@ while True:
     # User Main Menu start up screen
      
     functions.clear_screen()
-    print("---------------------------------") 
-    print("Program menu | Select and option")
-    print("---------------------------------\n")
+    print("--------------------------------") 
+    print("Program menu | Select an option")
+    print("--------------------------------\n")
     
     main_system_menu = input("[1] Start Monitoring\n[2] Show Current Monitoring Activity\n[3] Configure Alerts\n[4] Alert List\n[5] Commence Monitoring Mode\n[6] Quit Program\n")
     
@@ -23,23 +23,35 @@ while True:
             
             case "1": # Start Monitoring 
                 functions.clear_screen()
-                monitor.initialise_monitoring()
-                print("Monitoring started...")
-                input("Press enter to return to menu")
-                            
-            case "2": # Monitoring Activity 
-                functions.clear_screen()
                 
-                while True:
-                    functions.clear_screen()
-                    monitor.monitor_print()
-                        
-                    choice = input("\nPress E to Return to menu").lower()
-                    if choice == "E":
-                        break
-                    else:
-                        print("Unknown command")
-                        continue  
+                if monitor.running:
+                    print("Monitoring already started...")
+                    
+                else:
+                    monitor.initialise_monitoring()
+                    print("Monitoring started.....\n")
+                    time.sleep(1)
+                    
+                input("Press enter to return to menu")
+                
+            case "2": # Monitoring Activity
+                try:
+                    while True:
+                        functions.clear_screen()
+                        monitor.monitor_print()
+                        time.sleep(2)
+                except KeyboardInterrupt:
+                    print("\nReturning to menu...")
+                 
+                '''functions.clear_screen()
+                
+                monitor.monitor_print()
+                time.sleep(2)
+                print("Press 'Enter' to return to main menu")
+                _ = input()
+                '''
+            
+                    
                     
             case "3": # Configure different alerts 
                

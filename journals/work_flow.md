@@ -14,5 +14,8 @@
 
 - 2025-10-01 
 
-  Constructed several functions within different classes that can be called upon each other depending on it's purpose. Try usin parameters within functions rather than several 
+  Constructed several functions within different classes that can be called upon each other depending on it's purpose. Try using parameters within functions rather than several 
 
+- 2025-10-02
+
+  Frustrating day when I'm not able to get anything to work the way i want it to. Double check how to call functions/methods within classes with tutor 

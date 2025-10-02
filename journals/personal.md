@@ -37,3 +37,7 @@
     Noticed my frustration with error handling and trouble shooting, need to work with being able to "pass" or comment out code and move to next task within a project when "stuck"
 
     Note: Use a dict in my monitor_running for alerts, different key values depending on alerts needed just as in a list/dict
+
+- 2025-10-02
+
+    Need to have another look at building objects 
