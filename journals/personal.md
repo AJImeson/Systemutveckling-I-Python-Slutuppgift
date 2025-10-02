@@ -41,3 +41,4 @@
 - 2025-10-02
 
     Need to have another look at building objects 
+    Try to create a class with list and dict that appends to after each alert configuration 
