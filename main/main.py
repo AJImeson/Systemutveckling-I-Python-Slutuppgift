@@ -25,14 +25,14 @@ while True:
                 functions.clear_screen()
                 
                 if monitor.running:
-                    print("Monitoring already started...")
+                    print("Monitoring already started...\n")
                     
                 else:
                     monitor.initialise_monitoring()
                     print("Monitoring started.....\n")
                     time.sleep(1)
                     
-                input("Press enter to return to menu")
+                input("Press enter to return to menu ")
                 
             case "2": # Monitoring Activity
                 try:
@@ -41,17 +41,7 @@ while True:
                         monitor.monitor_print()
                         time.sleep(2)
                 except KeyboardInterrupt:
-                    print("\nReturning to menu...")
-                 
-                '''functions.clear_screen()
-                
-                monitor.monitor_print()
-                time.sleep(2)
-                print("Press 'Enter' to return to main menu")
-                _ = input()
-                '''
-            
-                    
+                    print("\n")
                     
             case "3": # Configure different alerts 
                
@@ -74,32 +64,32 @@ while True:
                         
                         case "1":
                             
-                            alert_level = input("Set CPU usge threshold percentage\n")
+                            alert_level = input("Set CPU usge threshold in percentage\n")
                             monitor.configure_alerts("CPU", alert_level)
                             
                                 
                         case "2":
                             
-                            alert_level = input("Set RAM usage threshold percentage\n")
+                            alert_level = input("Set RAM usage threshold in percentage\n")
                             monitor.configure_alerts("RAM", alert_level)
                             
                             pass
                 
                         case "3":
                             
-                            alert_level = input("Set Disk usage threshld\n")
+                            alert_level = input("Set Disk usage threshold in percentage\n")
                             monitor.configure_alerts("Disk", alert_level)
                             pass 
                         
                         case "4": # End loop and return to Main Menu 
                             
                             functions.clear_screen()
-                            print("Exiting back to main menu")
+                            print("Exiting back to main menu ")
                             configure_menu_bool = False                
 
                         case _:
 
-                            print("Please choose a valid option")
+                            print("Please choose a valid option ")
                     
             
             case "4":
@@ -112,15 +102,14 @@ while True:
                 pass
             
             case "6": # Closes the program 
-                print("Terminating Program....")
-                print("Thank you for using")
+                print("Terminating Program....\nThank you for using\n")
                 break
             
             case _:
                 
-                print("Invalid input - Choose between 1-6") # Default case 
+                print("Invalid input - Choose between 1-6 ") # Default case 
                 continue
                 
     except ValueError: # Error handling 
-        print("Unknown error occured")
+        print("Unknown error occured ")
         continue 

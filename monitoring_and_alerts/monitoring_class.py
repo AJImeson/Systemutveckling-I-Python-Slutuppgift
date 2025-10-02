@@ -34,11 +34,11 @@ class Monitor: # Functions for monitoring tasks
         
         if self.timecheck is None:
             GeneralFunctions.clear_screen()
-            print("No monitoring history documented\n")
+            print("No monitoring history documented\nPress Ctrl + C to exit ")
             return
         
         else:
-            print(f"CPU Usage: {self.cpu_usage}% | RAM Usage: {self.ram_usage}% | Disk Usage: {self.disk_usage}% | {self.timecheck}")
+            print(f"CPU Usage: {self.cpu_usage}% | RAM Usage: {self.ram_usage}% | Disk Usage: {self.disk_usage}% | {self.timecheck}\n\nPress CTRL + C To exit")
         
     def configure_alerts(self, alert_type, alert_threshold): # Configure alerts function 
         
