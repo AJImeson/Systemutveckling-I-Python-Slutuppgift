@@ -1,5 +1,6 @@
 
-from general_func import GeneralFunctions   
+import time
+from main.general_func import GeneralFunctions   
 from monitoring_and_alerts.monitoring_class import Monitor
 
 functions = GeneralFunctions() # Object for General_Functions Class
@@ -15,21 +16,31 @@ while True:
     print("---------------------------------\n")
     
     main_system_menu = input("[1] Start Monitoring\n[2] Show Current Monitoring Activity\n[3] Configure Alerts\n[4] Alert List\n[5] Commence Monitoring Mode\n[6] Quit Program\n")
+    
     try:
     
         match main_system_menu:
             
             case "1": # Start Monitoring 
                 functions.clear_screen()
-                monitor.Initialise_Monitoring()
+                monitor.initialise_monitoring()
                 print("Monitoring started...")
                 input("Press enter to return to menu")
-                
                             
             case "2": # Monitoring Activity 
                 functions.clear_screen()
-                pass 
-            
+                
+                while True:
+                    functions.clear_screen()
+                    monitor.monitor_print()
+                        
+                    choice = input("\nPress E to Return to menu").lower()
+                    if choice == "E":
+                        break
+                    else:
+                        print("Unknown command")
+                        continue  
+                    
             case "3": # Configure different alerts 
                
                 is_configuring_alerts = True
@@ -50,14 +61,22 @@ while True:
                             
                         
                         case "1":
-                            alert_level = input("Set threshold percentage\n")
-                            monitor.Configure_Alert("CPU", alert_level)
+                            
+                            alert_level = input("Set CPU usge threshold percentage\n")
+                            monitor.configure_alerts("CPU", alert_level)
                             
                                 
                         case "2":
+                            
+                            alert_level = input("Set RAM usage threshold percentage\n")
+                            monitor.configure_alerts("RAM", alert_level)
+                            
                             pass
                 
                         case "3":
+                            
+                            alert_level = input("Set Disk usage threshld\n")
+                            monitor.configure_alerts("Disk", alert_level)
                             pass 
                         
                         case "4": # End loop and return to Main Menu 

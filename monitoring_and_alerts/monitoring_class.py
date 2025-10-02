@@ -15,14 +15,14 @@ class Monitor: # Functions for monitoring tasks
         self.thread = None
         self.alerts = {"CPU":[5], "RAM":[5], "Disk":[5]}
     
-    def Initialise_Monitoring(self): # Starts monitoring by user in background
+    def initialise_monitoring(self): # Starts monitoring by user in background
         
         if not self.running:
             self.running = True
-            self.thread = threading.Thread(target=self.Monitor_Running, daemon=True)
+            self.thread = threading.Thread(target=self.monitor_running, daemon=True)
             self.thread.start()
         
-    def Monitor_Running(self):
+    def monitor_running(self): # Function fetches system info 
         
         while self.running:
             self.cpu_usage = psutil.cpu_percent(interval=2) # CPU Check
@@ -30,19 +30,22 @@ class Monitor: # Functions for monitoring tasks
             self.disk_usage = psutil.disk_usage('/').percent # Disk Usage
             self.timecheck = datetime.now().strftime("%H:%M:%S") # Shows time 
             
-    def Monitor_Print(self): # Prints latest value monitored 
-        GeneralFunctions.clear_screen(self)
+    def monitor_print(self): # Prints latest value monitored 
+        GeneralFunctions.clear_screen()
         if self.timecheck is None:
             print("No monitoring history documented\n")
             return
         
         print(f"CPU Usage: {self.cpu_usage}% | RAM Usage: {self.ram_usage}% | Disk Usage: {self.disk_usage}% | {self.timecheck}")
     
-    def Configure_Alert(self, alert_type, alert_threshold):
+    def configure_alerts(self, alert_type, alert_threshold): # Configure alerts function 
+        
         
         pass
     
-    def Monitoring_Mode(): # Automatic monitoring mode initialisation 
+    def alert_types():
+        pass
     
+    def monitoring_mode(): # Automatic monitoring mode initialisation 
         pass
     
