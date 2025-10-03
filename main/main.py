@@ -11,9 +11,9 @@ while True:
     # User Main Menu start up screen
      
     functions.clear_screen()
-    print("--------------------------------") 
-    print("Program menu | Select an option")
-    print("--------------------------------\n")
+    print("------------------------------------") 
+    print("Hardware Monitor | Select an option")
+    print("------------------------------------\n")
     
     main_menu = input("[1] Start Monitoring\n[2] Show Current Monitoring Activity\n[3] Configure Alerts\n[4] Alert List\n[5] Commence Monitoring Mode\n[6] Quit Program\n")
     
@@ -35,6 +35,7 @@ while True:
                 input("Press enter to return to menu ")
                 
             case "2": # Monitoring Activity
+                
                 try:
                     while True:
                         functions.clear_screen()
@@ -47,18 +48,21 @@ while True:
                
                 is_configuring_alerts = True
                 while is_configuring_alerts:
-                    
                     functions.clear_screen()
+                    
                     print("----------------------------")
                     print("Choose an Alert to configure")
                     print("----------------------------\n")
                     
+                    
+                    '''
                     try:
                         configure_menu = input("[1] CPU Usage\n[2] Memory Usage\n[3] Disk Usage\n[4] Exit to Main Menu\n")
                     except ValueError:
                         print("Choose a valid option")
+                        input("Press Enter to continue")
                         continue
-                    
+                    '''
                     match configure_menu:
                             
                         
@@ -85,7 +89,7 @@ while True:
                             
                             functions.clear_screen()
                             print("Exiting back to main menu ")
-                            configure_menu = False                
+                            is_configuring_alerts = False                
 
                         case _:
 
@@ -94,6 +98,8 @@ while True:
             
             case "4":
                 functions.clear_screen()
+                monitor.print_alert_list()
+                
                 pass 
                     
             

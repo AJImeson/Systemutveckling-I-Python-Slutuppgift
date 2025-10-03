@@ -42,3 +42,7 @@
 
     Need to have another look at building objects 
     Try to create a class with list and dict that appends to after each alert configuration 
+
+- 2025-10-03
+
+    Have a look at the tkinter python library. root, root.title, root.mainloop() 

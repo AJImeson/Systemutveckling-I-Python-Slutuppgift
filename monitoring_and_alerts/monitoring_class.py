@@ -48,18 +48,18 @@ class Monitor: # Functions for monitoring tasks
         except ValueError:
             print("Value must be a number")
             
-        if not (0 <= alert_threshold <= 100):
+        if not (0 <= alert_threshold >= 100): # Range limiter 
             print("Threshold must be set between 1-100% ")
             
         if alert_type in self.alerts:
-            self.alerts[alert_type].append(alert_threshold)
+            self.alerts[alert_type].append(alert_threshold) # Adds alert configuring to it's relevant key and list 
             print(f"Added Configured alert: {alert_type} at {alert_threshold}")
             
         else:
             print(f"Error adding alert: {alert_type}")
             
     def print_alert_list(self):
-        
+    
         print("Currently added/configured alerts: \n")
         for alert_type, thresholds in self.alerts.items():
             if thresholds:
@@ -69,7 +69,7 @@ class Monitor: # Functions for monitoring tasks
                 else:
                     print("No alerts set")
                     
-                    pass 
+                pass 
     
     def alert_types():
         pass

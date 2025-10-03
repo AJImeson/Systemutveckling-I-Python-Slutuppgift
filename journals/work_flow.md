@@ -11,6 +11,7 @@
   Managed to start the function that show current monitoring of the system. Will improve this 
 
   For some reason VS-Code is not finding my Modules, spent a bit too much time handling this but i don't want to restructure or reorganise my code and its sub folders for only this reason
+          Edit* 2025-10-02: Sorted this, at the time i didn't have the understanding of when running a fil i have to be very spevific with folders or they won't run properly. Learnt about the -m command and what it does 
 
 - 2025-10-01 
 
@@ -18,4 +19,8 @@
 
 - 2025-10-02
 
-  Frustrating day when I'm not able to get anything to work the way i want it to. Double check how to call functions/methods within classes with tutor 
+  Frustrating day when I'm not able to get anything to work the way i want it to. Double check how to call functions/methods within classes with tutor.
+
+- 2025-10-03
+
+  Constructed a function for configuring alerts and that they append 
