@@ -1,5 +1,5 @@
 
-import sys, select, time 
+import time 
 from main.general_func import GeneralFunctions   
 from monitoring_and_alerts.monitoring_class import Monitor
 
@@ -15,11 +15,11 @@ while True:
     print("Program menu | Select an option")
     print("--------------------------------\n")
     
-    main_system_menu = input("[1] Start Monitoring\n[2] Show Current Monitoring Activity\n[3] Configure Alerts\n[4] Alert List\n[5] Commence Monitoring Mode\n[6] Quit Program\n")
+    main_menu = input("[1] Start Monitoring\n[2] Show Current Monitoring Activity\n[3] Configure Alerts\n[4] Alert List\n[5] Commence Monitoring Mode\n[6] Quit Program\n")
     
     try:
     
-        match main_system_menu:
+        match main_menu:
             
             case "1": # Start Monitoring 
                 functions.clear_screen()
@@ -85,7 +85,7 @@ while True:
                             
                             functions.clear_screen()
                             print("Exiting back to main menu ")
-                            configure_menu_bool = False                
+                            configure_menu = False                
 
                         case _:
 
