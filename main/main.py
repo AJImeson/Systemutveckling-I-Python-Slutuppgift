@@ -1,5 +1,5 @@
 
-import time 
+import time #prettytable, terminalmenu, tkinter 
 from main.general_func import GeneralFunctions   
 from monitoring_and_alerts.monitoring_class import Monitor
 
@@ -54,15 +54,13 @@ while True:
                     print("Choose an Alert to configure")
                     print("----------------------------\n")
                     
-                    
-                    '''
                     try:
                         configure_menu = input("[1] CPU Usage\n[2] Memory Usage\n[3] Disk Usage\n[4] Exit to Main Menu\n")
                     except ValueError:
                         print("Choose a valid option")
                         input("Press Enter to continue")
                         continue
-                    '''
+                    
                     match configure_menu:
                             
                         

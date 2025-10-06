@@ -44,11 +44,11 @@ class Monitor: # Functions for monitoring tasks
     def configure_alerts(self, alert_type, alert_threshold): # Configure alerts function called to main menu
         
         try:
-            alert_threshold = int(alert_threshold) # Int converter 
+            alert_threshold = input(int(alert_threshold)) # Int converter 
         except ValueError:
             print("Value must be a number")
             
-        if not (0 <= alert_threshold >= 100): # Range limiter 
+        if not (0 >= alert_threshold <= 100): # Range limiter 
             print("Threshold must be set between 1-100% ")
             
         if alert_type in self.alerts:
