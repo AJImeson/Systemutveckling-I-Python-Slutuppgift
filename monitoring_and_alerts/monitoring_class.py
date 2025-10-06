@@ -64,11 +64,15 @@ class Monitor: # Functions for monitoring tasks
     
         print("Currently added/configured alerts: \n")
         for alert_type, thresholds in self.alerts.items():
+            print(f"{alert_type}: ")
             if thresholds:
+                for i, threshold in enumerate(thresholds, start=1):
+                    print(f"   [{i}] {threshold}%")
+                '''
                 for i, t in enumerate(thresholds, start=1):
                     print(f"{alert_type} Alert {i}: {t}%")
                     counter += 1
-                
+                '''
             else:
                 print("No alerts set")
                     
