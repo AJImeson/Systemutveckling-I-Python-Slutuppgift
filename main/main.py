@@ -65,12 +65,14 @@ while True:
                             
                         
                         case "1":
+                            functions.clear_screen()
                             
-                            alert_level = input("Set CPU usge threshold in percentage\n")
+                            alert_level = input("Set CPU usage threshold in percentage\n")
                             monitor.configure_alerts("CPU", alert_level)
                             
                                 
                         case "2":
+                            functions.clear_screen()
                             
                             alert_level = input("Set RAM usage threshold in percentage\n")
                             monitor.configure_alerts("RAM", alert_level)
@@ -78,6 +80,7 @@ while True:
                             pass
                 
                         case "3":
+                            functions.clear_screen()
                             
                             alert_level = input("Set Disk usage threshold in percentage\n")
                             monitor.configure_alerts("Disk", alert_level)
@@ -96,9 +99,10 @@ while True:
             
             case "4":
                 functions.clear_screen()
-                monitor.print_alert_list()
                 
-                pass 
+                monitor.print_alert_list()
+                input("\nPress Enter to return to main menu")
+                
                     
             
             case "5":
@@ -106,7 +110,9 @@ while True:
                 pass
             
             case "6": # Closes the program 
-                print("Terminating Program....\nThank you for using\n")
+                print("Terminating Program....\n")
+                time.sleep(2)
+                print("Thank you for using")
                 break
             
             case _:

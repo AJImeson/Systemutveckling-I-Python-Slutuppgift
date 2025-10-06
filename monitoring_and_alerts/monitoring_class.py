@@ -39,16 +39,16 @@ class Monitor: # Functions for monitoring tasks
             return
         
         else:
-            print(f"CPU Usage: {self.cpu_usage}% | RAM Usage: {self.ram_usage}% | Disk Usage: {self.disk_usage}% | {self.timecheck}\n\nPress CTRL + C To exit")
+            print(f"CPU Usage: {self.cpu_usage}% | RAM Usage: {self.ram_usage}% | Disk Usage: {self.disk_usage}% | {self.timecheck}\n\nPress CTRL + C To exit back to main menu")
         
     def configure_alerts(self, alert_type, alert_threshold): # Configure alerts function called to main menu
         
         try:
-            alert_threshold = input(int(alert_threshold)) # Int converter 
+            alert_threshold = float(alert_threshold) # Float converter/declaration 
         except ValueError:
             print("Value must be a number")
             
-        if not (0 >= alert_threshold <= 100): # Range limiter 
+        if not (0 < alert_threshold <= 100): # Range limiter 
             print("Threshold must be set between 1-100% ")
             
         if alert_type in self.alerts:
@@ -58,18 +58,20 @@ class Monitor: # Functions for monitoring tasks
         else:
             print(f"Error adding alert: {alert_type}")
             
-    def print_alert_list(self):
+    def print_alert_list(self): # Alert printing
+        
+        counter = 1 # Using counter to separate CPU, RAM and Disk in the for printing loop
     
         print("Currently added/configured alerts: \n")
         for alert_type, thresholds in self.alerts.items():
             if thresholds:
                 for i, t in enumerate(thresholds, start=1):
                     print(f"{alert_type} Alert {i}: {t}%")
+                    counter += 1
                 
-                else:
-                    print("No alerts set")
+            else:
+                print("No alerts set")
                     
-                pass 
     
     def alert_types():
         pass

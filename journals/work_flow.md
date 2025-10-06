@@ -24,3 +24,7 @@
 - 2025-10-03
 
   Constructed a function for configuring alerts and that they append 
+
+- 2025-10-06
+
+  I have done a lot of editing in my functions for configuring alerts and also printing them 
