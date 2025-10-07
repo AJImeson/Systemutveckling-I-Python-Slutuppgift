@@ -27,4 +27,10 @@
 
 - 2025-10-06
 
-  I have done a lot of editing in my functions for configuring alerts and also printing them 
+  I have done a lot of editing in my functions for configuring alerts and also printing them
+  Finished both the function to add/configure alerts and the one to print them out
+
+- 2025-10-07
+
+  Main goal for this day is to look at error handling of what I've constructed and coded so far before continuing constructing rest of the project. So far I've almost completed all the basic requirments.
+  After constructing my automatic monitoring that will trigger alerts, I'll have a look at the function for logging all the results from the monitoring, might create separate class for this. 

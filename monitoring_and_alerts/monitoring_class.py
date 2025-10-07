@@ -17,18 +17,27 @@ class Monitor: # Functions for monitoring tasks
     
     def initialise_monitoring(self): # Starts monitoring by user in background
         if self.running:
+            print("Monitor already running")
             return
-        self.running = True
-        self.thread = threading.Thread(target=self.monitor_running, daemon=True)
-        self.thread.start()
-        
+        try:
+            self.running = True
+            self.thread = threading.Thread(target=self.monitor_running, daemon=True)
+            self.thread.start()
+        except Exception as e:
+            print(f"Failed to start monitoring thread: {e}")
+            
     def monitor_running(self, interval=2): # Function fetches system info 
         
         while self.running:
-            self.cpu_usage = psutil.cpu_percent(interval=None) # CPU Check
-            self.ram_usage = psutil.virtual_memory().percent # RAM Check
-            self.disk_usage = psutil.disk_usage('/').percent # Disk Usage
-            self.timecheck = datetime.now().strftime("%H:%M:%S") # Shows time
+            
+            try:
+                self.cpu_usage = psutil.cpu_percent(interval=None) # CPU Check
+                self.ram_usage = psutil.virtual_memory().percent # RAM Check
+                self.disk_usage = psutil.disk_usage('/').percent # Disk Usage
+                self.timecheck = datetime.now().strftime("%H:%M:%S") # Shows time
+            except Exception as e:
+                print("Error during monitoring process")
+                self.running = False 
             time.sleep(interval)
             
     def monitor_print(self): # Function prints current info 
@@ -59,24 +68,27 @@ class Monitor: # Functions for monitoring tasks
             print(f"Error adding alert: {alert_type}")
             
     def print_alert_list(self): # Alert printing
-        
-        counter = 1 # Using counter to separate CPU, RAM and Disk in the for printing loop
     
-        print("Currently added/configured alerts: \n")
-        for alert_type, thresholds in self.alerts.items():
-            print(f"{alert_type}: ")
-            if thresholds:
-                for i, threshold in enumerate(thresholds, start=1):
-                    print(f"   [{i}] {threshold}%")
-                '''
-                for i, t in enumerate(thresholds, start=1):
-                    print(f"{alert_type} Alert {i}: {t}%")
-                    counter += 1
-                '''
-            else:
-                print("No alerts set")
+        try:
+            
+            print("Currently added/configured alerts: \n")
+            
+            if not any (self.alerts.values()): # Checks if any alerts are configured
+                print("No alerts configured\nPress Enter to continue")
+                return
+            
+            for alert_type, thresholds in self.alerts.items(): # Looks for relevant keys within the dictionary and prints type of alert
+                print(f"{alert_type}: ")
+                if thresholds:
+                    for i, threshold in enumerate(thresholds, start=1): # Lists alerts within it's proper type/key 
+                        print(f"   [{i}] {threshold}%")
                     
-    
+                else:
+                    print("No alerts set\nPress Enter to continue")
+                    
+        except Exception as e:
+            print(f"\nError printing alerts: {e}")
+        
     def alert_types():
         pass
     
