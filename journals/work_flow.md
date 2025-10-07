@@ -34,3 +34,4 @@
 
   Main goal for this day is to look at error handling of what I've constructed and coded so far before continuing constructing rest of the project. So far I've almost completed all the basic requirments.
   After constructing my automatic monitoring that will trigger alerts, I'll have a look at the function for logging all the results from the monitoring, might create separate class for this. 
+  After working with error handling I decided to do some more graphical programming just to make the text more interesting in the terminal by using ANSI colour already in the Python library
