@@ -10,6 +10,13 @@ try:
     
     while True: 
         
+        GREEN = "\033[92m"
+        YELLOW = "\033[93m"
+        RED = "\033[91m"
+        BLUE = "\033[34m"
+        RESET = "\033[0m"
+        MAGENTA = "\033[35m"
+        
         # User Main Menu start up screen
         
         functions.clear_screen()
@@ -21,8 +28,9 @@ try:
         
         if not main_menu:
             functions.clear_screen()
-            
+            print("--------------------------------------------------------------------------")
             print("Input cannot be any other options than the ones provided, please try again")
+            print("--------------------------------------------------------------------------\n")
             input("Press Enter to continue")
             continue
         
@@ -40,13 +48,17 @@ try:
                             print("Monitor already running\n")
                             monitor.initialise_monitoring()
                         else:
-                            print("Unexpected stop of monitor - Restarting...\n")
+                            print("------------------------------------------")
+                            print("Unexpected stop of monitor - Restarting...")
+                            print("------------------------------------------\n")
                             monitor.initialise_monitoring()
                         
                         
                     else:
                         monitor.initialise_monitoring()
-                        print("Monitoring started.....\n")
+                        print("-----------------------")
+                        print("Monitoring started.....")
+                        print("-----------------------\n")
                         time.sleep(1)
                         
                     input("Press enter to return to menu ")
@@ -67,12 +79,12 @@ try:
                     while is_configuring_alerts:
                         functions.clear_screen()
                         
-                        print("----------------------------")
-                        print("Choose an Alert to configure")
-                        print("----------------------------\n")
+                        print(f"{YELLOW}----------------------------{RESET}")
+                        print(f"{YELLOW}Choose an Alert to configure{RESET}")
+                        print(f"{YELLOW}----------------------------{RESET}\n")
                         
                         try:
-                            configure_menu = input("[1] CPU Usage\n[2] Memory Usage\n[3] Disk Usage\n[4] Exit to Main Menu\n").strip()
+                            configure_menu = input(f"[1]{BLUE} CPU Usage{RESET}\n[2]{YELLOW} Memory Usage{RESET}\n[3] {MAGENTA}Disk Usage{RESET}\n[4] {RED}Exit to Main Menu{RESET}\n").strip()
                             
                             if not configure_menu:
                                 print("Input cannot be any other options than the ones provided, please try again")
@@ -115,7 +127,9 @@ try:
                             case "4": # End loop and return to Main Menu 
                                 
                                 functions.clear_screen()
-                                print("Exiting back to main menu ")
+                                print("-------------------------")
+                                print("Exiting back to main menu")
+                                print("-------------------------\n")
                                 is_configuring_alerts = False                
 
                             case _:
@@ -125,11 +139,8 @@ try:
                 
                 case "4":
                     functions.clear_screen()
-                    
                     monitor.print_alert_list()
-                    input("\nPress Enter to return to main menu")
-                    
-                        
+                    input("Press Enter to return to main menu ")
                 
                 case "5":
                     functions.clear_screen()
@@ -143,8 +154,9 @@ try:
                 
                 case _:
                     functions.clear_screen()
-                    
-                    print("Invalid input - Choose between 1-6 ") # Default case
+                    print("----------------------------------")
+                    print("Invalid input - Choose between 1-6") # Default case
+                    print("----------------------------------\n")
                     input("Press Enter to continue")
                     continue
                     
@@ -160,3 +172,7 @@ except KeyboardInterrupt: # If user types ctrl + c during main menu loop the mon
             monitor.thread.join(timeout=2)
     time.sleep(1)
     print("\nExiting session...")
+    
+    
+    
+    

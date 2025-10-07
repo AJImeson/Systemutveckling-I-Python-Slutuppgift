@@ -3,6 +3,7 @@ from datetime import datetime
 from main.general_func import GeneralFunctions
 
 
+
 class Monitor: # Functions for monitoring tasks
     
     def __init__(self):
@@ -50,7 +51,7 @@ class Monitor: # Functions for monitoring tasks
             return
         
         else:
-            print(f"CPU Usage: {self.cpu_usage}% | RAM Usage: {self.ram_usage}% | Disk Usage: {self.disk_usage}% | {self.timecheck}\n\nPress CTRL + C To exit back to main menu")
+            print(f"{BLUE}CPU Usage:{RESET} {self.cpu_usage}% | {YELLOW}RAM Usage:{RESET} {self.ram_usage}% | {MAGENTA}Disk Usage:{RESET} {self.disk_usage}% | {self.timecheck}\n\nPress CTRL + C To exit back to main menu")
         
     def configure_alerts(self, alert_type, alert_threshold): # Configure alerts function called to main menu
         
@@ -59,8 +60,12 @@ class Monitor: # Functions for monitoring tasks
         except ValueError:
             print("Value must be a number")
             
-        if not (0 < alert_threshold <= 100): # Range limiter 
-            print("Threshold must be set between 1-100% ")
+        if not (0 <= alert_threshold <= 100): # Range limiter
+            
+            print(f"{RED}------------------------------------{RESET}")
+            print(f"{RED}Threshold must be set between 1-100%{RESET}")
+            print(f"{RED}------------------------------------{RESET}\n")
+            input("Press Enter to continue ")
             return
             
         if alert_type in self.alerts:
@@ -74,10 +79,15 @@ class Monitor: # Functions for monitoring tasks
     
         try:
             
-            print("Currently added/configured alerts: \n")
+            print(f"{YELLOW}----------------------------------{RESET}")
+            print(f"{YELLOW}Currently added/configured alerts:{RESET}")
+            print(f"{YELLOW}----------------------------------{RESET}\n")
             
             if not any (self.alerts.values()): # Checks if any alerts are configured
-                print("No alerts configured\nPress Enter to continue")
+                print(f"{RED}--------------------{RESET}")
+                print(f"{RED}No alerts configured{RESET}")
+                print(f"{RED}--------------------{RESET}\n")
+                input("Press Enter to continue ")
                 return
             
             for alert_type, thresholds in self.alerts.items(): # Looks for relevant keys within the dictionary and prints type of alert
@@ -87,7 +97,10 @@ class Monitor: # Functions for monitoring tasks
                         print(f"   [{i}] {threshold}%")
                     
                 else:
-                    print("No alerts set\nPress Enter to continue")
+                    print(f"{RED}--------------------------------------{RESET}")
+                    print(f"{RED}No alerts set\nPress Enter to continue{RESET}")
+                    print(f"{RED}--------------------------------------{RESET}\n")
+                    input("Press Enter to continue ")
                     
         except Exception as e:
             print(f"\nError printing alerts: {e}")
@@ -99,3 +112,13 @@ class Monitor: # Functions for monitoring tasks
     def monitoring_mode(): # Automatic monitoring mode initialisation 
         pass
     
+
+
+
+
+GREEN = "\033[92m"
+YELLOW = "\033[93m"
+RED = "\033[91m"
+BLUE = "\033[34m"
+RESET = "\033[0m"
+MAGENTA = "\033[35m"
