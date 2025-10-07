@@ -17,12 +17,13 @@ class Monitor: # Functions for monitoring tasks
     
     def initialise_monitoring(self): # Starts monitoring by user in background
         if self.running:
-            print("Monitor already running")
             return
+        
         try:
             self.running = True
             self.thread = threading.Thread(target=self.monitor_running, daemon=True)
             self.thread.start()
+            
         except Exception as e:
             print(f"Failed to start monitoring thread: {e}")
             
@@ -35,6 +36,7 @@ class Monitor: # Functions for monitoring tasks
                 self.ram_usage = psutil.virtual_memory().percent # RAM Check
                 self.disk_usage = psutil.disk_usage('/').percent # Disk Usage
                 self.timecheck = datetime.now().strftime("%H:%M:%S") # Shows time
+                
             except Exception as e:
                 print("Error during monitoring process")
                 self.running = False 
@@ -59,6 +61,7 @@ class Monitor: # Functions for monitoring tasks
             
         if not (0 < alert_threshold <= 100): # Range limiter 
             print("Threshold must be set between 1-100% ")
+            return
             
         if alert_type in self.alerts:
             self.alerts[alert_type].append(alert_threshold) # Adds alert configuring to it's relevant key and list 
@@ -88,9 +91,10 @@ class Monitor: # Functions for monitoring tasks
                     
         except Exception as e:
             print(f"\nError printing alerts: {e}")
-        
+    
     def alert_types():
-        pass
+    
+        pass 
     
     def monitoring_mode(): # Automatic monitoring mode initialisation 
         pass

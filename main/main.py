@@ -20,7 +20,10 @@ try:
         main_menu = input("[1] Start Monitoring\n[2] Show Current Monitoring Activity\n[3] Configure Alerts\n[4] Alert List\n[5] Commence Monitoring Mode\n[6] Quit Program\n").strip() # Strip trims and ensures proper input and "if not main_menu" can 
         
         if not main_menu:
+            functions.clear_screen()
+            
             print("Input cannot be any other options than the ones provided, please try again")
+            input("Press Enter to continue")
             continue
         
         try:
@@ -34,10 +37,10 @@ try:
                     if monitor.running:
                     
                         if monitor.thread and monitor.thread.is_alive():
-                            print("Unexpected stop, restarting")
+                            print("Monitor already running\n")
                             monitor.initialise_monitoring()
                         else:
-                            print("Unexpected stop of monitor - Restarting...")
+                            print("Unexpected stop of monitor - Restarting...\n")
                             monitor.initialise_monitoring()
                         
                         
@@ -139,15 +142,21 @@ try:
                     break
                 
                 case _:
+                    functions.clear_screen()
                     
-                    print("Invalid input - Choose between 1-6 ") # Default case 
+                    print("Invalid input - Choose between 1-6 ") # Default case
+                    input("Press Enter to continue")
                     continue
                     
         except ValueError: # Error handling 
             print("Unknown error occured ")
             continue
         
-except KeyboardInterrupt: # For more 
+except KeyboardInterrupt: # If user types ctrl + c during main menu loop the monitor thread is closed properly before exiting program 
     print("\nInteruppted by user...")
-    time.sleep(2)
-    print("\Exiting session...")
+    if monitor.running:
+        monitor.running = False
+        if monitor.thread and monitor.thread.is_alive():
+            monitor.thread.join(timeout=2)
+    time.sleep(1)
+    print("\nExiting session...")
