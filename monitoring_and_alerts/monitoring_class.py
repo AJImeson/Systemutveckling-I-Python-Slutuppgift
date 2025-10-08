@@ -6,12 +6,14 @@ from main.general_func import GeneralFunctions
 
 class Monitor: # Functions for monitoring tasks
     
-    def __init__(self):
+    def __init__(self): # Initialisation of Constructor 
         self.cpu_usage = 0
         self.ram_usage = 0
         self.disk_usage = 0
         self.timecheck = None
         self.running = False
+        self.alerts_running = False
+        self.alerts_thread = None
         self.thread = None
         self.alerts = {"CPU":[], "RAM":[], "Disk":[]}
         
@@ -26,7 +28,7 @@ class Monitor: # Functions for monitoring tasks
             self.thread.start()
             
         except Exception as e:
-            print(f"Failed to start monitoring thread: {e}")
+            print(f"{RED}Failed to start monitoring thread: {e}{RESET}")
             
     def monitor_running(self, interval=2): # Function fetches system info 
         
@@ -39,7 +41,7 @@ class Monitor: # Functions for monitoring tasks
                 self.timecheck = datetime.now().strftime("%H:%M:%S") # Shows time
                 
             except Exception as e:
-                print("Error during monitoring process")
+                print(f"{RED}Error during monitoring process{RESET}")
                 self.running = False 
             time.sleep(interval)
             
@@ -47,12 +49,36 @@ class Monitor: # Functions for monitoring tasks
         
         if self.timecheck is None:
             GeneralFunctions.clear_screen()
-            print("No monitoring history documented\nPress Ctrl + C to exit ")
+            print(f"{RED}No monitoring history documented{RESET}\n{YELLOW}Press Ctrl + C to exit{RESET} ")
             return
         
         else:
             print(f"{BLUE}CPU Usage:{RESET} {self.cpu_usage}% | {YELLOW}RAM Usage:{RESET} {self.ram_usage}% | {MAGENTA}Disk Usage:{RESET} {self.disk_usage}% | {self.timecheck}\n\nPress CTRL + C To exit back to main menu")
+            
+            
+    def initialise_alerts(self): # Initialises alerts monitoring in background
         
+        if not self.alerts_running:
+            self.alerts_running = True
+            self.alerts_thread = threading.Thread(target=self.alerts_inspector, daemon=True)
+            self.alerts_thread.start()
+            
+            print(f"{GREEN}--------------{RESET}")
+            print(f"{GREEN}Alerts started{RESET}")
+            print(f"{GREEN}--------------{RESET}\n")
+            
+        else:
+            print("Alerts already running\n")
+            
+            pass
+    
+    def alerts_inspector(self): # Checks alerts configured and compares with current usage
+        
+        if not self.alerts_running:
+            
+        
+            pass
+    
     def configure_alerts(self, alert_type, alert_threshold): # Configure alerts function called to main menu
         
         try:
@@ -105,17 +131,12 @@ class Monitor: # Functions for monitoring tasks
         except Exception as e:
             print(f"\nError printing alerts: {e}")
     
-    def alert_types():
-    
-        pass 
-    
-    def monitoring_mode(): # Automatic monitoring mode initialisation 
-        pass
     
 
 
 
 
+# Colour codes for implementation
 GREEN = "\033[92m"
 YELLOW = "\033[93m"
 RED = "\033[91m"

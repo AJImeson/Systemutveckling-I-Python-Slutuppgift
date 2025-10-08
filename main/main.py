@@ -8,14 +8,15 @@ monitor = Monitor() # Object for Monitor Class
 
 try:
     
-    while True: 
-        
-        GREEN = "\033[92m"
-        YELLOW = "\033[93m"
-        RED = "\033[91m"
-        BLUE = "\033[34m"
-        RESET = "\033[0m"
-        MAGENTA = "\033[35m"
+    # Colour codes for implementation
+    GREEN = "\033[92m"
+    YELLOW = "\033[93m"
+    RED = "\033[91m"
+    BLUE = "\033[34m"
+    RESET = "\033[0m"
+    MAGENTA = "\033[35m"
+     
+    while True: # Keeps loop alive until user inputs any exit command 
         
         # User Main Menu start up screen
         
@@ -48,17 +49,17 @@ try:
                             print("Monitor already running\n")
                             monitor.initialise_monitoring()
                         else:
-                            print("------------------------------------------")
-                            print("Unexpected stop of monitor - Restarting...")
-                            print("------------------------------------------\n")
+                            print(f"{RED}------------------------------------------{RESET}")
+                            print(f"{RED}Unexpected stop of monitor{RESET} - {YELLOW}Restarting...{RESET}")
+                            print(f"{RED}------------------------------------------{RESET}\n")
                             monitor.initialise_monitoring()
                         
                         
                     else:
                         monitor.initialise_monitoring()
-                        print("-----------------------")
-                        print("Monitoring started.....")
-                        print("-----------------------\n")
+                        print(f"{GREEN}-----------------------{RESET}")
+                        print(f"{GREEN}Monitoring started.....{RESET}")
+                        print(f"{GREEN}-----------------------{RESET}\n")
                         time.sleep(1)
                         
                     input("Press enter to return to menu ")
@@ -105,14 +106,14 @@ try:
                             case "1":
                                 functions.clear_screen()
                                 
-                                alert_level = input("Set CPU usage threshold in percentage\n")
+                                alert_level = input(f"Set {BLUE}CPU{RESET} usage threshold in percentage\n")
                                 monitor.configure_alerts("CPU", alert_level) # Calls configuring function
                                 
                                     
                             case "2":
                                 functions.clear_screen()
                                 
-                                alert_level = input("Set RAM usage threshold in percentage\n")
+                                alert_level = input(f"Set {YELLOW}RAM{RESET} usage threshold in percentage\n")
                                 monitor.configure_alerts("RAM", alert_level) # Calls configuring function
                                 
                                 pass
@@ -120,7 +121,7 @@ try:
                             case "3":
                                 functions.clear_screen()
                                 
-                                alert_level = input("Set Disk usage threshold in percentage\n")
+                                alert_level = input(f"Set {MAGENTA}Disk{RESET} usage threshold in percentage\n")
                                 monitor.configure_alerts("Disk", alert_level) # Calls configuring function
                                 pass 
                             
@@ -137,8 +138,9 @@ try:
                                 print("Please choose a valid option ")
                         
                 
-                case "4":
+                case "4": # Prints all configured alerts
                     functions.clear_screen()
+                    
                     monitor.print_alert_list()
                     input("Press Enter to return to main menu ")
                 
@@ -175,4 +177,11 @@ except KeyboardInterrupt: # If user types ctrl + c during main menu loop the mon
     
     
     
-    
+
+# Colour codes for implementation
+GREEN = "\033[92m"
+YELLOW = "\033[93m"
+RED = "\033[91m"
+BLUE = "\033[34m"
+RESET = "\033[0m"
+MAGENTA = "\033[35m"    
