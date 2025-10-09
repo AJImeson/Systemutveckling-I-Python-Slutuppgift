@@ -141,7 +141,7 @@ try:
                 case "4": # Prints all configured alerts
                     functions.clear_screen()
                     
-                    monitor.print_alert_list()
+                    monitor.print_configured_alerts()
                     input("Press Enter to return to main menu ")
                 
                 case "5":# Starts monitoring mode that runs alerts in the background

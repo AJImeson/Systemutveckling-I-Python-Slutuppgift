@@ -129,7 +129,7 @@ class Monitor: # Functions for monitoring tasks
         else:
             print(f"Error adding alert: {alert_type}")
             
-    def print_alert_list(self): # Alert printing
+    def print_configured_alerts(self): # Alert printing
     
         try:
             
