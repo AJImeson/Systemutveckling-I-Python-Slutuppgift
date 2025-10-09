@@ -11,7 +11,7 @@ class GeneralFunctions: # General functions for menu and system
         os.system('cls' if os.name == 'nt' else 'clear')
     
     @staticmethod
-    def end_task(monitor): # Ends processes when called upon
+    def end_task(): # Ends processes when called upon
         
         monitor.running = False
         monitor.alerts_running = False

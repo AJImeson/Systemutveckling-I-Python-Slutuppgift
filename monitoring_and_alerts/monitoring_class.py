@@ -81,20 +81,25 @@ class Monitor: # Functions for monitoring tasks
       
             try: 
                 
-                for metric, thresholds in self.alerts.items():
+                if not self.running: # Automatically stops alerts if monitoring is not active or running 
+                    print(f"{RED}Monitoring not active, ending alerts process{RESET}\n")
+                
+                for levels, thresholds in self.alerts.items(): # Loops each key in dictionary 
                     
-                    if not thresholds:
+                    if not thresholds: # Passes if no alerts are configured
+                        print(f"{YELLOW}No {levels} alerts configured{RESET}\n")
                         continue
                     
-                attr_name = f"{metric.lower()}_usage"
+                attr_name = f"{levels.lower()}_usage"
                 current = getattr(self, attr_name, None)
                 
-                if current is None: # Extra handling/error checking 
+                if current is None: # Extra handling/error checking
+                    print(f"{RED}Error retrieving {levels} usage{RESET}\n")
                     continue
                 
-                for threshold in thresholds:
+                for threshold in thresholds:# Checks each threshold within the list of configured alerts
                     if current >= threshold:
-                        print(f"{RED}ALERT! {metric} usage is at {current}% which exceeds the threshold of {threshold}%{RESET}\n")
+                        print(f"{RED}ALERT! {levels} usage is at {current}% which exceeds the threshold of {threshold}%{RESET}\n")
                 
                 time.sleep(2) # Interval for checking alerts
                 
