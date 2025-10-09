@@ -1,7 +1,13 @@
 import os, time
-from monitoring_and_alerts.monitoring_class import Monitor
 
-monitor = Monitor()
+monitor = None
+
+def get_monitor(): # Function that delays import to avoid circular imports
+    global monitor
+    if monitor is None:
+        from monitoring_and_alerts.monitoring_class import Monitor  # delayed import
+        monitor = Monitor()
+    return monitor
 
 class GeneralFunctions: # General functions for menu and system
     

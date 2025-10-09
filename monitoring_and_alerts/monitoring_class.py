@@ -66,11 +66,16 @@ class Monitor: # Functions for monitoring tasks
                 print(f"{GREEN}Alerts started{RESET}")
                 print(f"{GREEN}--------------{RESET}\n")
                 
+            else:
+                print(f"{YELLOW}------------------{RESET}")
+                print(f"{YELLOW}Alerts already active{RESET}")
+                print(f"{YELLOW}------------------{RESET}\n")
+                
         except Exception as e:
             print(f"{RED}Failure during alerts process: {e}{RESET}")
             self.alerts_running = False
                 
-            pass
+            
     
     def alerts_inspector(self): # Checks alerts configured and compares with current usage
         
@@ -82,7 +87,8 @@ class Monitor: # Functions for monitoring tasks
             try: 
                 
                 if not self.running: # Automatically stops alerts if monitoring is not active or running 
-                    print(f"{RED}Monitoring not active, ending alerts process{RESET}\n")
+                    print(f"{RED}Monitoring not active{RESET}\n")
+                    return
                 
                 for levels, thresholds in self.alerts.items(): # Loops each key in dictionary 
                     

@@ -1,7 +1,7 @@
 
 import time #prettytable, terminalmenu, tkinter 
-from main.general_func import GeneralFunctions   
 from monitoring_and_alerts.monitoring_class import Monitor
+from main.general_func import GeneralFunctions
 
 functions = GeneralFunctions() # Object for General_Functions Class
 monitor = Monitor() # Object for Monitor Class 
@@ -147,26 +147,21 @@ try:
                 case "5":# Starts monitoring mode that runs alerts in the background
                     functions.clear_screen()
                     
-                    if monitor.alerts_running and monitor.running:
-                        
-                        if monitor.thread and monitor.thread.is_alive() and monitor.alerts_thread and monitor.alerts_thread.is_alive(): # Checks if both threads are alive and running before trying to start alerts process 
-                            print(f"{YELLOW}----------------------------------{RESET}")
-                            print(f"{YELLOW}Alerts and Monitoring already active{RESET}")
-                            print(f"{YELLOW}----------------------------------{RESET}\n")
-                            input("Press Enter to return to main menu ")
-                    
-                        else:
-                            print(f"{RED}------------------------------------------{RESET}")
-                            print(f"{RED}Unexpected stop of monitor/alerts{RESET} - {YELLOW}Restarting...{RESET}")
-                            print(f"{RED}------------------------------------------{RESET}\n")
-                            monitor.initialise_alerts()
-                            input("Press Enter to return to main menu ")
-                    
+                    if not monitor.running:
+                        monitor.running = True
+                        print(f"{GREEN}Starting monitoring process...{RESET}\n")
+
                     else:
+                        print(f"{YELLOW}Monitoring already active...{RESET}\n")
+                    
+                    if not monitor.alert_running:
                         monitor.initialise_alerts()
                         
-                        input("Press Enter to return to main menu ")
-                        pass
+                    else:
+                        print(f"{YELLOW}Alerts already active...{RESET}\n")
+                        
+                           
+                    input("Press Enter to return to main menu ")
                 
                 case "6": # Closes the program 
                     print("Terminating Program....\n")
