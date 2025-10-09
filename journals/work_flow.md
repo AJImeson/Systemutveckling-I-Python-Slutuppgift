@@ -35,3 +35,11 @@
   Main goal for this day is to look at error handling of what I've constructed and coded so far before continuing constructing rest of the project. So far I've almost completed all the basic requirments.
   After constructing my automatic monitoring that will trigger alerts, I'll have a look at the function for logging all the results from the monitoring, might create separate class for this. 
   After working with error handling I decided to do some more graphical programming just to make the text more interesting in the terminal by using ANSI colour already in the Python library
+
+- 2025-10-08
+
+  Before and after lecture i did more error handling for what I've constructed so far and this is what most of my day consisted of doing. Had a look at creating a @staticmethod function that can be reused for any type of process in the program regardless of its object
+
+- 2025-10-09
+
+  Todays goal is to create the process that starts automatic monitoring for the alerts and prints 

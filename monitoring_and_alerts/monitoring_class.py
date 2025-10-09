@@ -19,13 +19,12 @@ class Monitor: # Functions for monitoring tasks
         
     
     def initialise_monitoring(self): # Starts monitoring by user in background
-        if self.running:
-            return
-        
+      
         try:
             self.running = True
             self.thread = threading.Thread(target=self.monitor_running, daemon=True)
             self.thread.start()
+            print(f"{GREEN}Monitoring thread started{RESET}\n")
             
         except Exception as e:
             print(f"{RED}Failed to start monitoring thread: {e}{RESET}")
@@ -43,7 +42,6 @@ class Monitor: # Functions for monitoring tasks
             except Exception as e:
                 print(f"{RED}Error during monitoring process{RESET}")
                 self.running = False 
-            time.sleep(interval)
             
     def monitor_print(self): # Function prints current info 
         
@@ -58,26 +56,51 @@ class Monitor: # Functions for monitoring tasks
             
     def initialise_alerts(self): # Initialises alerts monitoring in background
         
-        if not self.alerts_running:
-            self.alerts_running = True
-            self.alerts_thread = threading.Thread(target=self.alerts_inspector, daemon=True)
-            self.alerts_thread.start()
-            
-            print(f"{GREEN}--------------{RESET}")
-            print(f"{GREEN}Alerts started{RESET}")
-            print(f"{GREEN}--------------{RESET}\n")
-            
-        else:
-            print("Alerts already running\n")
-            
+        try:
+            if not self.alerts_running:
+                self.alerts_running = True
+                self.alerts_thread = threading.Thread(target=self.alerts_inspector, daemon=True)
+                self.alerts_thread.start()
+                
+                print(f"{GREEN}--------------{RESET}")
+                print(f"{GREEN}Alerts started{RESET}")
+                print(f"{GREEN}--------------{RESET}\n")
+                
+        except Exception as e:
+            print(f"{RED}Failure during alerts process: {e}{RESET}")
+            self.alerts_running = False
+                
             pass
     
     def alerts_inspector(self): # Checks alerts configured and compares with current usage
         
         if not self.alerts_running:
-            
+            return
         
-            pass
+        while self.alerts_running:
+      
+            try: 
+                
+                for metric, thresholds in self.alerts.items():
+                    
+                    if not thresholds:
+                        continue
+                    
+                attr_name = f"{metric.lower()}_usage"
+                current = getattr(self, attr_name, None)
+                
+                if current is None: # Extra handling/error checking 
+                    continue
+                
+                for threshold in thresholds:
+                    if current >= threshold:
+                        print(f"{RED}ALERT! {metric} usage is at {current}% which exceeds the threshold of {threshold}%{RESET}\n")
+                
+                time.sleep(2) # Interval for checking alerts
+                
+            except Exception as e:
+                print(f"{RED}Error in alerts {e}{RESET}")
+                self.alerts_running = False
     
     def configure_alerts(self, alert_type, alert_threshold): # Configure alerts function called to main menu
         
