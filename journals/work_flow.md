@@ -44,3 +44,7 @@
 
   Todays goal is to create the process that starts automatic monitoring for the alerts and prints
   Quite big issues with VS-Code, when trying to run file on my laptop with Ubuntu i get module errors and can't test my program, no issue on my windows laptop for some reason. Spent most of my day trying to solve this with no luck or progress 
+
+- 2025-10-10
+
+  This day has mostly been error handling functions so that they print the correct message depending on input and menu choice

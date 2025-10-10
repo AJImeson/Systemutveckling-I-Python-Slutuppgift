@@ -82,6 +82,9 @@ class Monitor: # Functions for monitoring tasks
         if not self.alerts_running:
             return
         
+        no_alerts_printed = False # Flag to track if "No alerts configured" has been printed
+        levels =  None # Flag reset for each loop
+        
         while self.alerts_running:
       
             try: 
@@ -89,13 +92,19 @@ class Monitor: # Functions for monitoring tasks
                 if not self.running: # Automatically stops alerts if monitoring is not active or running 
                     print(f"{RED}Monitoring not active{RESET}\n")
                     time.sleep(2)
-                    return
+                    continue
                 
                 if not any(self.alerts.values()): # Passes if no alerts are configured silently
-                    print(f"{YELLOW}No {levels} alerts configured{RESET}\n")
+                    if not no_alerts_printed:
+                        print(f"{YELLOW}No alerts configured{RESET}\n")
+                        no_alerts_printed = True
                     time.sleep(2)
                     continue
                 
+                else:
+                    
+                    no_alerts_printed = False
+                    
                 for levels, thresholds in self.alerts.items(): # Loops each key in dictionary 
                     
                     if not thresholds: # Passes if no alerts are configured silently
@@ -157,6 +166,7 @@ class Monitor: # Functions for monitoring tasks
             
             for alert_type, thresholds in self.alerts.items(): # Looks for relevant keys within the dictionary and prints type of alert
                 
+                # Colour coding for each alert type, as long as the key names are correct
                 
                 if alert_type == "CPU":
                     color = BLUE

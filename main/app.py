@@ -132,9 +132,10 @@ try:
                                 
                                 functions.clear_screen()
                                 print("-------------------------")
-                                print("Exiting back to main menu")
+                                print(f"{YELLOW}Exiting back to main menu{RESET}")
                                 print("-------------------------\n")
-                                is_configuring_alerts = False                
+                                is_configuring_alerts = False 
+                                time.sleep(1)               
 
                             case _:
 
@@ -145,7 +146,7 @@ try:
                     functions.clear_screen()
                     
                     monitor.print_configured_alerts()
-                    input("Press Enter to return to main menu ")
+                    input(f"{YELLOW}\nPress Enter to return to main menu{RESET} ")
                 
                 case "5":# Starts monitoring mode that runs alerts in the background
                     functions.clear_screen()
@@ -167,9 +168,9 @@ try:
                     input("Press Enter to return to main menu ")
                 
                 case "6": # Closes the program 
-                    print(f"{RED}Terminating Program....\n{RESET}")
+                    print(f"\n{RED}Terminating Program....\n{RESET}")
                     time.sleep(2)
-                    print(f"{GREEN}Thank you for using{RESET}")
+                    print(f"{YELLOW}Thank you for using{RESET}")
                     break
                 
                 case _:
@@ -191,7 +192,7 @@ except KeyboardInterrupt: # If user types ctrl + c during main menu loop the mon
         if monitor.thread and monitor.thread.is_alive():
             monitor.thread.join(timeout=2)
     time.sleep(1)
-    print(f"\n{GREEN}Exiting session...{RESET}")
+    print(f"\n{YELLOW}Exiting session...{RESET}")
     
     
     

@@ -45,4 +45,9 @@
 
 - 2025-10-03
 
-    Have a look at the tkinter python library. root, root.title, root.mainloop() 
+    Have a look at the tkinter python library. root, root.title, root.mainloop()
+
+- 2025-10-10
+
+    For next session: Error handle float input in Alert Configuring, crashes when trying to use string input 
+    
