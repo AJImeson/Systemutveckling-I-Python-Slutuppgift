@@ -30,7 +30,7 @@ try:
         if not main_menu:
             functions.clear_screen()
             print("--------------------------------------------------------------------------")
-            print("Input cannot be any other options than the ones provided, please try again")
+            print(f"{RED}Input cannot be any other options than the ones provided, please try again{RESET}")
             print("--------------------------------------------------------------------------\n")
             input("Press Enter to continue")
             continue
@@ -57,9 +57,9 @@ try:
                         
                     else:
                         monitor.initialise_monitoring()
-                        print(f"{GREEN}-----------------------{RESET}")
+                        print(f"-------------------------")
                         print(f"{GREEN}Monitoring started.....{RESET}")
-                        print(f"{GREEN}-----------------------{RESET}\n")
+                        print(f"-------------------------\n")
                         time.sleep(1)
                         
                     input("Press enter to return to menu ")
@@ -154,7 +154,7 @@ try:
                     else:
                         print(f"{YELLOW}Monitoring already active...{RESET}\n")
                     
-                    if not monitor.alert_running:
+                    if not monitor.alerts_running:
                         monitor.initialise_alerts()
                         
                     else:

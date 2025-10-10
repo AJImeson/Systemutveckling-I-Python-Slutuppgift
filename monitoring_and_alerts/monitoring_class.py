@@ -24,17 +24,17 @@ class Monitor: # Functions for monitoring tasks
             self.running = True
             self.thread = threading.Thread(target=self.monitor_running, daemon=True)
             self.thread.start()
-            print(f"{GREEN}Monitoring thread started{RESET}\n")
             
         except Exception as e:
             print(f"{RED}Failed to start monitoring thread: {e}{RESET}")
             
     def monitor_running(self, interval=2): # Function fetches system info 
         
+        psutil.cpu_percent(interval=None) # Initial call to set baseline
         while self.running:
             
             try:
-                self.cpu_usage = psutil.cpu_percent(interval=None) # CPU Check
+                self.cpu_usage = psutil.cpu_percent(interval=interval) # CPU Check
                 self.ram_usage = psutil.virtual_memory().percent # RAM Check
                 self.disk_usage = psutil.disk_usage('/').percent # Disk Usage
                 self.timecheck = datetime.now().strftime("%H:%M:%S") # Shows time
@@ -88,11 +88,16 @@ class Monitor: # Functions for monitoring tasks
                 
                 if not self.running: # Automatically stops alerts if monitoring is not active or running 
                     print(f"{RED}Monitoring not active{RESET}\n")
+                    time.sleep(2)
                     return
+                
+                if not any(self.alerts.values()): # Passes if no alerts are configured silently 
+                    time.sleep(2)
+                    continue
                 
                 for levels, thresholds in self.alerts.items(): # Loops each key in dictionary 
                     
-                    if not thresholds: # Passes if no alerts are configured
+                    if not thresholds: # Passes if no alerts are configured silently
                         print(f"{YELLOW}No {levels} alerts configured{RESET}\n")
                         continue
                     
@@ -105,9 +110,9 @@ class Monitor: # Functions for monitoring tasks
                 
                 for threshold in thresholds:# Checks each threshold within the list of configured alerts
                     if current >= threshold:
-                        print(f"{RED}ALERT! {levels} usage is at {current}% which exceeds the threshold of {threshold}%{RESET}\n")
+                        print(f"{RED}ALERT! {levels} usage is at {current:.1f}% which exceeds the threshold of {threshold}%{RESET}\n")
                 
-                time.sleep(2) # Interval for checking alerts
+                time.sleep(5) # Interval for checking alerts
                 
             except Exception as e:
                 print(f"{RED}Error in alerts {e}{RESET}")
@@ -147,7 +152,6 @@ class Monitor: # Functions for monitoring tasks
                 print(f"{RED}--------------------{RESET}")
                 print(f"{RED}No alerts configured{RESET}")
                 print(f"{RED}--------------------{RESET}\n")
-                input("Press Enter to continue ")
                 return
             
             for alert_type, thresholds in self.alerts.items(): # Looks for relevant keys within the dictionary and prints type of alert
@@ -160,7 +164,6 @@ class Monitor: # Functions for monitoring tasks
                     print(f"{RED}--------------------------------------{RESET}")
                     print(f"{RED}No alerts set\nPress Enter to continue{RESET}")
                     print(f"{RED}--------------------------------------{RESET}\n")
-                    input("Press Enter to continue ")
                     
         except Exception as e:
             print(f"\nError printing alerts: {e}")
