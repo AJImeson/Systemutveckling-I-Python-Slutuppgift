@@ -91,14 +91,15 @@ class Monitor: # Functions for monitoring tasks
                     time.sleep(2)
                     return
                 
-                if not any(self.alerts.values()): # Passes if no alerts are configured silently 
+                if not any(self.alerts.values()): # Passes if no alerts are configured silently
+                    print(f"{YELLOW}No {levels} alerts configured{RESET}\n")
                     time.sleep(2)
                     continue
                 
                 for levels, thresholds in self.alerts.items(): # Loops each key in dictionary 
                     
                     if not thresholds: # Passes if no alerts are configured silently
-                        print(f"{YELLOW}No {levels} alerts configured{RESET}\n")
+                        
                         continue
                     
                 attr_name = f"{levels.lower()}_usage"
@@ -155,7 +156,19 @@ class Monitor: # Functions for monitoring tasks
                 return
             
             for alert_type, thresholds in self.alerts.items(): # Looks for relevant keys within the dictionary and prints type of alert
-                print(f"{alert_type}: ")
+                
+                
+                if alert_type == "CPU":
+                    color = BLUE
+                elif alert_type == "RAM":
+                    color = YELLOW
+                elif alert_type == "Disk":
+                    color = MAGENTA
+                else:
+                    color = RESET
+                    
+                print(f"{color}{BOLD}{alert_type.upper()}{RESET}: ")
+                    
                 if thresholds:
                     for i, threshold in enumerate(thresholds, start=1): # Lists alerts within it's proper type/key 
                         print(f"   [{i}] {threshold}%")
@@ -180,3 +193,4 @@ RED = "\033[91m"
 BLUE = "\033[34m"
 RESET = "\033[0m"
 MAGENTA = "\033[35m"
+BOLD = "\033[1m"

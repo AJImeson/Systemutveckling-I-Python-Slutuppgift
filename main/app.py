@@ -15,6 +15,7 @@ try:
     BLUE = "\033[34m"
     RESET = "\033[0m"
     MAGENTA = "\033[35m"
+    CYAN = "\033[36m"
      
     while True: # Keeps loop alive until user inputs any exit command 
         
@@ -22,7 +23,7 @@ try:
         
         functions.clear_screen()
         print("------------------------------------") 
-        print("Hardware Monitor | Select an option")
+        print(f"{YELLOW}Hardware Monitor{RESET} | {CYAN}Select an option{RESET}")
         print("------------------------------------\n")
         
         main_menu = input("[1] Start Monitoring\n[2] Show Current Monitoring Activity\n[3] Configure Alerts\n[4] Alert List\n[5] Commence Monitoring Mode\n[6] Quit Program\n").strip() # Strip trims and ensures proper input and "if not main_menu" can 
@@ -80,15 +81,17 @@ try:
                     while is_configuring_alerts:
                         functions.clear_screen()
                         
-                        print(f"{YELLOW}----------------------------{RESET}")
-                        print(f"{YELLOW}Choose an Alert to configure{RESET}")
-                        print(f"{YELLOW}----------------------------{RESET}\n")
+                        print(f"----------------------------")
+                        print(f"{CYAN}Choose an Alert to configure{RESET}")
+                        print(f"----------------------------\n")
                         
                         try:
                             configure_menu = input(f"[1]{BLUE} CPU Usage{RESET}\n[2]{YELLOW} Memory Usage{RESET}\n[3] {MAGENTA}Disk Usage{RESET}\n[4] {RED}Exit to Main Menu{RESET}\n").strip()
                             
                             if not configure_menu:
-                                print("Input cannot be any other options than the ones provided, please try again")
+                                print("--------------------------------------------------------------------------")
+                                print(f"{RED}Input cannot be any other options than the ones provided, please try again{RESET}")
+                                print("--------------------------------------------------------------------------\n")
                                 continue
                             
                             if configure_menu not in ("1", "2", "3", "4"):
@@ -164,9 +167,9 @@ try:
                     input("Press Enter to return to main menu ")
                 
                 case "6": # Closes the program 
-                    print("Terminating Program....\n")
+                    print(f"{RED}Terminating Program....\n{RESET}")
                     time.sleep(2)
-                    print("Thank you for using")
+                    print(f"{GREEN}Thank you for using{RESET}")
                     break
                 
                 case _:
@@ -182,13 +185,13 @@ try:
             continue
         
 except KeyboardInterrupt: # If user types ctrl + c during main menu loop the monitor thread is closed properly before exiting program 
-    print("\nInteruppted by user...")
+    print(f"\n{RED}Interuppted by user...{RESET}")
     if monitor.running:
         monitor.running = False
         if monitor.thread and monitor.thread.is_alive():
             monitor.thread.join(timeout=2)
     time.sleep(1)
-    print("\nExiting session...")
+    print(f"\n{GREEN}Exiting session...{RESET}")
     
     
     
