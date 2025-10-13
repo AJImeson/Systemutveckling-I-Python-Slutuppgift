@@ -7,6 +7,7 @@ functions = GeneralFunctions() # Object for General_Functions Class
 monitor = Monitor() # Object for Monitor Class 
 
 def main():
+    action_logger = monitor.action_logger()
     
     try:
         

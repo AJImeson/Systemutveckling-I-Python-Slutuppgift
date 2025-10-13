@@ -4,7 +4,7 @@ import threading
 import logging 
 from datetime import datetime
 from main.general_func import GeneralFunctions
-
+from pathlib import Path
 
 
 class Monitor: # Functions for monitoring tasks
@@ -195,7 +195,12 @@ class Monitor: # Functions for monitoring tasks
             print(f"\nError printing alerts: {e}")
     
     
-
+    def action_logger():
+        
+        logging.basicConfig(filename='system_monitor.log', level=logging.INFO,
+                            format='%(asctime)s - %(levelname)s - %(message)s')
+        logging.info('System Monitor started')
+    pass 
 
 
 
