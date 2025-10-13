@@ -28,7 +28,7 @@ class Monitor: # Functions for monitoring tasks
             self.thread.start()
             
         except Exception as e:
-            print(f"{RED}Failed to start monitoring thread: {e}{RESET}")
+            return f"{RED}Failed to start monitoring thread: {e}{RESET}"
             
     def monitor_running(self, interval=2): # Function fetches system info 
         
@@ -42,18 +42,17 @@ class Monitor: # Functions for monitoring tasks
                 self.timecheck = datetime.now().strftime("%H:%M:%S") # Shows time
                 
             except Exception as e:
-                print(f"{RED}Error during monitoring process{RESET}")
-                self.running = False 
+                self.running = False
+                return f"{RED}Error during monitoring process: {e}{RESET}"
             
     def monitor_print(self): # Function prints current info 
         
         if self.timecheck is None:
             GeneralFunctions.clear_screen()
-            print(f"{RED}No monitoring history documented{RESET}\n{YELLOW}Press Ctrl + C to exit{RESET} ")
-            return
+            return f"{RED}No monitoring history documented{RESET}\n{YELLOW}Press Ctrl + C to exit{RESET}"
         
         else:
-            print(f"{BLUE}CPU Usage:{RESET} {self.cpu_usage}% | {YELLOW}RAM Usage:{RESET} {self.ram_usage}% | {MAGENTA}Disk Usage:{RESET} {self.disk_usage}% | {self.timecheck}\n\nPress CTRL + C To exit back to main menu")
+            return f"{BLUE}CPU Usage:{RESET} {self.cpu_usage}% | {YELLOW}RAM Usage:{RESET} {self.ram_usage}% | {MAGENTA}Disk Usage:{RESET} {self.disk_usage}% | {self.timecheck}\n\nPress CTRL + C To exit back to main menu"
             
             
     def initialise_alerts(self): # Initialises alerts monitoring by user in the background with thread
@@ -127,15 +126,17 @@ class Monitor: # Functions for monitoring tasks
                 time.sleep(5) # Interval for checking alerts
                 
             except Exception as e:
-                print(f"{RED}Error in alerts {e}{RESET}")
                 self.alerts_running = False
+                return f"{RED}Error in alerts {e}{RESET}"
+                
     
     def configure_alerts(self, alert_type, alert_threshold): # Configure alerts function called to main menu
         
         try:
             alert_threshold = float(alert_threshold) # Float converter/declaration 
         except ValueError:
-            print("Value must be a number")
+            print(f"{RED}\nValue must be a number, press Enter to continue{RESET}")
+            input() 
             return
             
         if not (0 <= alert_threshold <= 100): # Range limiter
@@ -151,7 +152,7 @@ class Monitor: # Functions for monitoring tasks
             print(f"Added Configured alert: {alert_type} at {alert_threshold}")
             
         else:
-            print(f"Error adding alert: {alert_type}")
+            return f"Error adding alert: {alert_type}"
             
     def print_configured_alerts(self): # Alert printing
     
@@ -192,7 +193,7 @@ class Monitor: # Functions for monitoring tasks
                     print(f"{RED}--------------------------------------{RESET}\n")
                     
         except Exception as e:
-            print(f"\nError printing alerts: {e}")
+            return f"\nError printing alerts: {e}"
     
     
     def action_logger():
