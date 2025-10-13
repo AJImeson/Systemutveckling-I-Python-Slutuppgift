@@ -1,4 +1,7 @@
-import psutil, time, threading
+import psutil
+import time
+import threading
+import logging 
 from datetime import datetime
 from main.general_func import GeneralFunctions
 
@@ -16,7 +19,6 @@ class Monitor: # Functions for monitoring tasks
         self.alerts_thread = None
         self.thread = None
         self.alerts = {"CPU":[], "RAM":[], "Disk":[]}
-        
     
     def initialise_monitoring(self): # Starts monitoring by user in the background with threading 
       

@@ -10,14 +10,6 @@ def main():
     
     try:
         
-        # Colour codes for implementation
-        GREEN = "\033[92m"
-        YELLOW = "\033[93m"
-        RED = "\033[91m"
-        BLUE = "\033[34m"
-        RESET = "\033[0m"
-        MAGENTA = "\033[35m"
-        CYAN = "\033[36m"
         
         while True: # Keeps loop alive until user inputs any exit command 
             
@@ -141,7 +133,9 @@ def main():
 
                                 case _: # Default case for invalid input
                                     functions.clear_screen()
-                                    print(f"{RED}Please choose a valid option{RESET} ")
+                                    print("--------------------------------------------------------------------------")
+                                    print(f"{RED}Input cannot be any other options than the ones provided, please try again{RESET}")
+                                    print("--------------------------------------------------------------------------\n")
                                     continue
                             
                     
@@ -168,7 +162,7 @@ def main():
                             print(f"{YELLOW}Alerts already active...{RESET}\n")
                             
                             
-                        input("Press Enter to return to main menu ")
+                        input("Press Enter to return to main menu: ")
                     
                     case "6": # Closes the program 
                         functions.clear_screen()
@@ -179,16 +173,26 @@ def main():
                     
                     case _: # Default case for invalid input
                         functions.clear_screen()
-                        print("----------------------------------")
-                        print(f"{RED}Invalid input - Choose between 1-6{RESET}") 
-                        print("----------------------------------\n")
-                        input("Press Enter to continue")
+                        print("--------------------------------------------------------------------------")
+                        print(f"{RED}Input cannot be any other options than the ones provided, please try again{RESET}")
+                        print("--------------------------------------------------------------------------\n")
+                        input("Press Enter to continue: ")
                         continue
                         
             except ValueError: # Error handling 
                 print("Unknown error occured ")
                 continue
-            
+          
+          
+            # Colour codes for implementation
+        GREEN = "\033[92m"
+        YELLOW = "\033[93m"
+        RED = "\033[91m"
+        BLUE = "\033[34m"
+        RESET = "\033[0m"
+        MAGENTA = "\033[35m"
+        CYAN = "\033[36m"
+        
     except KeyboardInterrupt: # If user types ctrl + c during main menu loop the monitor thread is closed properly before exiting program
         functions.clear_screen()
         print(f"\n{RED}Interuppted by user...{RESET}")
