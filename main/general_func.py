@@ -15,6 +15,9 @@ class GeneralFunctions: # General functions for menu and system
     @staticmethod
     def clear_screen(): # Clears screens at input
         os.system('cls' if os.name == 'nt' else 'clear')
+        
+    def print_menu():
+        pass
     
     @staticmethod
     def end_task(monitor): # Ends processes when called upon
@@ -33,9 +36,6 @@ class GeneralFunctions: # General functions for menu and system
                 if hasattr(obj, 'alerts_running') and obj.alerts_running:
                     obj.alerts_running = False
                     
-            
-            print("Process ended. Returning to main menu.")
-        
         except Exception as e:
             print(f"{RED}Error ending tasks: {e}{RESET}")
             pass

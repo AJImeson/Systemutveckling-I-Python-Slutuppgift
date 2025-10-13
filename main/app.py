@@ -139,9 +139,10 @@ def main():
                                     is_configuring_alerts = False 
                                     time.sleep(1)               
 
-                                case _:
-
-                                    print("Please choose a valid option ")
+                                case _: # Default case for invalid input
+                                    functions.clear_screen()
+                                    print(f"{RED}Please choose a valid option{RESET} ")
+                                    continue
                             
                     
                     case "4": # Prints all configured alerts
@@ -176,10 +177,10 @@ def main():
                         print(f"{YELLOW}Thank you for using{RESET}")
                         break
                     
-                    case _:
+                    case _: # Default case for invalid input
                         functions.clear_screen()
                         print("----------------------------------")
-                        print("Invalid input - Choose between 1-6") # Default case
+                        print(f"{RED}Invalid input - Choose between 1-6{RESET}") 
                         print("----------------------------------\n")
                         input("Press Enter to continue")
                         continue
