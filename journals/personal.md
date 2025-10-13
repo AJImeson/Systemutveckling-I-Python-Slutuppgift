@@ -54,5 +54,6 @@
 - 2025-10-13
 
     Function for menu printing? 
+    Check file reading function from todays lecture and check logging package 
     
     
