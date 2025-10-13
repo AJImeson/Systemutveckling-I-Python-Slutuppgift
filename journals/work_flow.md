@@ -1,3 +1,9 @@
+
+
+Dev Log
+
+My Main principles with this project: Well structured, free fom errors, even when completed; I should be able to continue building and develop it
+
 - 2025-09-29
 
   Updated my repo with separate folders per file function within the code and also created several .md files for documentation
@@ -11,7 +17,7 @@
   Managed to start the function that show current monitoring of the system. Will improve this 
 
   For some reason VS-Code is not finding my Modules, spent a bit too much time handling this but i don't want to restructure or reorganise my code and its sub folders for only this reason
-          Edit* 2025-10-02: Sorted this, at the time i didn't have the understanding of when running a fil i have to be very spevific with folders or they won't run properly. Learnt about the -m command and what it does 
+          Edit* 2025-10-02: Sorted this, at the time i didn't have the understanding of when running a file i have to be very spevific with folders or they won't run properly. Learnt about the -m command and what it does 
 
 - 2025-10-01 
 
@@ -23,12 +29,12 @@
 
 - 2025-10-03
 
-  Constructed a function for configuring alerts and that they append into the dictionary in the __init__ 
+  Constructed a function for configuring alerts and saw to that they append into the dictionary declared in the __init__ function.
 
 - 2025-10-06
 
-  I have done a lot of editing in my functions for configuring alerts and also printing them
-  Finished both the function to add/configure alerts and the one to print them out
+  I have done a lot of editing in my functions for configuring alerts and also printing them.
+  Finished both the function to add/configure alerts and the one to print them out.
 
 - 2025-10-07
 

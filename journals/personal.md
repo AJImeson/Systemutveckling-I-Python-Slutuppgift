@@ -50,4 +50,9 @@
 - 2025-10-10
 
     For next session: Error handle float input in Alert Configuring, crashes when trying to use string input 
+
+- 2025-10-13
+
+    Function for menu printing? 
+    
     

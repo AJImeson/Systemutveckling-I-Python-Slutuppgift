@@ -18,7 +18,7 @@ class Monitor: # Functions for monitoring tasks
         self.alerts = {"CPU":[], "RAM":[], "Disk":[]}
         
     
-    def initialise_monitoring(self): # Starts monitoring by user in background
+    def initialise_monitoring(self): # Starts monitoring by user in the background with threading 
       
         try:
             self.running = True
@@ -30,7 +30,7 @@ class Monitor: # Functions for monitoring tasks
             
     def monitor_running(self, interval=2): # Function fetches system info 
         
-        psutil.cpu_percent(interval=None) # Initial call to set baseline
+        psutil.cpu_percent(interval=None) # Flag to set initial CPU percent reading to 0
         while self.running:
             
             try:
@@ -54,7 +54,7 @@ class Monitor: # Functions for monitoring tasks
             print(f"{BLUE}CPU Usage:{RESET} {self.cpu_usage}% | {YELLOW}RAM Usage:{RESET} {self.ram_usage}% | {MAGENTA}Disk Usage:{RESET} {self.disk_usage}% | {self.timecheck}\n\nPress CTRL + C To exit back to main menu")
             
             
-    def initialise_alerts(self): # Initialises alerts monitoring in background
+    def initialise_alerts(self): # Initialises alerts monitoring by user in the background with thread
         
         try:
             if not self.alerts_running:
@@ -134,6 +134,7 @@ class Monitor: # Functions for monitoring tasks
             alert_threshold = float(alert_threshold) # Float converter/declaration 
         except ValueError:
             print("Value must be a number")
+            return
             
         if not (0 <= alert_threshold <= 100): # Range limiter
             
@@ -158,7 +159,7 @@ class Monitor: # Functions for monitoring tasks
             print(f"{YELLOW}Currently added/configured alerts:{RESET}")
             print(f"{YELLOW}----------------------------------{RESET}\n")
             
-            if not any (self.alerts.values()): # Checks if any alerts are configured
+            if not any (self.alerts.values()): # Checks if any alerts are configured in a dictionary 
                 print(f"{RED}--------------------{RESET}")
                 print(f"{RED}No alerts configured{RESET}")
                 print(f"{RED}--------------------{RESET}\n")
