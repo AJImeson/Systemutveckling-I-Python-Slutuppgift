@@ -54,3 +54,8 @@ My Main principles with this project: Well structured, free fom errors, even whe
 - 2025-10-10
 
   This day has mostly been error handling functions so that they print the correct message depending on input and menu choice
+
+- 2025-10-10 
+
+  More error handling and reused the logic in my printing_monitor to have the same type of output in my monitoring mode for alerts, original idea was to have alerts printing at the same time as using the menu but ended up being problematic since implementing a clear_screen() only erased everything and had a hard time working around it, so i'm pleased with the result for this.
+  Did some graphical for colour coding my printing functions in the Alerts subclass, made a separate function for this for reusability in a possible future 

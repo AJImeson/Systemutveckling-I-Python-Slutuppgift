@@ -1,29 +1,31 @@
 import psutil
 import time
 import threading
-import logging 
 from datetime import datetime
-from main.general_func import GeneralFunctions
+from main.functions import GeneralFunctions
 
-class Monitor: # Functions for monitoring tasks
+class Monitor: # Base Monitor class
     
-    def __init__(self): # Initialisation of Constructor 
+    def __init__(self): # Initialisation of Constructor
+         
         self.cpu_usage = 0
         self.ram_usage = 0
         self.disk_usage = 0
         self.timecheck = None
-        self.running = False
+        self.monitoring_running = False
+        self.monitoring_thread = None
         self.alerts_running = False
         self.alerts_thread = None
-        self.thread = None
         self.alerts = {"CPU":[], "RAM":[], "Disk":[]}
+        
+class Monitoring(Monitor): # Inherits from Monitor class and it's parameters; responsible for monitoring system info and initialisation
     
     def initialise_monitoring(self): # Starts monitoring by user in the background with threading 
       
         try:
-            self.running = True
-            self.thread = threading.Thread(target=self.monitor_running, daemon=True)
-            self.thread.start()
+            self.monitoring_running = True
+            self.monitoring_thread = threading.Thread(target=self.monitor_running, daemon=True)
+            self.monitoring_thread.start()
             
         except Exception as e:
             return f"{RED}Failed to start monitoring thread: {e}{RESET}"
@@ -31,7 +33,7 @@ class Monitor: # Functions for monitoring tasks
     def monitor_running(self, interval=2): # Function fetches system info 
         
         psutil.cpu_percent(interval=None) # Flag to set initial CPU percent reading to 0
-        while self.running:
+        while self.monitoring_running:
             
             try:
                 self.cpu_usage = psutil.cpu_percent(interval=interval) # CPU Check
@@ -40,7 +42,7 @@ class Monitor: # Functions for monitoring tasks
                 self.timecheck = datetime.now().strftime("%H:%M:%S") # Shows time
                 
             except Exception as e:
-                self.running = False
+                self.monitoring_running = False
                 return f"{RED}Error during monitoring process: {e}{RESET}"
             
     def monitor_print(self): # Function prints current info 
@@ -50,8 +52,20 @@ class Monitor: # Functions for monitoring tasks
             return f"{RED}No monitoring history documented{RESET}\n{YELLOW}Press Ctrl + C to exit{RESET}"
         
         else:
-            return f"{BLUE}CPU Usage:{RESET} {self.cpu_usage}% | {YELLOW}RAM Usage:{RESET} {self.ram_usage}% | {MAGENTA}Disk Usage:{RESET} {self.disk_usage}% | {self.timecheck}\n\nPress CTRL + C To exit back to main menu"
-            
+            return f"{BLUE}CPU Usage:{RESET} {self.cpu_usage}% | {YELLOW}RAM Usage:{RESET} {self.ram_usage}% | {MAGENTA}Disk Usage:{RESET} {self.disk_usage}% | {self.timecheck}\n\n{YELLOW}Press CTRL + C To exit back to main menu{RESET}"
+        
+class Alerts(Monitor): # Inherits from Monitor class and it's parameters; responsible for alert configuration, initialisation and update         
+           
+    def alert_colour(self, alert_type): # Colour coding for reuse, looks for keys in the dictionary
+        
+        if alert_type == "CPU":
+            return BLUE
+        elif alert_type == "RAM":
+            return YELLOW
+        elif alert_type == "Disk":
+            return MAGENTA
+        else:
+            return RESET
             
     def initialise_alerts(self): # Initialises alerts monitoring by user in the background with thread
         
@@ -61,9 +75,9 @@ class Monitor: # Functions for monitoring tasks
                 self.alerts_thread = threading.Thread(target=self.alerts_inspector, daemon=True)
                 self.alerts_thread.start()
                 
-                print(f"{GREEN}--------------{RESET}")
-                print(f"{GREEN}Alerts started{RESET}")
-                print(f"{GREEN}--------------{RESET}\n")
+                print(f"{GREEN}-------------{RESET}")
+                print(f"{GREEN}Alerts active{RESET}")
+                print(f"{GREEN}-------------{RESET}\n")
                 
             else:
                 print(f"{YELLOW}------------------{RESET}")
@@ -75,18 +89,18 @@ class Monitor: # Functions for monitoring tasks
             self.alerts_running = False
                 
     
-    def alerts_inspector(self): # Checks alerts configured and compares with current usage
+    def alerts_inspector(self): # Checks alerts automatically in the background
         
         while self.alerts_running:
       
             try: 
                 
-                if not self.running: # Automatically stops alerts if monitoring is not active or running 
+                if not self.monitoring_running: # Automatically stops alerts if monitoring is not active or running 
                     print(f"{RED}Monitoring not active{RESET}\n")
                     time.sleep(2)
                     continue
                 
-                self.print.alerts()
+                self.print_alerts()
                 time.sleep(2)
                 
             except Exception as e:
@@ -101,6 +115,8 @@ class Monitor: # Functions for monitoring tasks
         for levels, thresholds in self.alerts.items():
             if not thresholds:
                 continue
+            
+            colour = self.alert_colour(levels)
             attr_name = f"{levels.lower()}_usage"
             current = getattr(self, attr_name, None)
             if current is None:  
@@ -108,7 +124,7 @@ class Monitor: # Functions for monitoring tasks
             exceeded = [t for t in thresholds if current >= t]
             if exceeded:
                 lowest_exceeded = min(exceeded)
-                print(f"{RED}[ALERT]{RESET} {levels} usage is at {current:.1f}% which exceeds {lowest_exceeded}%\n")
+                print(f"{RED}[ALERT]{RESET} | {colour}{levels}: {YELLOW}usage is at{RESET} {RED}{current:.1f}%{RESET} {YELLOW}which exceeds{RESET} {CYAN}{lowest_exceeded}%{RESET}\n")
                 
     def configure_alerts(self, alert_type, alert_threshold): # Configure alerts function called to main menu
                 
@@ -153,22 +169,14 @@ class Monitor: # Functions for monitoring tasks
             
             for alert_type, thresholds in self.alerts.items(): # Looks for relevant keys within the dictionary and prints type of alert
                 
-                # Colour coding for each alert type, as long as the key names are correct
-                
-                if alert_type == "CPU":
-                    color = BLUE
-                elif alert_type == "RAM":
-                    color = YELLOW
-                elif alert_type == "Disk":
-                    color = MAGENTA
-                else:
-                    color = RESET
+                colour = self.alert_colour(alert_type)
                     
-                print(f"\n{color}{BOLD}{alert_type.upper()}{RESET}: ")
+                print(f"\n{colour}{BOLD}{alert_type.upper()}{RESET}: ") # Printing in uppercase for more emphasis in the terminal
                     
                 if thresholds:
-                    lowest = min(thresholds) # Finds lowest alert configured for each type
-                    for i, threshold in enumerate(thresholds, start=1): # Lists alerts within it's proper type/key
+                    sorted_thresholds = sorted(thresholds) # Sorts thresholds in ascending order
+                    lowest = sorted_thresholds[0] # Finds lowest alert configured for each type
+                    for i, threshold in enumerate(sorted_thresholds, start=1): # Lists alerts within its proper type/key
                         if threshold == lowest:
                             print(f"   [{i}] {threshold}%")
                         else:
@@ -180,13 +188,8 @@ class Monitor: # Functions for monitoring tasks
         except Exception as e:
             return f"\nError printing alerts: {e}"
     
-    
-    def action_logger():
-        
-        logging.basicConfig(filename='system_monitor.log', level=logging.INFO,
-                            format='%(asctime)s - %(levelname)s - %(message)s')
-        logging.info('System Monitor started')
-    pass 
+class MonitorSystem(Monitoring, Alerts):
+    pass   
 
 
 
@@ -198,3 +201,4 @@ BLUE = "\033[34m"
 RESET = "\033[0m"
 MAGENTA = "\033[35m"
 BOLD = "\033[1m"
+CYAN = "\033[36m"

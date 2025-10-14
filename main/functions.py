@@ -1,13 +1,15 @@
 import os
 import time
+import logging
 
 monitor = None
 
 def get_monitor(): # Function that delays import to avoid circular imports
-    global monitor
-    if monitor is None:
-        from monitoring_and_alerts.monitoring_class import Monitor  # delayed import
-        monitor = Monitor()
+    global monitor, alerts
+    if monitor and alerts is None:
+        from monitoring_and_alerts.monitoring_class import Monitoring, Alerts  # delayed import
+        monitor = Monitoring()
+        alerts = Alerts()
     return monitor
 
 class GeneralFunctions: # General functions for menu and system
@@ -32,7 +34,7 @@ class GeneralFunctions: # General functions for menu and system
     def end_task(monitor): # Ends processes when called upon
        
         try: 
-            confirm = input("Are you sure you wan to end all current running processes? (y/n): ").strip().lower()
+            confirm = input("Are you sure you wan to end all current process? (y/n): ").strip().lower()
             
             if confirm != 'y':
                 print(f"{YELLOW}Ending all running processes...{RESET}")
@@ -48,6 +50,16 @@ class GeneralFunctions: # General functions for menu and system
         except Exception as e:
             print(f"{RED}Error ending tasks: {e}{RESET}")
             pass
+        
+    
+    def action_logger():
+        
+        logging.basicConfig(filename='system_monitor.log', level=logging.INFO,
+                            format='%(asctime)s - %(levelname)s - %(message)s')
+        logging.info('System Monitor started')
+    pass     
+
+    
 
         
 # Colour codes for implementation 

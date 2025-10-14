@@ -1,13 +1,13 @@
 
 import time
-from monitoring_and_alerts.monitoring_class import Monitor
-from main.general_func import GeneralFunctions
+from monitoring_and_alerts.monitoring_class import MonitorSystem 
+from main.functions import GeneralFunctions
 
 functions = GeneralFunctions() # Object for General_Functions Class
-monitor = Monitor() # Object for Monitor Class 
-
+monitor = MonitorSystem() # Object for Monitor Class and inheriting classes
+alerts = monitor # Defining alerts as the same object, cleaner in main menu
+ 
 def main():
-    
     
     try:
         
@@ -26,16 +26,6 @@ def main():
             
             main_menu = GeneralFunctions.print_menu()
             
-            '''
-            functions.clear_screen()
-            print("------------------------------------") 
-            print(f"{YELLOW}Hardware Monitor{RESET} | {CYAN}Select an option{RESET}")
-            print("------------------------------------\n")
-            
-            main_menu = input("[1] Start Monitoring\n[2] Show Current Monitoring Activity\n[3] Configure Alerts\n[4] Alert List\n[5] Commence Monitoring Mode\n[6] Quit Program\n").strip() # Strip trims and ensures proper input
-            
-            '''
-            
             try:
             
                 match main_menu:
@@ -44,10 +34,10 @@ def main():
                     case "1": # Start Monitoring 
                         functions.clear_screen()
                         
-                        if monitor.running:
+                        if monitor.monitoring_running:
                         
-                            if monitor.thread and monitor.thread.is_alive():
-                                print("Monitor already running\n")
+                            if monitor.monitoring_thread and monitor.monitoring_thread.is_alive():
+                                print(f"{CYAN}Monitor already running\n{RESET}")
                                 monitor.initialise_monitoring()
                             else:
                                 print(f"{RED}------------------------------------------{RESET}")
@@ -68,7 +58,7 @@ def main():
                     case "2": # Monitoring Activity
                         
                         if monitor.timecheck is None:
-                            time.sleep(2)
+                            time.sleep(1)
                         
                         try:
                             while True:
@@ -104,14 +94,14 @@ def main():
                                     functions.clear_screen()
                                     
                                     alert_level = input(f"Set {BLUE}CPU{RESET} usage threshold in percentage\n")
-                                    monitor.configure_alerts("CPU", alert_level) 
+                                    alerts.configure_alerts("CPU", alert_level) 
                                     
                                         
                                 case "2":
                                     functions.clear_screen()
                                     
                                     alert_level = input(f"Set {YELLOW}RAM{RESET} usage threshold in percentage\n")
-                                    monitor.configure_alerts("RAM", alert_level)
+                                    alerts.configure_alerts("RAM", alert_level)
                                     
                                     pass
                         
@@ -119,7 +109,7 @@ def main():
                                     functions.clear_screen()
                                     
                                     alert_level = input(f"Set {MAGENTA}Disk{RESET} usage threshold in percentage\n")
-                                    monitor.configure_alerts("Disk", alert_level) 
+                                    alerts.configure_alerts("Disk", alert_level) 
                                     pass 
                                 
                                 case "4": # End loop and return to Main Menu 
@@ -142,21 +132,21 @@ def main():
                     case "4": # Prints all configured alerts
                         functions.clear_screen()
                         
-                        monitor.print_configured_alerts()
+                        alerts.print_configured_alerts()
                         input(f"{YELLOW}\nPress Enter to return to main menu{RESET} ")
                     
                     case "5":# Starts monitoring mode that runs alerts in the background
                        
-                        if not monitor.running:
+                        if not monitor.monitoring_running:
                             functions.clear_screen()
                             print(f"{RED}Monitoring not active{RESET}\n")
-                            input("Press Enter to return to main menu: ")
+                            input(f"{CYAN}Press Enter to return to main menu: {RESET}")
                             continue
 
                         try:
                             while True:
                                 functions.clear_screen()
-                                monitor.print_alerts()
+                                alerts.print_alerts()
                                 print(f"\n{YELLOW}Press CTRL + C To exit back to main menu{RESET}")
                                 time.sleep(2)
                         except KeyboardInterrupt:
@@ -187,10 +177,10 @@ def main():
     except KeyboardInterrupt: # If user types ctrl + c during main menu loop the monitor thread is closed properly before exiting program
         functions.clear_screen()
         print(f"\n{RED}Interuppted by user...{RESET}")
-        if monitor.running:
-            monitor.running = False
-            if monitor.thread and monitor.thread.is_alive():
-                monitor.thread.join(timeout=2)
+        if monitor.monitoring_running:
+            monitor.monitoring_running = False
+            if monitor.monitoring_thread and monitor.monitoring_thread.is_alive():
+                monitor.monitoring_thread.join(timeout=2)
         time.sleep(1)
         print(f"\n{YELLOW}Exiting session...{RESET}")
     
