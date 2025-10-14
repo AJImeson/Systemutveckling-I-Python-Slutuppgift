@@ -1,5 +1,4 @@
 import os
-import time
 import logging
 
 monitor = None
@@ -23,36 +22,19 @@ class GeneralFunctions: # General functions for menu and system
         GeneralFunctions.clear_screen()
         
         print("------------------------------------") 
-        print(f"{YELLOW}Hardware Monitor{RESET} | {CYAN}Select an option{RESET}")
+        print(f"{BLUE}Hardware Monitor{RESET} | {PINK}Select an option{RESET}")
         print("------------------------------------\n")
                         
-        print("[1] Start Monitoring\n[2] Show Current Monitoring Activity\n[3] Configure Alerts\n[4] Alert List\n[5] Commence Monitoring Mode\n[6] Stop Running Processes\n[7] Quit Program\n")
+        print(f"{YELLOW}[1] - Monitoring Processes Options\n[2] - Show Current Monitoring Activity\n[3] - Configure Alerts\n[4] - Alert List\n[5] - Alerts Processes Options\n[6] - Quit Program\n{RESET}")
         return input("").strip() # Strip trims and ensures proper input
-          
     
-    @staticmethod
-    def end_task(): # End process menu for main
-       
-        try:
-            print("\nChoose one of the following processes :\n")
-            print("[1] Stop Monitoring\n[2] Stop Alerts\n[3] Stop Both Processes\n[4] Exit to Main Menu\n")
-            
-            input_task = input("").strip()
-            
-            match input_task:
-                
-                case "1":
-                    pass
-                case "2":
-                    pass
-                case "3":
-                    pass 
-                case "4":
-                    pass
-        except ValueError: 
-                   
-            pass
+    def default_case(): # For reusability in main()
         
+        print("--------------------------------------------------------------------------")
+        print(f"{RED}Input cannot be any other options than the ones provided, please try again{RESET}")
+        print("--------------------------------------------------------------------------\n")
+        input("Press Enter to continue: ")
+        pass
     
     def action_logger():
         
@@ -72,3 +54,4 @@ BLUE = "\033[34m"
 RESET = "\033[0m"
 MAGENTA = "\033[35m"
 CYAN = "\033[36m"
+PINK = "\033[95m"

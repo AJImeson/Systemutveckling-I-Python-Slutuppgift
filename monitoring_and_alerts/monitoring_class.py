@@ -30,7 +30,7 @@ class Monitoring(Monitor): # Inherits from Monitor class and it's parameters; re
         except Exception as e:
             return f"{RED}Failed to start monitoring thread: {e}{RESET}"
             
-    def monitor_running(self, interval=2): # Function fetches system info 
+    def monitor_running(self, interval=2): # Function fetches system info
         
         psutil.cpu_percent(interval=None) # Flag to set initial CPU percent reading to 0
         while self.monitoring_running:
@@ -49,7 +49,7 @@ class Monitoring(Monitor): # Inherits from Monitor class and it's parameters; re
         
         if self.timecheck is None:
             GeneralFunctions.clear_screen()
-            return f"{RED}No monitoring history documented{RESET}\n{YELLOW}Press Ctrl + C to exit{RESET}"
+            return f"{RED}No monitoring history documented{RESET}\n\n{YELLOW}Press Ctrl + C to exit{RESET}"
         
         else:
             return f"{BLUE}CPU Usage:{RESET} {self.cpu_usage}% | {YELLOW}RAM Usage:{RESET} {self.ram_usage}% | {MAGENTA}Disk Usage:{RESET} {self.disk_usage}% | {self.timecheck}\n\n{YELLOW}Press CTRL + C To exit back to main menu{RESET}"
@@ -132,7 +132,7 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
         try:
             alert_threshold = float(alert_threshold) # Float converter/declaration 
         except ValueError:
-            print(f"{RED}\nValue must be a number, press Enter to continue{RESET}")
+            print(f"{RED}\nValue must be a valid, press Enter to continue{RESET}")
             input() 
             return
             

@@ -31,29 +31,87 @@ def main():
                 match main_menu:
                     
                     
-                    case "1": # Start Monitoring 
-                        functions.clear_screen()
+                    case "1": # Monitoring options 
                         
-                        if monitor.monitoring_running:
-                        
-                            if monitor.monitoring_thread and monitor.monitoring_thread.is_alive():
-                                print(f"{CYAN}Monitor already running\n{RESET}")
-                                monitor.initialise_monitoring()
-                            else:
-                                print(f"{RED}------------------------------------------{RESET}")
-                                print(f"{RED}Unexpected stop of monitor{RESET} - {YELLOW}Restarting...{RESET}")
-                                print(f"{RED}------------------------------------------{RESET}\n")
-                                monitor.initialise_monitoring()
+                        is_choosing_monitoring_option = True
+                        while is_choosing_monitoring_option:
+                            functions.clear_screen()
                             
+                            print("----------------")
+                            print(f"{YELLOW}Choose An Option{RESET}")
+                            print("----------------")
                             
-                        else:
-                            monitor.initialise_monitoring()
-                            print(f"-------------------------")
-                            print(f"{GREEN}Monitoring started.....{RESET}")
-                            print(f"-------------------------\n")
-                            time.sleep(1)
+                            try:
+                                monitoring_menu = input(f"[1] - {GREEN}Start Monitoring Process{RESET}\n[2] - {RED}End Monitoring Process{RESET}\n[3] - {YELLOW}Exit to Main menu{RESET}\n").strip()
                             
-                        input("Press enter to return to menu ")
+                            except ValueError:
+                                print("Unknown error occured")
+                                input("Press Enter to continue")
+                                continue
+                             
+                            match monitoring_menu:
+                                
+                                case "1": # Start Monitoring
+                                    
+                                    if monitor.monitoring_running:
+                                    
+                                        if monitor.monitoring_thread and monitor.monitoring_thread.is_alive():
+                                            functions.clear_screen()
+                                            print(f"\n{CYAN}Monitor already running\n{RESET}")
+                                            monitor.initialise_monitoring()
+                                        else:
+                                            print(f"{RED}------------------------------------------{RESET}")
+                                            print(f"{RED}Unexpected stop of monitor{RESET} - {YELLOW}Restarting...{RESET}")
+                                            print(f"{RED}------------------------------------------{RESET}\n")
+                                            monitor.initialise_monitoring()
+                                        
+                                        
+                                    else:
+                                        monitor.initialise_monitoring()
+                                        functions.clear_screen()
+                                        print(f"-------------------------")
+                                        print(f"{GREEN}Monitoring started.....{RESET}")
+                                        print(f"-------------------------\n")
+                                        time.sleep(1)
+                                        
+                                    input("Press enter to return to menu ")
+                                        
+                                case "2": # End monitoring 
+                                    
+                                    if monitor.monitoring_running:
+                                        functions.clear_screen()
+                                        monitor.monitoring_running = False
+                                        if monitor.monitoring_thread and monitor.monitoring_thread.is_alive():
+                                            monitor.monitoring_thread.join(timeout=2)
+                                            monitor.monitoring_thread = None
+                                            
+                                        print("------------------------------")
+                                        print(f"{RED}Monitoring Process Ended{RESET}")
+                                        print("------------------------------\n")
+                                        time.sleep(2)
+                                        
+                                    else:
+                                        functions.clear_screen()
+                                        print(f"{YELLOW}Monitor Process not Running\n{RESET}")
+                                    
+                                    input(f"\n{YELLOW}Press Enter to return to Monitoring Options{RESET}")
+                                    
+                                    
+                                case "3":
+                                    functions.clear_screen()
+                                    print("-------------------------")
+                                    print(f"{YELLOW}Exiting back to main menu{RESET}")
+                                    print("-------------------------\n")
+                                    is_choosing_monitoring_option = False
+                                    time.sleep(1)
+                                    
+                                case _:
+                                    functions.clear_screen()
+                                    print("--------------------------------------------------------------------------")
+                                    print(f"{RED}Input cannot be any other options than the ones provided, please try again{RESET}")
+                                    print("--------------------------------------------------------------------------\n")
+                                    continue
+                                    
                         
                     case "2": # Monitoring Activity
                         
@@ -79,7 +137,7 @@ def main():
                             print(f"----------------------------\n")
                             
                             try:
-                                configure_menu = input(f"[1]{BLUE} CPU Usage{RESET}\n[2]{YELLOW} Memory Usage{RESET}\n[3] {MAGENTA}Disk Usage{RESET}\n[4] {RED}Exit to Main Menu{RESET}\n").strip()
+                                configure_menu = input(f"[1] - {BLUE}CPU Usage{RESET}\n[2] - {YELLOW}Memory Usage{RESET}\n[3] - {MAGENTA}Disk Usage{RESET}\n[4] - {RED}Exit to Main Menu{RESET}\n").strip()
                                 
                                 
                             except ValueError:
@@ -152,16 +210,8 @@ def main():
                         except KeyboardInterrupt:
                             print("\n")
                             
-                    case "6": # Ends specific chosen process or both
-                        
-                        
-                        is_ending_processes = True
-                        while is_ending_processes:
-                            functions.clear_screen()
-                            functions.end_task()
-                        pass 
                     
-                    case "7": # Closes the program 
+                    case "6": # Closes the program 
                         functions.clear_screen()
                         print(f"\n{RED}Terminating Program....\n{RESET}")
                         time.sleep(2)
