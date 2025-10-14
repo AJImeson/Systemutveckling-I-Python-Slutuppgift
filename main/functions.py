@@ -26,29 +26,31 @@ class GeneralFunctions: # General functions for menu and system
         print(f"{YELLOW}Hardware Monitor{RESET} | {CYAN}Select an option{RESET}")
         print("------------------------------------\n")
                         
-        print("[1] Start Monitoring\n[2] Show Current Monitoring Activity\n[3] Configure Alerts\n[4] Alert List\n[5] Commence Monitoring Mode\n[6] Quit Program\n")
+        print("[1] Start Monitoring\n[2] Show Current Monitoring Activity\n[3] Configure Alerts\n[4] Alert List\n[5] Commence Monitoring Mode\n[6] Stop Running Processes\n[7] Quit Program\n")
         return input("").strip() # Strip trims and ensures proper input
           
     
     @staticmethod
-    def end_task(monitor): # Ends processes when called upon
+    def end_task(): # End process menu for main
        
-        try: 
-            confirm = input("Are you sure you wan to end all current process? (y/n): ").strip().lower()
+        try:
+            print("\nChoose one of the following processes :\n")
+            print("[1] Stop Monitoring\n[2] Stop Alerts\n[3] Stop Both Processes\n[4] Exit to Main Menu\n")
             
-            if confirm != 'y':
-                print(f"{YELLOW}Ending all running processes...{RESET}")
-                time.sleep(3)
-                return
+            input_task = input("").strip()
             
-            for obj in monitor: # Ends all running threads by checking if they are active with '' flags in the method by use of a loop 
-                if hasattr(obj, 'running') and obj.running:
-                    obj.running = False
-                if hasattr(obj, 'alerts_running') and obj.alerts_running:
-                    obj.alerts_running = False
-                    
-        except Exception as e:
-            print(f"{RED}Error ending tasks: {e}{RESET}")
+            match input_task:
+                
+                case "1":
+                    pass
+                case "2":
+                    pass
+                case "3":
+                    pass 
+                case "4":
+                    pass
+        except ValueError: 
+                   
             pass
         
     

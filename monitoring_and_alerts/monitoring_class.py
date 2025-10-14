@@ -121,10 +121,11 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
             current = getattr(self, attr_name, None)
             if current is None:  
                 continue
-            exceeded = [t for t in thresholds if current >= t]
+            
+            exceeded = [t for t in thresholds if current >= t] # List with a for loop that controls if usage exceeds any of the thresholds set in configured alerts 
             if exceeded:
                 lowest_exceeded = min(exceeded)
-                print(f"{RED}[ALERT]{RESET} | {colour}{levels}: {YELLOW}usage is at{RESET} {RED}{current:.1f}%{RESET} {YELLOW}which exceeds{RESET} {CYAN}{lowest_exceeded}%{RESET}\n")
+                print(f"{RED}[ALERT]{RESET} | {colour}{levels}: usage is at {RED}{current:.1f}%{RESET} which exceeds {CYAN}{lowest_exceeded}%{RESET}\n")
                 
     def configure_alerts(self, alert_type, alert_threshold): # Configure alerts function called to main menu
                 
@@ -190,8 +191,6 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
     
 class MonitorSystem(Monitoring, Alerts):
     pass   
-
-
 
 # Colour codes for implementation
 GREEN = "\033[92m"

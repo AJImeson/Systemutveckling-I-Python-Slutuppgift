@@ -151,8 +151,17 @@ def main():
                                 time.sleep(2)
                         except KeyboardInterrupt:
                             print("\n")
+                            
+                    case "6": # Ends specific chosen process or both
                         
-                    case "6": # Closes the program 
+                        
+                        is_ending_processes = True
+                        while is_ending_processes:
+                            functions.clear_screen()
+                            functions.end_task()
+                        pass 
+                    
+                    case "7": # Closes the program 
                         functions.clear_screen()
                         print(f"\n{RED}Terminating Program....\n{RESET}")
                         time.sleep(2)
