@@ -24,20 +24,17 @@ def main():
             
             # User Main Menu start up screen
             
+            main_menu = GeneralFunctions.print_menu()
+            
+            '''
             functions.clear_screen()
             print("------------------------------------") 
             print(f"{YELLOW}Hardware Monitor{RESET} | {CYAN}Select an option{RESET}")
             print("------------------------------------\n")
             
-            main_menu = input("[1] Start Monitoring\n[2] Show Current Monitoring Activity\n[3] Configure Alerts\n[4] Alert List\n[5] Commence Monitoring Mode\n[6] Quit Program\n").strip() # Strip trims and ensures proper input and "if not main_menu" can 
+            main_menu = input("[1] Start Monitoring\n[2] Show Current Monitoring Activity\n[3] Configure Alerts\n[4] Alert List\n[5] Commence Monitoring Mode\n[6] Quit Program\n").strip() # Strip trims and ensures proper input
             
-            if not main_menu:
-                functions.clear_screen()
-                print("--------------------------------------------------------------------------")
-                print(f"{RED}Input cannot be any other options than the ones provided, please try again{RESET}")
-                print("--------------------------------------------------------------------------\n")
-                input("Press Enter to continue")
-                continue
+            '''
             
             try:
             
@@ -94,15 +91,6 @@ def main():
                             try:
                                 configure_menu = input(f"[1]{BLUE} CPU Usage{RESET}\n[2]{YELLOW} Memory Usage{RESET}\n[3] {MAGENTA}Disk Usage{RESET}\n[4] {RED}Exit to Main Menu{RESET}\n").strip()
                                 
-                                if not configure_menu:
-                                    print("--------------------------------------------------------------------------")
-                                    print(f"{RED}Input cannot be any other options than the ones provided, please try again{RESET}")
-                                    print("--------------------------------------------------------------------------\n")
-                                    continue
-                                
-                                if configure_menu not in ("1", "2", "3", "4"):
-                                    print("Input must be between 1-4")
-                                    continue
                                 
                             except ValueError:
                                 print("Uknown error occured ")
@@ -158,24 +146,21 @@ def main():
                         input(f"{YELLOW}\nPress Enter to return to main menu{RESET} ")
                     
                     case "5":# Starts monitoring mode that runs alerts in the background
-                        functions.clear_screen()
-                        
+                       
                         if not monitor.running:
-                            monitor.running = True
-                            print(f"{GREEN}Starting monitoring process...{RESET}\n")
+                            print(f"{RED}Monitoring not active{RESET}\n")
+                            input("Press Enter to return to main menu: ")
+                            continue
 
-                        else:
-                            print(f"{YELLOW}Monitoring already active...{RESET}\n")
+                        try:
+                            while True:
+                                functions.clear_screen()
+                                monitor.print_alerts()
+                                print(f"\nPress CTRL + C To exit back to main menu")
+                                time.sleep(2)
+                        except KeyboardInterrupt:
+                            print("\n")
                         
-                        if not monitor.alerts_running:
-                            monitor.initialise_alerts()
-                            
-                        else:
-                            print(f"{YELLOW}Alerts already active...{RESET}\n")
-                            
-                            
-                        input("Press Enter to return to main menu: ")
-                    
                     case "6": # Closes the program 
                         functions.clear_screen()
                         print(f"\n{RED}Terminating Program....\n{RESET}")

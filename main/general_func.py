@@ -18,7 +18,15 @@ class GeneralFunctions: # General functions for menu and system
         os.system('cls' if os.name == 'nt' else 'clear')
         
     def print_menu():
-        pass
+        GeneralFunctions.clear_screen()
+        
+        print("------------------------------------") 
+        print(f"{YELLOW}Hardware Monitor{RESET} | {CYAN}Select an option{RESET}")
+        print("------------------------------------\n")
+                        
+        print("[1] Start Monitoring\n[2] Show Current Monitoring Activity\n[3] Configure Alerts\n[4] Alert List\n[5] Commence Monitoring Mode\n[6] Quit Program\n")
+        return input("").strip() # Strip trims and ensures proper input
+          
     
     @staticmethod
     def end_task(monitor): # Ends processes when called upon
@@ -49,3 +57,4 @@ RED = "\033[91m"
 BLUE = "\033[34m"
 RESET = "\033[0m"
 MAGENTA = "\033[35m"
+CYAN = "\033[36m"

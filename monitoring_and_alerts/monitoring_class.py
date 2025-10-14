@@ -76,15 +76,8 @@ class Monitor: # Functions for monitoring tasks
             print(f"{RED}Failure during alerts process: {e}{RESET}")
             self.alerts_running = False
                 
-            
     
     def alerts_inspector(self): # Checks alerts configured and compares with current usage
-        
-        if not self.alerts_running:
-            return
-        
-        no_alerts_printed = False # Flag to track if "No alerts configured" has been printed
-        levels =  None # Flag reset for each loop
         
         while self.alerts_running:
       
@@ -95,43 +88,30 @@ class Monitor: # Functions for monitoring tasks
                     time.sleep(2)
                     continue
                 
-                if not any(self.alerts.values()): # Passes if no alerts are configured silently
-                    if not no_alerts_printed:
-                        print(f"{YELLOW}No alerts configured{RESET}\n")
-                        no_alerts_printed = True
-                    time.sleep(2)
-                    continue
-                
-                else:
-                    
-                    no_alerts_printed = False
-                    
-                for levels, thresholds in self.alerts.items(): # Loops each key in dictionary 
-                    
-                    if not thresholds: # Passes if no alerts are configured silently
-                        
-                        continue
-                    
-                attr_name = f"{levels.lower()}_usage"
-                current = getattr(self, attr_name, None)
-                
-                if current is None: # Extra handling/error checking
-                    print(f"{RED}Error retrieving {levels} usage{RESET}\n")
-                    continue
-                
-                for threshold in thresholds:# Checks each threshold within the list of configured alerts
-                    if current >= threshold:
-                        print(f"{RED}ALERT! {levels} usage is at {current:.1f}% which exceeds the threshold of {threshold}%{RESET}\n")
-                
-                time.sleep(5) # Interval for checking alerts
+                self.print.alerts()
+                time.sleep(2)
                 
             except Exception as e:
                 self.alerts_running = False
                 return f"{RED}Error in alerts {e}{RESET}"
-                
     
-    def configure_alerts(self, alert_type, alert_threshold): # Configure alerts function called to main menu
+    def print_alerts(self): # Function to print alerts when called from main menu
         
+        for levels, thresholds in self.alert.items():
+            if not thresholds:
+                continue
+            attr_name = f"{levels.lower()}_usage"
+            current = getattr(self, attr_name, None)
+            if current is None:  
+                continue
+            exceeded = [t for t in thresholds if current >= t]
+            if exceeded:
+                lowest_exceeded = min(exceeded)
+                print(f"{RED}[ALERT]{RESET} {levels} usage is at {current:.1f}% which exceeds {lowest_exceeded}%\n")
+                print("Press CTRL + C to return to main menu ")
+                
+    def configure_alerts(self, alert_type, alert_threshold): # Configure alerts function called to main menu
+                
         try:
             alert_threshold = float(alert_threshold) # Float converter/declaration 
         except ValueError:
@@ -150,6 +130,8 @@ class Monitor: # Functions for monitoring tasks
         if alert_type in self.alerts:
             self.alerts[alert_type].append(alert_threshold) # Adds alert configuring to it's relevant key and list 
             print(f"Added Configured alert: {alert_type} at {alert_threshold}")
+            input(f"{YELLOW}\nPress Enter to return to alert configuration menu{RESET} ")
+            return
             
         else:
             return f"Error adding alert: {alert_type}"
@@ -184,11 +166,15 @@ class Monitor: # Functions for monitoring tasks
                 print(f"{color}{BOLD}{alert_type.upper()}{RESET}: ")
                     
                 if thresholds:
-                    for i, threshold in enumerate(thresholds, start=1): # Lists alerts within it's proper type/key 
-                        print(f"   [{i}] {threshold}%")
+                    lowest = min(thresholds) # Finds lowest alert configured for each type
+                    for i, threshold in enumerate(thresholds, start=1): # Lists alerts within it's proper type/key
+                        if threshold == lowest:
+                            print(f"   [{i}] {threshold}%")
+                        else:
+                            print(f"   [{i}] {threshold}%")
                     
                 else:
-                    print(f"{RED}--------------------------------------{RESET}")
+                    print(f"\n{RED}--------------------------------------{RESET}")
                     print(f"{RED}No alerts set\nPress Enter to continue{RESET}")
                     print(f"{RED}--------------------------------------{RESET}\n")
                     
