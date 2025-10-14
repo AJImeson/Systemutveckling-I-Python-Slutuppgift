@@ -4,8 +4,6 @@ import threading
 import logging 
 from datetime import datetime
 from main.general_func import GeneralFunctions
-from pathlib import Path
-
 
 class Monitor: # Functions for monitoring tasks
     
@@ -97,7 +95,10 @@ class Monitor: # Functions for monitoring tasks
     
     def print_alerts(self): # Function to print alerts when called from main menu
         
-        for levels, thresholds in self.alert.items():
+        if not any (self.alerts.values()):
+            print(f"{RED}No alerts configured{RESET}\n")
+        
+        for levels, thresholds in self.alerts.items():
             if not thresholds:
                 continue
             attr_name = f"{levels.lower()}_usage"
@@ -108,7 +109,6 @@ class Monitor: # Functions for monitoring tasks
             if exceeded:
                 lowest_exceeded = min(exceeded)
                 print(f"{RED}[ALERT]{RESET} {levels} usage is at {current:.1f}% which exceeds {lowest_exceeded}%\n")
-                print("Press CTRL + C to return to main menu ")
                 
     def configure_alerts(self, alert_type, alert_threshold): # Configure alerts function called to main menu
                 
@@ -128,8 +128,9 @@ class Monitor: # Functions for monitoring tasks
             return
             
         if alert_type in self.alerts:
-            self.alerts[alert_type].append(alert_threshold) # Adds alert configuring to it's relevant key and list 
-            print(f"Added Configured alert: {alert_type} at {alert_threshold}")
+            self.alerts[alert_type].append(alert_threshold) # Adds alert configuring to it's relevant key and list
+            GeneralFunctions.clear_screen() 
+            print(f"{GREEN}Added Configured alert{RESET}: {alert_type} at {alert_threshold}")
             input(f"{YELLOW}\nPress Enter to return to alert configuration menu{RESET} ")
             return
             
@@ -163,7 +164,7 @@ class Monitor: # Functions for monitoring tasks
                 else:
                     color = RESET
                     
-                print(f"{color}{BOLD}{alert_type.upper()}{RESET}: ")
+                print(f"\n{color}{BOLD}{alert_type.upper()}{RESET}: ")
                     
                 if thresholds:
                     lowest = min(thresholds) # Finds lowest alert configured for each type
@@ -172,11 +173,9 @@ class Monitor: # Functions for monitoring tasks
                             print(f"   [{i}] {threshold}%")
                         else:
                             print(f"   [{i}] {threshold}%")
-                    
                 else:
-                    print(f"\n{RED}--------------------------------------{RESET}")
-                    print(f"{RED}No alerts set\nPress Enter to continue{RESET}")
-                    print(f"{RED}--------------------------------------{RESET}\n")
+                    
+                    print(f"\n{RED}No alerts set\n{RESET}")
                     
         except Exception as e:
             return f"\nError printing alerts: {e}"

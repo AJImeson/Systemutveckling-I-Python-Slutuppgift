@@ -148,6 +148,7 @@ def main():
                     case "5":# Starts monitoring mode that runs alerts in the background
                        
                         if not monitor.running:
+                            functions.clear_screen()
                             print(f"{RED}Monitoring not active{RESET}\n")
                             input("Press Enter to return to main menu: ")
                             continue
@@ -156,7 +157,7 @@ def main():
                             while True:
                                 functions.clear_screen()
                                 monitor.print_alerts()
-                                print(f"\nPress CTRL + C To exit back to main menu")
+                                print(f"\n{YELLOW}Press CTRL + C To exit back to main menu{RESET}")
                                 time.sleep(2)
                         except KeyboardInterrupt:
                             print("\n")
