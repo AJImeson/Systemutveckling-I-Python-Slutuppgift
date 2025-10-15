@@ -77,14 +77,11 @@ def main():
                                     input("Press enter to return to menu ")
                                         
                                 case "2": # End monitoring 
-                                    
-                                    if monitor.monitoring_running:
-                                        functions.clear_screen()
-                                        monitor.monitoring_running = False
-                                        if monitor.monitoring_thread and monitor.monitoring_thread.is_alive():
-                                            monitor.monitoring_thread.join(timeout=2)
-                                            monitor.monitoring_thread = None
-                                            
+                                    functions.clear_screen()
+                                    running = bool(monitor.monitoring_thread and monitor.monitoring_thread.is_alive()) # Calls the monitoring thread status in the monitor_stop method
+                                  
+                                    if running or monitor.monitoring_running:
+                                        monitor.monitor_stop(clear_data=True) # Calls the stop method from the monitoring class
                                         print("------------------------------")
                                         print(f"{RED}Monitoring Process Ended{RESET}")
                                         print("------------------------------\n")
@@ -94,22 +91,18 @@ def main():
                                         functions.clear_screen()
                                         print(f"{YELLOW}Monitor Process not Running\n{RESET}")
                                     
-                                    input(f"\n{YELLOW}Press Enter to return to Monitoring Options{RESET}")
+                                    input(f"{YELLOW}Press Enter to return to Monitoring Options\n{RESET}")
                                     
                                     
                                 case "3":
                                     functions.clear_screen()
-                                    print("-------------------------")
-                                    print(f"{YELLOW}Exiting back to main menu{RESET}")
-                                    print("-------------------------\n")
+                                    functions.exit_sub_menu()
                                     is_choosing_monitoring_option = False
                                     time.sleep(1)
                                     
                                 case _:
                                     functions.clear_screen()
-                                    print("--------------------------------------------------------------------------")
-                                    print(f"{RED}Input cannot be any other options than the ones provided, please try again{RESET}")
-                                    print("--------------------------------------------------------------------------\n")
+                                    functions.default_case()
                                     continue
                                     
                         
@@ -173,17 +166,13 @@ def main():
                                 case "4": # End loop and return to Main Menu 
                                     
                                     functions.clear_screen()
-                                    print("-------------------------")
-                                    print(f"{YELLOW}Exiting back to main menu{RESET}")
-                                    print("-------------------------\n")
+                                    functions.exit_sub_menu()
                                     is_configuring_alerts = False 
                                     time.sleep(1)               
 
                                 case _: # Default case for invalid input
                                     functions.clear_screen()
-                                    print("--------------------------------------------------------------------------")
-                                    print(f"{RED}Input cannot be any other options than the ones provided, please try again{RESET}")
-                                    print("--------------------------------------------------------------------------\n")
+                                    functions.default_case()
                                     continue
                             
                     
@@ -214,18 +203,15 @@ def main():
                     case "6": # Closes the program 
                         functions.clear_screen()
                         print(f"\n{RED}Terminating Program....\n{RESET}")
-                        time.sleep(2)
+                        time.sleep(1)
                         print(f"{YELLOW}Thank you for using{RESET}")
                         break
                     
                     case _: # Default case for invalid input
                         functions.clear_screen()
-                        print("--------------------------------------------------------------------------")
-                        print(f"{RED}Input cannot be any other options than the ones provided, please try again{RESET}")
-                        print("--------------------------------------------------------------------------\n")
-                        input("Press Enter to continue: ")
+                        functions.default_case()
                         continue
-                        
+                       
             except ValueError: # Error handling 
                 print("Unknown error occured ")
                 continue

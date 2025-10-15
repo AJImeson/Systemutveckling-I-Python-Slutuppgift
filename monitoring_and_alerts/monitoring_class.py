@@ -1,6 +1,7 @@
 import psutil
 import time
 import threading
+import logging
 from datetime import datetime
 from main.functions import GeneralFunctions
 
@@ -14,8 +15,10 @@ class Monitor: # Base Monitor class
         self.timecheck = None
         self.monitoring_running = False
         self.monitoring_thread = None
+        self.monitoring_stop = threading.Event() # Class for managing objects in threading, used to stop the monitoring process when called upon in the method
         self.alerts_running = False
         self.alerts_thread = None
+        self.alerts_stop = threading.Event() # Class for managing objects in threading, used to stop the alerts process when called upon in the method
         self.alerts = {"CPU":[], "RAM":[], "Disk":[]}
         
 class Monitoring(Monitor): # Inherits from Monitor class and it's parameters; responsible for monitoring system info and initialisation
@@ -23,6 +26,7 @@ class Monitoring(Monitor): # Inherits from Monitor class and it's parameters; re
     def initialise_monitoring(self): # Starts monitoring by user in the background with threading 
       
         try:
+            self.monitoring_stop.clear()
             self.monitoring_running = True
             self.monitoring_thread = threading.Thread(target=self.monitor_running, daemon=True)
             self.monitoring_thread.start()
@@ -33,7 +37,7 @@ class Monitoring(Monitor): # Inherits from Monitor class and it's parameters; re
     def monitor_running(self, interval=2): # Function fetches system info
         
         psutil.cpu_percent(interval=None) # Flag to set initial CPU percent reading to 0
-        while self.monitoring_running:
+        while self.monitoring_running and not self.monitoring_stop.is_set(): # While loop that runs the monitoring process in the background
             
             try:
                 self.cpu_usage = psutil.cpu_percent(interval=interval) # CPU Check
@@ -53,6 +57,20 @@ class Monitoring(Monitor): # Inherits from Monitor class and it's parameters; re
         
         else:
             return f"{BLUE}CPU Usage:{RESET} {self.cpu_usage}% | {YELLOW}RAM Usage:{RESET} {self.ram_usage}% | {MAGENTA}Disk Usage:{RESET} {self.disk_usage}% | {self.timecheck}\n\n{YELLOW}Press CTRL + C To exit back to main menu{RESET}"
+        
+    def monitor_stop(self,clear_data=False): # Stops monitoring process when called upon in the main menu
+        
+        if self.monitoring_running:
+            self.monitoring_stop.set() # Sets the event flag to stop the monitoring thread
+            self.monitoring_running = False
+            m_t = self.monitoring_thread
+            if m_t and m_t.is_alive():
+                m_t.join(timeout=3) # Waits for the monitoring thread to finish
+            self.monitoring_thread = None
+        if clear_data:
+            self.timecheck = None 
+            self.cpu_usage = self.ram_usage = self.disk_usage = 0  
+          
         
 class Alerts(Monitor): # Inherits from Monitor class and it's parameters; responsible for alert configuration, initialisation and update         
            
@@ -188,6 +206,21 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
                     
         except Exception as e:
             return f"\nError printing alerts: {e}"
+        
+        
+    def alerts_stop():
+        
+        pass
+        
+        
+class SystemLog(Monitor):
+    
+    def real_time_log():
+        
+        logging.basicConfig(filename='system_monitor.log', level=logging.INFO,
+            format='%(asctime)s - %(levelname)s - %(message)s')
+        logging.info('System Monitor started')
+    pass     
     
 class MonitorSystem(Monitoring, Alerts):
     pass   

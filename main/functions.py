@@ -17,33 +17,35 @@ class GeneralFunctions: # General functions for menu and system
     @staticmethod
     def clear_screen(): # Clears screens at input
         os.system('cls' if os.name == 'nt' else 'clear')
-        
+    
+    @staticmethod   
     def print_menu():
         GeneralFunctions.clear_screen()
         
         print("------------------------------------") 
-        print(f"{BLUE}Hardware Monitor{RESET} | {PINK}Select an option{RESET}")
+        print(f"{YELLOW}Hardware Monitor{RESET} | {YELLOW}Select an option{RESET}")
         print("------------------------------------\n")
                         
-        print(f"{YELLOW}[1] - Monitoring Processes Options\n[2] - Show Current Monitoring Activity\n[3] - Configure Alerts\n[4] - Alert List\n[5] - Alerts Processes Options\n[6] - Quit Program\n{RESET}")
+        print(f"[1] - Monitoring Process Options\n[2] - Show Current Monitoring Activity\n[3] - Configure Alerts\n[4] - Alert List\n[5] - Alert Process Options\n[6] - Quit Program\n")
         return input("").strip() # Strip trims and ensures proper input
     
+    @staticmethod
     def default_case(): # For reusability in main()
         
         print("--------------------------------------------------------------------------")
         print(f"{RED}Input cannot be any other options than the ones provided, please try again{RESET}")
         print("--------------------------------------------------------------------------\n")
         input("Press Enter to continue: ")
+    
+    @staticmethod
+    def exit_sub_menu(): # Exits submenus to main menu
+        print("-------------------------")
+        print(f"{YELLOW}Exiting back to main menu{RESET}")
+        print("-------------------------\n")
         pass
     
-    def action_logger():
-        
-        logging.basicConfig(filename='system_monitor.log', level=logging.INFO,
-                            format='%(asctime)s - %(levelname)s - %(message)s')
-        logging.info('System Monitor started')
-    pass     
-
     
+
 
         
 # Colour codes for implementation 
