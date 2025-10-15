@@ -72,8 +72,8 @@ My Main principles with this project: Well structured, free fom errors, even whe
 - 2025-10-10 
 
   More error handling and reused the logic in my printing_monitor to have the same type of output in my monitoring mode for alerts, original idea was to have alerts printing at the same time as using the menu but ended up being problematic since implementing a clear_screen() only erased everything and had a hard time working around it, so i'm pleased with the result for this.
-  Did some graphical for colour coding my printing functions in the Alerts subclass, made a separate function for this for reusability in a possible future.
-  Nested some more options in the program that has caused some more problems than i wanted to, it seems as in starting processes in nested while loops with matches won't show any activity or alerts in the main loop. 
+  Did some graphical for colour coding my printing functions in the Alerts subclass during a "break" from actual coding, made a separate function for this for reusability in a possible future.
+  Nested some more options in the program that has caused some more problems than i wanted to, it seems as in the starting processes with nested while loops in match structure, monitoring won't show any activity or alerts in the main loop. 
 
 - 2025-10-14
 
@@ -81,7 +81,7 @@ My Main principles with this project: Well structured, free fom errors, even whe
   
 - 2025-10-15 
 
-  Restructured my program so that i can: Both start and stop Monitoring and Alert processes with user input. So far constructed this for Monitoring, but since both Monitoring and Alerts are constructed with threading i should be able to use same logic for Alerts.
+  Restructured my program so that i can: Both start and stop Monitoring process with user input. So far constructed this for Monitoring, but since both Monitoring and Alerts are constructed with threading i should be able to use same logic for Alerts.
   Created a method for this using Event() class with threading which is a flag that initially sets to false. For this i needed a lot of AI to help understand the flow and code lines since it required several 'if', 'False' and 'True' to work properly through my logic and main function for the app.
 
 
@@ -90,7 +90,7 @@ My Main principles with this project: Well structured, free fom errors, even whe
     + Functions for certain tasks
 
         - append() - to store configured alerts for monitoring
-        - 
+        - sorted() - different from sort, can be used on any iteration and returns a new list, doesn't modify anything
 
     + Tools 
 
@@ -102,7 +102,7 @@ My Main principles with this project: Well structured, free fom errors, even whe
     + Further improvments
       
         - General: In monitoring_and_alerts folder have all sub classes in separate files for more clarification. Less printing in methods for better use on platform in future.
-        - Method for monitoring of internet trafic up/down, maybe alert thresholds when internet trafic suddenly without explainable reason spikes for seurity measure.
+        - Method for monitoring of internet trafic up/down, maybe alert thresholds when internet trafic suddenly without any explainable reason spikes for seurity measure.
         - 
 
     + Git 

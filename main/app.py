@@ -183,7 +183,8 @@ def main():
                         input(f"{YELLOW}\nPress Enter to return to main menu{RESET} ")
                     
                     case "5":# Starts monitoring mode that runs alerts in the background
-                       
+                        
+                        
                         if not monitor.monitoring_running:
                             functions.clear_screen()
                             print(f"{RED}Monitoring not active{RESET}\n")

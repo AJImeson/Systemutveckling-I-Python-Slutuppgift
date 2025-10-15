@@ -1,4 +1,5 @@
 import os
+import time 
 
 class GeneralFunctions: # General functions for menu and system
     
@@ -31,11 +32,7 @@ class GeneralFunctions: # General functions for menu and system
         print("-------------------------")
         print(f"{YELLOW}Exiting back to main menu{RESET}")
         print("-------------------------\n")
-        pass
-    
-    
-
-
+       
         
 # Colour codes for implementation 
 

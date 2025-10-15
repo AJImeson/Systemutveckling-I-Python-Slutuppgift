@@ -154,7 +154,7 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
             input() 
             return
             
-        if not (0 <= alert_threshold <= 100): # Range limiter
+        if not (0 < alert_threshold <= 100): # Range limiter
             
             print(f"{RED}------------------------------------{RESET}")
             print(f"{RED}Threshold must be set between 1-100%{RESET}")
@@ -208,21 +208,28 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
             return f"\nError printing alerts: {e}"
         
         
-    def alerts_stop():
+    def alerting_stop(self):
         
-        pass
+        if self.alerts_running:
+            self.alerts_stop.set() # Sets the event flag to stop the alerts thread
+            self.alerts_running = False
+            a_t = self.alerts_thread
+            if a_t and a_t.is_alive():
+                a_t.join(timeout=3) # Waits for the alerts thread to finish
+            self.alerts_thread = None
+            pass
         
         
 class SystemLog(Monitor):
     
-    def real_time_log():
+    def system_log():
         
         logging.basicConfig(filename='system_monitor.log', level=logging.INFO,
             format='%(asctime)s - %(levelname)s - %(message)s')
         logging.info('System Monitor started')
     pass     
     
-class MonitorSystem(Monitoring, Alerts):
+class MonitorSystem(Monitoring, Alerts): # Inherits from both Monitoring and Alerts class: Used as a bridge/flag for easier object managemnet in main 
     pass   
 
 # Colour codes for implementation
