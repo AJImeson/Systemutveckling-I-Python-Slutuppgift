@@ -1,15 +1,4 @@
 import os
-import logging
-
-monitor = None
-
-def get_monitor(): # Function that delays import to avoid circular imports
-    global monitor, alerts
-    if monitor and alerts is None:
-        from monitoring_and_alerts.monitoring_class import Monitoring, Alerts  # delayed import
-        monitor = Monitoring()
-        alerts = Alerts()
-    return monitor
 
 class GeneralFunctions: # General functions for menu and system
     
@@ -30,7 +19,7 @@ class GeneralFunctions: # General functions for menu and system
         return input("").strip() # Strip trims and ensures proper input
     
     @staticmethod
-    def default_case(): # For reusability in main()
+    def default_case(): # Print message for main and sub menus in main()
         
         print("--------------------------------------------------------------------------")
         print(f"{RED}Input cannot be any other options than the ones provided, please try again{RESET}")
@@ -38,7 +27,7 @@ class GeneralFunctions: # General functions for menu and system
         input("Press Enter to continue: ")
     
     @staticmethod
-    def exit_sub_menu(): # Exits submenus to main menu
+    def exit_sub_menu(): # Exits submenus to main menu print message
         print("-------------------------")
         print(f"{YELLOW}Exiting back to main menu{RESET}")
         print("-------------------------\n")

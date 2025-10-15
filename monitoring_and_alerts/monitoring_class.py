@@ -53,7 +53,7 @@ class Monitoring(Monitor): # Inherits from Monitor class and it's parameters; re
         
         if self.timecheck is None:
             GeneralFunctions.clear_screen()
-            return f"{RED}No monitoring history documented{RESET}\n\n{YELLOW}Press Ctrl + C to exit{RESET}"
+            return f"{RED}No monitoring active{RESET}\n\n{YELLOW}Press Ctrl + C to exit{RESET}"
         
         else:
             return f"{BLUE}CPU Usage:{RESET} {self.cpu_usage}% | {YELLOW}RAM Usage:{RESET} {self.ram_usage}% | {MAGENTA}Disk Usage:{RESET} {self.disk_usage}% | {self.timecheck}\n\n{YELLOW}Press CTRL + C To exit back to main menu{RESET}"
@@ -197,9 +197,9 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
                     lowest = sorted_thresholds[0] # Finds lowest alert configured for each type
                     for i, threshold in enumerate(sorted_thresholds, start=1): # Lists alerts within its proper type/key
                         if threshold == lowest:
-                            print(f"   [{i}] {threshold}%")
+                            print(f"\n\t{colour}[{i}] {threshold}%")
                         else:
-                            print(f"   [{i}] {threshold}%")
+                            print(f"\n\t{colour}[{i}] {threshold}%")
                 else:
                     
                     print(f"\n{RED}No alerts set\n{RESET}")

@@ -16,11 +16,6 @@
 
     Lecture about loops / If, elif, else etc. Some error handling and built a case/match menu (Switch in C#) during lecture
 
-- 2025-09-25
-
-    Constructed a search function in for one of my "cases", uses enumerate to list at positive search. 
-    Created a function that calculates average of ages with help of python library and AI Learnt about ternary expression which is a compact if/else one line statement, used it to create a function for clearing the terminal at inputs
-
 - 2025-09-29
 
     Lecture about more data variables and functions, separate notes and documentation in Google Docs
@@ -29,7 +24,6 @@
 - 2025-09-30
 
     Learnt how to properly Import Classes and it's functions to a Main from other Folders and files 
-    Ran into problems with <modules>. Occured due to root folder issues when trying to import classes and functions. Double check this in the future 
 
 - 2025-10-01
 
