@@ -38,11 +38,7 @@ class GeneralFunctions: # General functions for menu and system
 
         
 # Colour codes for implementation 
-GREEN = "\033[92m"
+
 YELLOW = "\033[93m"
 RED = "\033[91m"
-BLUE = "\033[34m"
 RESET = "\033[0m"
-MAGENTA = "\033[35m"
-CYAN = "\033[36m"
-PINK = "\033[95m"

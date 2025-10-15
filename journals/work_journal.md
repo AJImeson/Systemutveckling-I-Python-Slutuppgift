@@ -12,14 +12,15 @@ My Main principles with this project: Well structured, free fom errors, even whe
 
 - 2025-09-25
 
-  Constructed a search function in for one of my "cases", uses enumerate to list at positive search. 
-  Created a function that calculates average of ages with help of python library and AI Learnt about ternary expression which is a compact if/else one line statement, used it to create a function for clearing the terminal at inputs
+  I've started constructing my code: Menu base and have outlined functions for Monitoring options. Central methods will be starting monitoring and also starting alert 
+  Created a function with advice from AI about ternary expression, which is a compact if/else one line statement, used it to create a function for clearing the terminal at inputs
 
 - 2025-09-29
 
-  Updated my repo with separate folders per file function within the code and also created several .md files for documentation
+  Updated my repo with separate folders per file function within the code and also created several .md files for documentation.
+  I now have a main folder, here my main will be executed in its own file and also a seperate file with functions for the menu or general tasks within the program.
+  The other folder will contain a file for my class (or classses depending on progression) where i will 
   
-  I've started constructing my code: Menu base and have outlined functions for Monitoring options 
 
 - 2025-09-30
 
@@ -83,4 +84,30 @@ My Main principles with this project: Well structured, free fom errors, even whe
   Restructured my program so that i can: Both start and stop Monitoring and Alert processes with user input. So far constructed this for Monitoring, but since both Monitoring and Alerts are constructed with threading i should be able to use same logic for Alerts.
   Created a method for this using Event() class with threading which is a flag that initially sets to false. For this i needed a lot of AI to help understand the flow and code lines since it required several 'if', 'False' and 'True' to work properly through my logic and main function for the app.
 
-  
+
+  * Other notes 
+
+    + Functions for certain tasks
+
+        - append() - to store configured alerts for monitoring
+        - 
+
+    + Tools 
+
+        - datetime - To show time during monitoring loops
+        - os - For system data and create own function (clear_screen())
+        - threading - To be able to let both monitoring and alert to run in the background during program run
+        - time - Used for delaying certain inputs so that threading has time to start properly before new inputs, also for updating loops that shows activity 
+    
+    + Further improvments
+      
+        - General: In monitoring_and_alerts folder have all sub classes in separate files for more clarification. Less printing in methods for better use on platform in future.
+        - Method for monitoring of internet trafic up/down, maybe alert thresholds when internet trafic suddenly without explainable reason spikes for seurity measure.
+        - 
+
+    + Git 
+
+
+
+        
+    
