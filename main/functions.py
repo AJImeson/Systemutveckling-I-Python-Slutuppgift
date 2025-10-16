@@ -32,6 +32,11 @@ class GeneralFunctions: # General functions for menu and system
         print("-------------------------")
         print(f"{YELLOW}Exiting back to main menu{RESET}")
         print("-------------------------\n")
+        
+    @staticmethod
+    def value_error_print():
+        print("Uknown error occured ")
+        input("Press Enter to continue")
        
         
 # Colour codes for implementation 

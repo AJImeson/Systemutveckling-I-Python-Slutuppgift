@@ -78,9 +78,9 @@ def main():
                                         
                                 case "2": # End monitoring 
                                     functions.clear_screen()
-                                    running = bool(monitor.monitoring_thread and monitor.monitoring_thread.is_alive()) # Calls the monitoring thread status in the monitor_stop method
+                                    monitor_active = bool(monitor.monitoring_thread and monitor.monitoring_thread.is_alive()) # Checks monitoring thread status by first self(False) then if it's active 
                                   
-                                    if running or monitor.monitoring_running:
+                                    if monitor_active or monitor.monitoring_running:
                                         monitor.monitor_stop(clear_data=True) # Calls the stop method from the monitoring class
                                         print("------------------------------")
                                         print(f"{RED}Monitoring Process Ended{RESET}")
@@ -130,15 +130,14 @@ def main():
                             print(f"----------------------------\n")
                             
                             try:
-                                configure_menu = input(f"[1] - {BLUE}CPU Usage{RESET}\n[2] - {YELLOW}Memory Usage{RESET}\n[3] - {MAGENTA}Disk Usage{RESET}\n[4] - {RED}Exit to Main Menu{RESET}\n").strip()
+                                alerts_configure_menu = input(f"[1] - {BLUE}CPU Usage{RESET}\n[2] - {YELLOW}Memory Usage{RESET}\n[3] - {MAGENTA}Disk Usage{RESET}\n[4] - {RED}Exit to Main Menu{RESET}\n").strip()
                                 
                                 
                             except ValueError:
-                                print("Uknown error occured ")
-                                input("Press Enter to continue")
+                                functions.value_error_print()
                                 continue
                             
-                            match configure_menu:
+                            match alerts_configure_menu:
                                     
                                 
                                 case "1": # All options except exit to main menu calls configure method
@@ -182,7 +181,74 @@ def main():
                         alerts.print_configured_alerts()
                         input(f"{YELLOW}\nPress Enter to return to main menu{RESET} ")
                     
-                    case "5":# Starts monitoring mode that runs alerts in the background
+                    case "5": # Alerts option for starting or ending processes 
+                        
+                        # is_executing_alerts = True 
+                        # while is_executing_alerts:
+                        #     functions.clear_screen()
+                        
+                        #    print(f"----------------------------")
+                        #    print(f"{YELLOW}Choose an Alert to configure{RESET}")
+                        #    print(f"----------------------------\n")
+                        
+                        #   try:
+                        
+                        #        alerts_process_menu = input(f"[1] - {GREEN}Start Alert Process{RESET}\n[2] - {RED}End Alert Process{RESET}\n[3] - {YELLOW}Exit to Main menu{RESET}\n").strip()
+                        #
+                        #   except ValuError:
+                        #       print("Uknown error occured\n")
+                        #       input("Press Enter to continue ")
+                        #       continue 
+                        #
+                        #        match alerts_process_menu:
+                        #
+                        #            case "1": # Start Alerts process
+                        #
+                        #                if not monitor.monitoring_running:
+                        #                   functions.clear_screen()
+                        #                    print(f"{RED}Monitoring not active{RESET}\n")
+                        #                    input(f"{CYAN}Press Enter to return to main menu: {RESET}")
+                        #                    continue
+                        #
+                        #                try:
+                        #                    while True:
+                        #                    functions.clear_screen()
+                        #                    alerts.print_alerts()
+                        #                    print(f"\n{YELLOW}Press CTRL + C To exit back to main menu{RESET}")
+                        #                    time.sleep(2)
+                        #                    except KeyboardInterrupt:
+                        #                    print("\n"
+                        #            
+                        
+                        #            case "2": # End Alerts process
+                        #                functions.clear_screen()
+                        #                alerts_active = bool(monitor.alerts_thread and monitor.alerts_thread.is.alive()) # Checks alerts thread status(False) then if it's active
+                        
+                        #                if alerts_active and monitor.alerts_running
+                        #                   monitor.stop_alerts()
+                        #                   print("-"*30)
+                        #                   print("Alerts process ended")
+                        #                   print("-"*30)
+                        #                   time.sleep(2)
+                        
+                        #               else:
+                        #                   functions.clear_screen() 
+                        #                   print(f"{RED}Alerts process not running{RESET}")
+                        #               
+                        #                
+                        #               input("Press Enter to return to Alerts process menu ")
+                        #
+                        #             case "3": # Return to main menu
+                        #                functions.clear_scren()
+                        #                functions.exit_sub_menu()
+                        #                is_executing_alerts = False
+                        #                time.sleep(2)
+                        #               
+                        #             case _:
+                        #               functions.clear_screen()
+                        #               functions.default_case()
+                        #               continue 
+                        #
                         
                         
                         if not monitor.monitoring_running:
@@ -214,7 +280,7 @@ def main():
                         continue
                        
             except ValueError: # Error handling 
-                print("Unknown error occured ")
+                functions.value_error_print()
                 continue
           
           

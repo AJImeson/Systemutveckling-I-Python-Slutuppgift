@@ -58,7 +58,7 @@ class Monitoring(Monitor): # Inherits from Monitor class and it's parameters; re
         else:
             return f"{BLUE}CPU Usage:{RESET} {self.cpu_usage}% | {YELLOW}RAM Usage:{RESET} {self.ram_usage}% | {MAGENTA}Disk Usage:{RESET} {self.disk_usage}% | {self.timecheck}\n\n{YELLOW}Press CTRL + C To exit back to main menu{RESET}"
         
-    def monitor_stop(self,clear_data=False): # Stops monitoring process when called upon in the main menu
+    def monitor_stop(self,clear_monitor=False): # Stops monitoring process when called upon in the main menu
         
         if self.monitoring_running:
             self.monitoring_stop.set() # Sets the event flag to stop the monitoring thread
@@ -67,7 +67,7 @@ class Monitoring(Monitor): # Inherits from Monitor class and it's parameters; re
             if m_t and m_t.is_alive():
                 m_t.join(timeout=3) # Waits for the monitoring thread to finish
             self.monitoring_thread = None
-        if clear_data:
+        if clear_monitor: # Clears data if specified when called
             self.timecheck = None 
             self.cpu_usage = self.ram_usage = self.disk_usage = 0  
           
@@ -85,7 +85,7 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
         else:
             return RESET
             
-    def initialise_alerts(self): # Initialises alerts monitoring by user in the background with thread
+    def initialise_alerts(self): # Initialises alerts monitoring by user in the background with threading
         
         try:
             if not self.alerts_running:
@@ -208,7 +208,7 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
             return f"\nError printing alerts: {e}"
         
         
-    def alerting_stop(self):
+    def stop_alerts(self): # Stops alerts process when called upon in the main menu
         
         if self.alerts_running:
             self.alerts_stop.set() # Sets the event flag to stop the alerts thread
@@ -217,8 +217,7 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
             if a_t and a_t.is_alive():
                 a_t.join(timeout=3) # Waits for the alerts thread to finish
             self.alerts_thread = None
-            pass
-        
+                
         
 class SystemLog(Monitor):
     
