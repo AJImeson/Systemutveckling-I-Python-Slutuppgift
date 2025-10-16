@@ -42,7 +42,7 @@ def main():
                             print("----------------")
                             
                             try:
-                                monitoring_menu = input(f"[1] - {GREEN}Start Monitoring Process{RESET}\n[2] - {RED}End Monitoring Process{RESET}\n[3] - {YELLOW}Exit to Main menu{RESET}\n").strip()
+                                monitoring_menu = input(f"[1] - {GREEN}Start Monitoring Activity{RESET}\n[2] - {RED}End Monitoring Process{RESET}\n[3] - {YELLOW}Exit to Main menu{RESET}\n").strip()
                             
                             except ValueError:
                                 print("Unknown error occured")
@@ -61,7 +61,7 @@ def main():
                                             monitor.initialise_monitoring()
                                         else:
                                             print(f"{RED}------------------------------------------{RESET}")
-                                            print(f"{RED}Unexpected stop of monitor{RESET} - {YELLOW}Restarting...{RESET}")
+                                            print(f"{RED}Unexpected stop of Monitor{RESET} - {YELLOW}Restarting...{RESET}")
                                             print(f"{RED}------------------------------------------{RESET}\n")
                                             monitor.initialise_monitoring()
                                         
@@ -74,14 +74,14 @@ def main():
                                         print(f"-------------------------\n")
                                         time.sleep(1)
                                         
-                                    input("Press enter to return to menu ")
+                                    input(f"{YELLOW}Press enter to return to menu{RESET} ")
                                         
                                 case "2": # End monitoring 
                                     functions.clear_screen()
                                     monitor_active = bool(monitor.monitoring_thread and monitor.monitoring_thread.is_alive()) # Checks monitoring thread status by first self(False) then if it's active 
                                   
                                     if monitor_active or monitor.monitoring_running:
-                                        monitor.monitor_stop(clear_data=True) # Calls the stop method from the monitoring class
+                                        monitor.monitor_stop(clear_monitor=True) # Calls the stop method from the monitoring class
                                         print("------------------------------")
                                         print(f"{RED}Monitoring Process Ended{RESET}")
                                         print("------------------------------\n")
@@ -89,7 +89,7 @@ def main():
                                         
                                     else:
                                         functions.clear_screen()
-                                        print(f"{YELLOW}Monitor Process not Running\n{RESET}")
+                                        print(f"{RED}Monitoring Process not Running\n{RESET}")
                                     
                                     input(f"{YELLOW}Press Enter to return to Monitoring Options\n{RESET}")
                                     
@@ -183,74 +183,74 @@ def main():
                     
                     case "5": # Alerts option for starting or ending processes 
                         
-                        # is_executing_alerts = True 
-                        # while is_executing_alerts:
-                        #     functions.clear_screen()
+                        is_executing_alerts = True 
+                        while is_executing_alerts:
+                            functions.clear_screen()
                         
-                        #    print(f"----------------------------")
-                        #    print(f"{YELLOW}Choose an Alert to configure{RESET}")
-                        #    print(f"----------------------------\n")
+                            print(f"----------------------------")
+                            print(f"{YELLOW}Choose an Alert option{RESET}")
+                            print(f"----------------------------\n")
                         
-                        #   try:
+                            try:
                         
-                        #        alerts_process_menu = input(f"[1] - {GREEN}Start Alert Process{RESET}\n[2] - {RED}End Alert Process{RESET}\n[3] - {YELLOW}Exit to Main menu{RESET}\n").strip()
-                        #
-                        #   except ValuError:
-                        #       print("Uknown error occured\n")
-                        #       input("Press Enter to continue ")
-                        #       continue 
-                        #
-                        #        match alerts_process_menu:
-                        #
-                        #            case "1": # Start Alerts process
-                        #
-                        #                if not monitor.monitoring_running:
-                        #                   functions.clear_screen()
-                        #                    print(f"{RED}Monitoring not active{RESET}\n")
-                        #                    input(f"{CYAN}Press Enter to return to main menu: {RESET}")
-                        #                    continue
-                        #
-                        #                try:
-                        #                    while True:
-                        #                    functions.clear_screen()
-                        #                    alerts.print_alerts()
-                        #                    print(f"\n{YELLOW}Press CTRL + C To exit back to main menu{RESET}")
-                        #                    time.sleep(2)
-                        #                    except KeyboardInterrupt:
-                        #                    print("\n"
-                        #            
+                                alerts_process_menu = input(f"[1] - {GREEN}Start Alerts Activity{RESET}\n[2] - {RED}End Alert Process{RESET}\n[3] - {YELLOW}Exit to Main menu{RESET}\n\n").strip()
                         
-                        #            case "2": # End Alerts process
-                        #                functions.clear_screen()
-                        #                alerts_active = bool(monitor.alerts_thread and monitor.alerts_thread.is.alive()) # Checks alerts thread status(False) then if it's active
+                            except ValueError:
+                                functions.value_error_print()
+                                continue 
                         
-                        #                if alerts_active and monitor.alerts_running
-                        #                   monitor.stop_alerts()
-                        #                   print("-"*30)
-                        #                   print("Alerts process ended")
-                        #                   print("-"*30)
-                        #                   time.sleep(2)
+                            match alerts_process_menu:
                         
-                        #               else:
-                        #                   functions.clear_screen() 
-                        #                   print(f"{RED}Alerts process not running{RESET}")
-                        #               
-                        #                
-                        #               input("Press Enter to return to Alerts process menu ")
-                        #
-                        #             case "3": # Return to main menu
-                        #                functions.clear_scren()
-                        #                functions.exit_sub_menu()
-                        #                is_executing_alerts = False
-                        #                time.sleep(2)
-                        #               
-                        #             case _:
-                        #               functions.clear_screen()
-                        #               functions.default_case()
-                        #               continue 
-                        #
+                                case "1": # Start Alerts activity 
+                        
+                                    if not monitor.monitoring_running:
+                                        functions.clear_screen()
+                                        print(f"{RED}Monitoring not active{RESET}\n")
+                                        input(f"{CYAN}Press Enter to return to main menu: {RESET}")
+                                        continue
+                        
+                                    try:
+                                        while True:
+                                            functions.clear_screen()
+                                            alerts.print_alerts()
+                                            print(f"\n{YELLOW}Press CTRL + C To exit back to main menu{RESET}")
+                                            time.sleep(2)
+                                        
+                                    except KeyboardInterrupt:
+                                        print("\n")
+                                    
+                        
+                                case "2": # End Alerts process
+                                    functions.clear_screen()
+                                    alerts_active = bool(monitor.alerts_thread and monitor.alerts_thread.is_alive()) # Checks alerts thread status(False) then if it's active
+                        
+                                    if alerts_active and monitor.alerts_running:
+                                        monitor.stop_alerts()
+                                        print("-"*30)
+                                        print(f"{GREEN}Alerts activity ended{RESET}")
+                                        print("-"*30)
+                                        time.sleep(2)
+                        
+                                    else:
+                                        functions.clear_screen() 
+                                        print(f"{RED}Alerts activity not running{RESET}")
+                                       
+                                        
+                                    input(f"\n{YELLOW}Press Enter to return to Alerts process menu{RESET} ")
+                        
+                                case "3": # Return to main menu
+                                    functions.clear_screen()
+                                    functions.exit_sub_menu()
+                                    is_executing_alerts = False
+                                    time.sleep(1)
+                                       
+                                case _:
+                                    functions.clear_screen()
+                                    functions.default_case()
+                                    continue 
                         
                         
+                        '''
                         if not monitor.monitoring_running:
                             functions.clear_screen()
                             print(f"{RED}Monitoring not active{RESET}\n")
@@ -265,7 +265,7 @@ def main():
                                 time.sleep(2)
                         except KeyboardInterrupt:
                             print("\n")
-                            
+                           ''' 
                     
                     case "6": # Closes the program 
                         functions.clear_screen()

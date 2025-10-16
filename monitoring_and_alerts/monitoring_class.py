@@ -127,6 +127,9 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
     
     def print_alerts(self): # Function to print alerts when called from main menu
         
+        real_time = f"{GREEN}Active{RESET}" if self.alerts_running else f"{RED}Inactive{RESET}"
+        
+        
         if not any (self.alerts.values()):
             print(f"{RED}No alerts configured{RESET}\n")
         
