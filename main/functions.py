@@ -12,9 +12,9 @@ class GeneralFunctions: # General functions for menu and system
     def print_menu():
         GeneralFunctions.clear_screen()
         
-        print("------------------------------------") 
-        print(f"{YELLOW}Hardware Monitor{RESET} | {YELLOW}Select an option{RESET}")
-        print("------------------------------------\n")
+        print("-"*40) 
+        print(f"{YELLOW}Hardware Monitor{RESET} | {YELLOW}Select an option{RESET}".center(40))
+        print("-"*40)
                         
         print(f"[1] - Monitoring Process Options\n[2] - Show Current Monitoring Activity\n[3] - Configure Alerts\n[4] - Alert List\n[5] - Alert Process Options\n[6] - Quit Program\n")
         return input("").strip() # Strip trims and ensures proper input

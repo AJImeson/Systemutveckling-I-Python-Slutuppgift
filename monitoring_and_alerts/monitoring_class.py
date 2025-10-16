@@ -130,34 +130,34 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
         if not any (self.alerts.values()):
             print(f"{RED}No alerts configured{RESET}\n")
         
-        for levels, thresholds in self.alerts.items():
+        for key, thresholds in self.alerts.items(): # Loops through the dictionary keys and their relevant lists
             if not thresholds:
                 continue
             
-            colour = self.alert_colour(levels)
-            attr_name = f"{levels.lower()}_usage"
+            colour = self.alert_colour(key) 
+            attr_name = f"{key.lower()}_usage"
             current = getattr(self, attr_name, None)
-            if current is None:  
+            if current is None: 
                 continue
             
             exceeded = [t for t in thresholds if current >= t] # List with a for loop that controls if usage exceeds any of the thresholds set in configured alerts 
             if exceeded:
                 lowest_exceeded = min(exceeded)
-                print(f"{RED}[ALERT]{RESET} | {colour}{levels}: usage is at {RED}{current:.1f}%{RESET} which exceeds {CYAN}{lowest_exceeded}%{RESET}\n")
+                print(f"{RED}[ALERT]{RESET} | {colour}{key}: usage is at {RED}{current:.1f}%{RESET} which exceeds {CYAN}{lowest_exceeded}%{RESET}\n")
                 
     def configure_alerts(self, alert_type, alert_threshold): # Configure alerts function called to main menu
                 
         try:
             alert_threshold = float(alert_threshold) # Float converter/declaration 
         except ValueError:
-            print(f"{RED}\nValue must be a valid, press Enter to continue{RESET}")
+            print(f"{RED}\nValue must be a valid number, press Enter to continue{RESET}")
             input() 
             return
             
-        if not (0 < alert_threshold <= 100): # Range limiter
+        if not (0.5 < alert_threshold <= 100): # Range limiter
             
             print(f"{RED}------------------------------------{RESET}")
-            print(f"{RED}Threshold must be set between 1-100%{RESET}")
+            print(f"{RED}Threshold must be set between 0.5-100%{RESET}")
             print(f"{RED}------------------------------------{RESET}\n")
             input("Press Enter to continue ")
             return

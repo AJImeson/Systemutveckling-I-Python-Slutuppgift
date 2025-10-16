@@ -50,7 +50,9 @@
     Function for menu printing? 
     Check file reading function from todays lecture and check logging package 
 
+- 2025-10-16
 
+    Set limiter on configured alerts for several of the same type of thresholds
 
     
     
