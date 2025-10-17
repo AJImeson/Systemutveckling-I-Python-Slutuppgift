@@ -218,9 +218,10 @@ def main():
                                         
                                     else:
                                         
-                                        monitor.initialise_alerts() # Calls the initialise alerts method from Alerts sub class
+                                        monitor.initialise_alerts() # Calls the initialise alerts method from Alerts sub class  
+                                        time.sleep(1)
                                         print("-"*30)
-                                        print(f"{YELLOW}Alerts process started{RESET}")
+                                        print(f"{GREEN}Alerts process started{RESET}")
                                         print(f"-"*30)
                                         time.sleep(2)
                                         

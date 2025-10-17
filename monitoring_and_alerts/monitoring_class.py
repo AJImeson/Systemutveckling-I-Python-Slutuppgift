@@ -90,6 +90,7 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
         try:
             if not self.alerts_running:
                 self.alerts_running = True
+                self.alerts_stop.clear()
                 self.alerts_thread = threading.Thread(target=self.alerts_inspector, daemon=True)
                 self.alerts_thread.start()
                 
@@ -107,20 +108,33 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
                 
                 if not self.monitoring_running: # Automatically stops alerts if monitoring is not active or running 
                     print(f"{RED}Monitoring not active{RESET}\n")
-                    time.sleep(2)
-                    continue
-               
-                time.sleep(2)
+                    if self.alerts_stop.wait(timeout=3):
+                        continue
                 
             except Exception as e:
                 self.alerts_running = False
                 return f"{RED}Error in alerts {e}{RESET}"
+            
+            
+    def stop_alerts(self): # Stops alerts process when called upon in the main menu
+        
+        if self.alerts_running:
+            self.alerts_stop.set() # Sets the event flag to stop the alerts thread
+            self.alerts_running = False
+            a_t = self.alerts_thread
+            if a_t and a_t.is_alive():
+                a_t.join() 
+            self.alerts_thread = None
+            self.alerts_running = False 
     
     def print_alerts(self): # Function to print alerts when called from main menu
         
-        status = f"{GREEN}Active{RESET}" if self.alerts_running else f"{RED}Inactive{RESET}"
+        status = (
+        f"{GREEN}Active{RESET}" 
+        if (self.alerts_thread and self.alerts_thread.is_alive()) 
+        else f"{RED}Inactive{RESET}"
+        )
         print(f"Current Status: {status}\n")
-        
         
         if not any (self.alerts.values()):
             GeneralFunctions.clear_screen()
@@ -202,18 +216,7 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
                     
         except Exception as e:
             return f"\nError printing alerts: {e}"
-        
-        
-    def stop_alerts(self): # Stops alerts process when called upon in the main menu
-        
-        if self.alerts_running:
-            self.alerts_stop.set() # Sets the event flag to stop the alerts thread
-            self.alerts_running = False
-            a_t = self.alerts_thread
-            if a_t and a_t.is_alive():
-                a_t.join(timeout=3) # Waits for the alerts thread to finish
-            self.alerts_thread = None
-                
+   
         
 class SystemLog(Monitor):
     
