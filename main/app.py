@@ -209,6 +209,8 @@ def main():
                                         input(f"{CYAN}Press Enter to return to main menu: {RESET}")
                                         continue
                         
+                                    monitor.initialise_alerts() # Calls the initialise alerts method from monitoring class
+                                    
                                     try:
                                         while True:
                                             functions.clear_screen()

@@ -109,7 +109,7 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
     
     def alerts_inspector(self): # Checks alerts automatically in the background
         
-        while self.alerts_running:
+        while self.alerts_running and not self.alerts_stop.is_set(): # Confirms flag is not set to stop the alerts thread
       
             try: 
                 
@@ -127,7 +127,8 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
     
     def print_alerts(self): # Function to print alerts when called from main menu
         
-        real_time = f"{GREEN}Active{RESET}" if self.alerts_running else f"{RED}Inactive{RESET}"
+        status = f"{GREEN}Active{RESET}" if self.alerts_running else f"{RED}Inactive{RESET}"
+        print(f"Current Status: {status}\n")
         
         
         if not any (self.alerts.values()):
@@ -157,10 +158,10 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
             input() 
             return
             
-        if not (0.5 < alert_threshold <= 100): # Range limiter
+        if not ( 1 < alert_threshold <= 100): # Range limiter
             
             print(f"{RED}------------------------------------{RESET}")
-            print(f"{RED}Threshold must be set between 0.5-100%{RESET}")
+            print(f"{RED}Threshold must be set between 1-100%{RESET}")
             print(f"{RED}------------------------------------{RESET}\n")
             input("Press Enter to continue ")
             return
