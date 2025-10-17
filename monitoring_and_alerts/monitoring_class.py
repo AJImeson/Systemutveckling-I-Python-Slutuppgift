@@ -93,14 +93,6 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
                 self.alerts_thread = threading.Thread(target=self.alerts_inspector, daemon=True)
                 self.alerts_thread.start()
                 
-                print(f"{GREEN}-------------{RESET}")
-                print(f"{GREEN}Alerts active{RESET}")
-                print(f"{GREEN}-------------{RESET}\n")
-                
-            else:
-                print(f"{YELLOW}------------------{RESET}")
-                print(f"{YELLOW}Alerts already active{RESET}")
-                print(f"{YELLOW}------------------{RESET}\n")
                 
         except Exception as e:
             print(f"{RED}Failure during alerts process: {e}{RESET}")
@@ -117,8 +109,7 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
                     print(f"{RED}Monitoring not active{RESET}\n")
                     time.sleep(2)
                     continue
-                
-                self.print_alerts()
+               
                 time.sleep(2)
                 
             except Exception as e:
@@ -132,6 +123,7 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
         
         
         if not any (self.alerts.values()):
+            GeneralFunctions.clear_screen()
             print(f"{RED}No alerts configured{RESET}\n")
         
         for key, thresholds in self.alerts.items(): # Loops through the dictionary keys and their relevant lists
@@ -140,7 +132,7 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
             
             colour = self.alert_colour(key) 
             attr_name = f"{key.lower()}_usage"
-            current = getattr(self, attr_name, None)
+            current = getattr(self, attr_name, None) # Retrieves current usage value depending on which key is looped through 
             if current is None: 
                 continue
             

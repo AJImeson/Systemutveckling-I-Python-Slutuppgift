@@ -83,7 +83,7 @@ def main():
                                     if monitor_active or monitor.monitoring_running:
                                         monitor.monitor_stop(clear_monitor=True) # Calls the stop method from the monitoring class
                                         print("------------------------------")
-                                        print(f"{RED}Monitoring Process Ended{RESET}")
+                                        print(f"{GREEN}Monitoring Process Ended{RESET}")
                                         print("------------------------------\n")
                                         time.sleep(2)
                                         
@@ -202,25 +202,30 @@ def main():
                             match alerts_process_menu:
                         
                                 case "1": # Start Alerts activity 
+                                    functions.clear_screen()
                         
-                                    if not monitor.monitoring_running:
+                                    if not monitor.monitoring_running: # Inspect if monitoring is active 
                                         functions.clear_screen()
                                         print(f"{RED}Monitoring not active{RESET}\n")
                                         input(f"{CYAN}Press Enter to return to main menu: {RESET}")
                                         continue
-                        
-                                    monitor.initialise_alerts() # Calls the initialise alerts method from monitoring class
                                     
-                                    try:
-                                        while True:
-                                            functions.clear_screen()
-                                            alerts.print_alerts()
-                                            print(f"\n{YELLOW}Press CTRL + C To exit back to main menu{RESET}")
-                                            time.sleep(2)
+                                    if monitor.alerts_running and monitor.alerts_thread and monitor.alerts_thread.is_alive(): # Inspects if the alert thread is already running 
+                                        functions.clear_screen()
+                                        print("-"*30)
+                                        print(f"{YELLOW}Alerts activity already running{RESET}")
+                                        print("-"*30)
                                         
-                                    except KeyboardInterrupt:
-                                        print("\n")
-                                    
+                                    else:
+                                        
+                                        monitor.initialise_alerts() # Calls the initialise alerts method from Alerts sub class
+                                        print("-"*30)
+                                        print(f"{YELLOW}Alerts process started{RESET}")
+                                        print(f"-"*30)
+                                        time.sleep(2)
+                                        
+                                    input(f"\n{YELLOW}Press Enter to return to Alerts process menu{RESET} ")
+                                
                         
                                 case "2": # End Alerts process
                                     functions.clear_screen()
@@ -251,25 +256,20 @@ def main():
                                     functions.default_case()
                                     continue 
                         
+                    case "6":
                         
-                        '''
-                        if not monitor.monitoring_running:
-                            functions.clear_screen()
-                            print(f"{RED}Monitoring not active{RESET}\n")
-                            input(f"{CYAN}Press Enter to return to main menu: {RESET}")
-                            continue
-
                         try:
                             while True:
                                 functions.clear_screen()
                                 alerts.print_alerts()
                                 print(f"\n{YELLOW}Press CTRL + C To exit back to main menu{RESET}")
                                 time.sleep(2)
+                                 
                         except KeyboardInterrupt:
                             print("\n")
-                           ''' 
+                            pass
                     
-                    case "6": # Closes the program 
+                    case "7": # Closes the program 
                         functions.clear_screen()
                         print(f"\n{RED}Terminating Program....\n{RESET}")
                         time.sleep(1)
