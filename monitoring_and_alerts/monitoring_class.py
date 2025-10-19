@@ -1,7 +1,6 @@
 import psutil
 import time
 import threading
-import logging
 from datetime import datetime
 from main.functions import GeneralFunctions
 
@@ -172,14 +171,15 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
         try:
             alert_threshold = float(alert_threshold) # Float converter/declaration 
         except ValueError:
-            print(f"{RED}\nValue must be a valid number, press Enter to continue{RESET}")
+            print(f"{RED}\nError{RESET} | {YELLOW}Please set a value between 0.5-100, press Enter to continue{RESET}")
             input() 
             return
             
-        if not ( 1 < alert_threshold <= 100): # Range limiter
+        if not ( 0.5 <= alert_threshold <= 100): # Range limiter
             
+            GeneralFunctions.clear_screen()
             print(f"{RED}------------------------------------{RESET}")
-            print(f"{RED}Threshold must be set between 1-100%{RESET}")
+            print(f"{RED}Threshold must be set between 0.5-100%{RESET}")
             print(f"{RED}------------------------------------{RESET}\n")
             input("Press Enter to continue ")
             return
@@ -228,16 +228,6 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
                     
         except Exception as e:
             return f"\nError printing alerts: {e}"
-   
-        
-class SystemLog(Monitor):
-    
-    def system_log():
-        
-        logging.basicConfig(filename='system_monitor.log', level=logging.INFO,
-            format='%(asctime)s - %(levelname)s - %(message)s')
-        logging.info('System Monitor started')
-    pass     
     
 class MonitorSystem(Monitoring, Alerts): # Inherits from both Monitoring and Alerts class: Used as a bridge/flag for easier object managemnet in main 
     pass   

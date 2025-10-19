@@ -1,5 +1,6 @@
 import os
-import time 
+import time
+import logging 
 
 class GeneralFunctions: # General functions for menu and system
     
@@ -37,6 +38,13 @@ class GeneralFunctions: # General functions for menu and system
     def value_error_print():
         print("Uknown error occured ")
         input("Press Enter to continue")
+        
+    def system_log(self):
+        
+        logging.basicConfig(filename='system_monitor.log', level=logging.INFO,
+            format='%(asctime)s - %(levelname)s - %(message)s')
+        logging.info('System Monitor started')
+    pass     
        
         
 # Colour codes for implementation 
