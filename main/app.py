@@ -1,5 +1,6 @@
 
 import time
+import logging
 from monitoring_and_alerts.monitoring_class import MonitorSystem 
 from main.functions import GeneralFunctions
 

@@ -38,12 +38,12 @@ class GeneralFunctions: # General functions for menu and system
     def value_error_print():
         print("Uknown error occured ")
         input("Press Enter to continue")
-        
-    def system_log(self):
-        
-        logging.basicConfig(filename='system_monitor.log', level=logging.INFO,
-            format='%(asctime)s - %(levelname)s - %(message)s')
+    
+    @staticmethod   
+    def system_log(filename="system_monitor.log"): # System log function
+        logging.basicConfig(filename=filename,filemode='a', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
         logging.info('System Monitor started')
+       
     pass     
        
         
