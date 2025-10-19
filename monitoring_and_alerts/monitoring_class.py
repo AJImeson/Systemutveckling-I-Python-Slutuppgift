@@ -99,8 +99,8 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
             print(f"{RED}Failure during alerts process: {e}{RESET}")
             self.alerts_running = False
                 
-    
-    def alerts_inspector(self): # Checks alerts automatically in the background
+        
+    def alerts_inspector(self): 
         
         while self.alerts_running and not self.alerts_stop.is_set(): # Confirms flag is not set to stop the alerts thread
       
@@ -109,13 +109,18 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
                 if not self.monitoring_running: # Automatically stops alerts if monitoring is not active or running 
                     print(f"{RED}Monitoring not active{RESET}\n")
                     if self.alerts_stop.wait(timeout=3):
-                        continue
+                        break
+                    continue
+                
+                
+                if self.alerts_stop.wait(timeout=3):
+                    break
                 
             except Exception as e:
                 self.alerts_running = False
                 return f"{RED}Error in alerts {e}{RESET}"
-            
-            
+                
+                
     def stop_alerts(self): # Stops alerts process when called upon in the main menu
         
         if self.alerts_running:
@@ -134,11 +139,14 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
         if (self.alerts_thread and self.alerts_thread.is_alive()) 
         else f"{RED}Inactive{RESET}"
         )
+        print(f"{YELLOW}-----Alerts Status-----\n{RESET}")
         print(f"Current Status: {status}\n")
         
-        if not any (self.alerts.values()):
-            GeneralFunctions.clear_screen()
-            print(f"{RED}No alerts configured{RESET}\n")
+        if not self.alerts_thread or not self.alerts_thread.is_alive():
+            print (f"{YELLOW}----- No Active Alerts Process Running -----{RESET}")
+            return
+            
+        active_alert = False # Flag for wether anything has been triggered 
         
         for key, thresholds in self.alerts.items(): # Loops through the dictionary keys and their relevant lists
             if not thresholds:
@@ -152,8 +160,12 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
             
             exceeded = [t for t in thresholds if current >= t] # List with a for loop that controls if usage exceeds any of the thresholds set in configured alerts 
             if exceeded:
+                active_alert = True
                 lowest_exceeded = min(exceeded)
                 print(f"{RED}[ALERT]{RESET} | {colour}{key}: usage is at {RED}{current:.1f}%{RESET} which exceeds {CYAN}{lowest_exceeded}%{RESET}\n")
+                
+        if not active_alert: # Silent pass for loop 
+            pass 
                 
     def configure_alerts(self, alert_type, alert_threshold): # Configure alerts function called to main menu
                 
