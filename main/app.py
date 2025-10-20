@@ -189,7 +189,7 @@ def main():
                             functions.clear_screen()
                         
                             print(f"----------------------------")
-                            print(f"{YELLOW}Choose an Alert option{RESET}")
+                            print(f"{YELLOW}Choose an Alert Option{RESET}")
                             print(f"----------------------------\n")
                         
                             try:
@@ -219,22 +219,22 @@ def main():
                                         
                                     else:
                                         
-                                        monitor.initialise_alerts() # Calls the initialise alerts method from Alerts sub class  
+                                        alerts.initialise_alerts() # Calls the initialise alerts method from Alerts sub class  
                                         time.sleep(1)
                                         print("-"*30)
                                         print(f"{GREEN}Alerts process started{RESET}")
                                         print(f"-"*30)
                                         time.sleep(2)
                                         
-                                    input(f"\n{YELLOW}Press Enter to return to Alerts process menu{RESET} ")
+                                    input(f"\n{YELLOW}Press Enter to return to Alerts Options menu{RESET} ")
                                 
                         
                                 case "2": # End Alerts process
                                     functions.clear_screen()
-                                    alerts_active = bool(monitor.alerts_thread and monitor.alerts_thread.is_alive()) # Checks alerts thread status(False) then if it's active
+                                    alerts_active = bool(monitor.alerts_thread and monitor.alerts_thread.is_alive()) # Checks alerts thread status (False) then if it's active
                         
                                     if alerts_active and monitor.alerts_running:
-                                        monitor.stop_alerts()
+                                        alerts.stop_alerts()
                                         print("-"*30)
                                         print(f"{GREEN}Alerts activity ended{RESET}")
                                         print("-"*30)
