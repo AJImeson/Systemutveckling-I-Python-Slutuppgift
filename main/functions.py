@@ -1,5 +1,4 @@
 import os
-import time
 import logging 
 
 class GeneralFunctions: # General functions for menu and system
