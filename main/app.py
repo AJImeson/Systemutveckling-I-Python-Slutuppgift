@@ -10,6 +10,9 @@ alerts = monitor # Defining alerts as the same object, cleaner in main menu
  
 def main():
     
+    functions.system_log() # Initialises system log at program start up
+    logging.info('Program started')
+    
     try:
         
         # Colour codes for implementation
