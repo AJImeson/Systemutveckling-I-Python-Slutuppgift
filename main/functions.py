@@ -1,5 +1,6 @@
 import os
-import logging 
+import logging
+from datetime import datetime
 
 class GeneralFunctions: # General functions for menu and system
     
@@ -40,14 +41,20 @@ class GeneralFunctions: # General functions for menu and system
     
     @staticmethod   
     def system_log(filename="system_monitor.log"): # System log function
-        logging.basicConfig(filename=filename,filemode='a', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-        logging.info('System Monitor started')
-       
-    pass     
-       
         
+        logging.basicConfig(filename=filename,filemode='a',encoding ='utf-8', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+        logging.info('System Monitor started')
+        
+        session_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        logging.info("-"*50)
+        logging.info(f"New session started at | {session_time}")
+        logging.info("-"*50)
+        
+        
+         
 # Colour codes for implementation 
 
+GREEN = "\033[92m"
 YELLOW = "\033[93m"
 RED = "\033[91m"
 RESET = "\033[0m"

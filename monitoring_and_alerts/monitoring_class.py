@@ -1,5 +1,5 @@
 import psutil
-import time
+import logging
 import threading
 from datetime import datetime
 from main.functions import GeneralFunctions
@@ -31,24 +31,26 @@ class Monitoring(Monitor): # Inherits from Monitor class and it's parameters; re
             self.monitoring_thread.start()
             
         except Exception as e:
+            logging.error(f'Failed to start monitoring thread: {e}')
             return f"{RED}Failed to start monitoring thread: {e}{RESET}"
             
     def monitor_running(self, interval=2): # Function fetches system info
         
-        psutil.cpu_percent(interval=None) # Flag to set initial CPU percent reading to 0
-        while self.monitoring_running and not self.monitoring_stop.is_set(): # While loop that runs the monitoring process in the background
+        try:
+            psutil.cpu_percent(interval=None) # Flag to set initial CPU percent reading to 0
+            while self.monitoring_running and not self.monitoring_stop.wait(timeout=interval): # While loop that runs the monitoring process in the background
             
-            try:
                 self.cpu_usage = psutil.cpu_percent(interval=interval) # CPU Check
                 self.ram_usage = psutil.virtual_memory().percent # RAM Check
                 self.disk_usage = psutil.disk_usage('/').percent # Disk Usage
                 self.timecheck = datetime.now().strftime("%H:%M:%S") # Shows time
                 
-            except Exception as e:
-                self.monitoring_running = False
-                return f"{RED}Error during monitoring process: {e}{RESET}"
+        except Exception as e:
+            logging.error(f'Error during monitoring process: {e}')
+            self.monitoring_running = False
+            return f"{RED}Error during monitoring process: {e}{RESET}"
             
-    def monitor_print(self): # Function prints current info 
+    def monitor_print(self): # Function prints current info
         
         if self.timecheck is None:
             GeneralFunctions.clear_screen()
@@ -95,6 +97,7 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
                 
                 
         except Exception as e:
+            logging.error(f'Failed to start alerts thread: {e}')
             print(f"{RED}Failure during alerts process: {e}{RESET}")
             self.alerts_running = False
                 
@@ -116,6 +119,7 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
                     break
                 
             except Exception as e:
+                logging.error(f'Error in alerts inspector: {e}')
                 self.alerts_running = False
                 return f"{RED}Error in alerts {e}{RESET}"
                 
@@ -162,6 +166,7 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
                 active_alert = True
                 lowest_exceeded = min(exceeded)
                 print(f"{RED}[ALERT]{RESET} | {colour}{key}: usage is at {RED}{current:.1f}%{RESET} which exceeds {CYAN}{lowest_exceeded}%{RESET}\n")
+                logging.warning(f'Alert triggered for {key} usage at {current:.1f}%, exceeding threshold of {lowest_exceeded}%')
                 
         if not active_alert: # Silent pass for loop 
             pass 
@@ -171,12 +176,14 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
         try:
             alert_threshold = float(alert_threshold) # Float converter/declaration 
         except ValueError:
+            logging.error(f'Invalid input for alert threshold: {alert_threshold}')
             print(f"{RED}\nError{RESET} | {YELLOW}Please set a value between 0.5-100, press Enter to continue{RESET}")
             input() 
             return
             
         if not ( 0.5 <= alert_threshold <= 100): # Range limiter
             
+            logging.error(f'Alert threshold out of range: {alert_threshold}')
             GeneralFunctions.clear_screen()
             print(f"{RED}------------------------------------{RESET}")
             print(f"{RED}Threshold must be set between 0.5-100%{RESET}")
@@ -198,6 +205,7 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
     
         try:
             
+            logging.info('Printing configured alerts')
             print(f"{YELLOW}----------------------------------{RESET}")
             print(f"{YELLOW}Currently added/configured alerts:{RESET}")
             print(f"{YELLOW}----------------------------------{RESET}\n")
@@ -227,6 +235,7 @@ class Alerts(Monitor): # Inherits from Monitor class and it's parameters; respon
                     print(f"\n{RED}No alerts set\n{RESET}")
                     
         except Exception as e:
+            logging.error(f'Error printing alerts: {e}')
             return f"\nError printing alerts: {e}"
     
 class MonitorSystem(Monitoring, Alerts): # Inherits from both Monitoring and Alerts class: Used as a bridge/flag for easier object managemnet in main 

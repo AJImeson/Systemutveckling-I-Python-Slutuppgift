@@ -84,30 +84,18 @@ My Main principles with this project: Well structured, free fom errors, even whe
   Restructured my program so that i can: Both start and stop Monitoring process with user input. So far constructed this for Monitoring, but since both Monitoring and Alerts are constructed with threading i should be able to use same logic for Alerts.
   Created a method for this using Event() class with threading which is a flag that initially sets to false. For this i needed a lot of AI to help understand the flow and code lines since it required several 'if', 'False' and 'True' to work properly through my logic and main function for the app.
 
+- 2025-10-16
 
-  * Other notes 
+  Hard time 
 
-    + Functions for certain tasks
+- 2025-10-18 / 2025-10-19
 
-        - append() - to store configured alerts for monitoring
-        - sorted() - different from sort, can be used on any iteration and returns a new list, doesn't modify anything
+  Had a few minutes over to polish my code and managed to get the thread for alerts to stop when called for
 
-    + Tools 
+- 2025-10-21
 
-        - datetime - To show time during monitoring loops
-        - os - For system data and create own function (clear_screen())
-        - threading - To be able to let both monitoring and alert to run in the background during program run
-        - time - Used for delaying certain inputs so that threading has time to start properly before new inputs, also for updating loops that shows activity 
-    
-    + Further improvments
-      
-        - General: In monitoring_and_alerts folder have all sub classes in separate files for more clarification. Less printing in methods for better use on platform in future.
-        - Method for monitoring of internet trafic up/down, maybe alert thresholds when internet trafic suddenly without any explainable reason spikes for seurity measure.
-        - 
+  Finished my report/documentation for this project, will need some polishing before handing in and maybe add some thoughts I've accumulated the past two days
 
-    + Git 
+- 2025-10-22
 
-
-
-        
-    
+  Made a logging function with "logging" library, kept simple and clean since It's a new concept for myself 

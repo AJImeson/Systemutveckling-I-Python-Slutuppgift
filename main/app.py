@@ -4,13 +4,13 @@ import logging
 from monitoring_and_alerts.monitoring_class import MonitorSystem 
 from main.functions import GeneralFunctions
 
-functions = GeneralFunctions() # Object for General_Functions Class
-monitor = MonitorSystem() # Object for Monitor Class and inheriting classes
+functions = GeneralFunctions() # Object for General_Functions Class import 
+monitor = MonitorSystem() # Object for Monitor Class and inheriting classes import 
 alerts = monitor # Defining alerts as the same object, cleaner in main menu
  
 def main():
     
-    functions.system_log() # Initialises system log at program start up
+    GeneralFunctions.system_log() # Initialises system log at program start up for documentation 
     logging.info('Program started')
     
     try:
@@ -29,11 +29,11 @@ def main():
             # User Main Menu start up screen
             
             main_menu = GeneralFunctions.print_menu()
+            logging.info(f'User selected main menu option: {main_menu}')
             
             try:
             
                 match main_menu:
-                    
                     
                     case "1": # Monitoring options 
                         
@@ -47,8 +47,10 @@ def main():
                             
                             try:
                                 monitoring_menu = input(f"[1] - {GREEN}Start Monitoring Activity{RESET}\n[2] - {RED}End Monitoring Process{RESET}\n[3] - {YELLOW}Exit to Main menu{RESET}\n").strip()
-                            
+                                logging.info(f'User selected monitoring menu option: {monitoring_menu}')
+                                
                             except ValueError:
+                                logging.error('ValueError occurred in monitoring menu selection')
                                 print("Unknown error occured")
                                 input("Press Enter to continue")
                                 continue
@@ -57,20 +59,23 @@ def main():
                                 
                                 case "1": # Start Monitoring
                                     
+                                    logging.info('User selected to start monitoring activity')
                                     if monitor.monitoring_running:
-                                    
+                                        
+                                        logging.warning('Attempted to start monitoring, but it is already running')
                                         if monitor.monitoring_thread and monitor.monitoring_thread.is_alive():
                                             functions.clear_screen()
                                             print(f"\n{CYAN}Monitor already running\n{RESET}")
                                             monitor.initialise_monitoring()
-                                        else:
+                                            
+                                        else: # Remove or keep? 
                                             print(f"{RED}------------------------------------------{RESET}")
                                             print(f"{RED}Unexpected stop of Monitor{RESET} - {YELLOW}Restarting...{RESET}")
                                             print(f"{RED}------------------------------------------{RESET}\n")
                                             monitor.initialise_monitoring()
                                         
-                                        
                                     else:
+                                        logging.info('Starting monitoring activity')
                                         monitor.initialise_monitoring()
                                         functions.clear_screen()
                                         print(f"-------------------------")
@@ -82,21 +87,22 @@ def main():
                                         
                                 case "2": # End monitoring 
                                     functions.clear_screen()
-                                    monitor_active = bool(monitor.monitoring_thread and monitor.monitoring_thread.is_alive()) # Checks monitoring thread status by first self(False) then if it's active 
+                                    monitor_active = bool(monitor.monitoring_thread and monitor.monitoring_thread.is_alive()) # Checks monitoring thread status by first self(False) then if it's active for thread safety
+                                    logging.info('User selected to end monitoring activity')
                                   
                                     if monitor_active or monitor.monitoring_running:
-                                        monitor.monitor_stop(clear_monitor=True) # Calls the stop method from the monitoring class
+                                        monitor.monitor_stop(clear_monitor=True) # Calls the stop method from the monitoring class, 
                                         print("------------------------------")
                                         print(f"{GREEN}Monitoring Process Ended{RESET}")
                                         print("------------------------------\n")
-                                        time.sleep(2)
+                                        time.sleep(1)
                                         
                                     else:
+                                        logging.error('Attempted to stop monitoring, process not running')
                                         functions.clear_screen()
                                         print(f"{RED}Monitoring Process not Running\n{RESET}")
                                     
                                     input(f"{YELLOW}Press Enter to return to Monitoring Options\n{RESET}")
-                                    
                                     
                                 case "3":
                                     functions.clear_screen()
@@ -109,7 +115,6 @@ def main():
                                     functions.default_case()
                                     continue
                                     
-                        
                     case "2": # Monitoring Activity
                         
                         if monitor.timecheck is None:
@@ -136,8 +141,8 @@ def main():
                             try:
                                 alerts_configure_menu = input(f"[1] - {BLUE}CPU Usage{RESET}\n[2] - {YELLOW}Memory Usage{RESET}\n[3] - {MAGENTA}Disk Usage{RESET}\n[4] - {RED}Exit to Main Menu{RESET}\n").strip()
                                 
-                                
                             except ValueError:
+                                logging.error('ValueError occurred in configure alerts menu selection')
                                 functions.value_error_print()
                                 continue
                             
@@ -150,7 +155,6 @@ def main():
                                     alert_level = input(f"Set {BLUE}CPU{RESET} usage threshold in percentage\n")
                                     alerts.configure_alerts("CPU", alert_level) 
                                     
-                                        
                                 case "2":
                                     functions.clear_screen()
                                     
@@ -178,8 +182,7 @@ def main():
                                     functions.default_case()
                                     continue
                             
-                    
-                    case "4": # Prints all configured alerts
+                    case "4": # Prints all configured alerts by method call 
                         functions.clear_screen()
                         
                         alerts.print_configured_alerts()
@@ -200,6 +203,7 @@ def main():
                                 alerts_process_menu = input(f"[1] - {GREEN}Start Alerts Activity{RESET}\n[2] - {RED}End Alert Process{RESET}\n[3] - {YELLOW}Exit to Main menu{RESET}\n\n").strip()
                         
                             except ValueError:
+                                logging.error('ValueError occurred in alerts process menu selection')
                                 functions.value_error_print()
                                 continue 
                         
@@ -231,7 +235,6 @@ def main():
                                         
                                     input(f"\n{YELLOW}Press Enter to return to Alerts Options menu{RESET} ")
                                 
-                        
                                 case "2": # End Alerts process
                                     functions.clear_screen()
                                     alerts_active = bool(monitor.alerts_thread and monitor.alerts_thread.is_alive()) # Checks alerts thread status (False) then if it's active
@@ -247,7 +250,6 @@ def main():
                                         functions.clear_screen() 
                                         print(f"{RED}Alerts activity not running{RESET}")
                                        
-                                        
                                     input(f"\n{YELLOW}Press Enter to return to Alerts process menu{RESET} ")
                         
                                 case "3": # Return to main menu
@@ -256,7 +258,7 @@ def main():
                                     is_executing_alerts = False
                                     time.sleep(1)
                                        
-                                case _:
+                                case _: # Default case for invalid input
                                     functions.clear_screen()
                                     functions.default_case()
                                     continue 
@@ -286,13 +288,11 @@ def main():
                         functions.default_case()
                         continue
                        
-            except ValueError: # Error handling 
+            except ValueError: # Error handling
+                logging.error('ValueError occurred in main menu selection')
                 functions.value_error_print()
                 continue
           
-          
-            
-        
     except KeyboardInterrupt: # If user types ctrl + c during main menu loop the monitor thread is closed properly before exiting program
         functions.clear_screen()
         print(f"\n{RED}Interuppted by user...{RESET}")
