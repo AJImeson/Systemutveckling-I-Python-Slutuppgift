@@ -99,3 +99,4 @@ My Main principles with this project: Well structured, free fom errors, even whe
 - 2025-10-22
 
   Made a logging function with "logging" library, kept simple and clean since It's a new concept for myself 
+  As of this date my program and assignment is more or less completed the way i want it to function properly 
