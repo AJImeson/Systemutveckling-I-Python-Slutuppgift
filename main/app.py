@@ -195,7 +195,7 @@ def main():
                         input(f"{YELLOW}\nPress Enter to return to main menu{RESET} ")
                     
                     case "5": # Alerts option for starting or ending processes 
-                        
+                        logging.info('User selected alerts process options')
                         is_executing_alerts = True 
                         while is_executing_alerts:
                             functions.clear_screen()
@@ -300,6 +300,7 @@ def main():
                         break
                     
                     case _: # Default case for invalid input
+                        logging.error('Invalid input in main menu selection')
                         functions.clear_screen()
                         functions.default_case()
                         continue
