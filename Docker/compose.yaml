@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  sysmon:
+    container_name: sysmon
+    build:
+      context: ..                     # project root (one level up from Docker/)
+      dockerfile: Docker/DockerFile   # path is relative to context
+    tty: true
+    stdin_open: true
+    volumes:
+      - ../:/app:rw                   # mount project root into container for dev
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "main/app.py"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+    # If you need host metrics (psutil reading host), uncomment with caution:
+    # pid: "host"
+    # network_mode: "host"
+    # privileged: true
+

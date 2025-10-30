@@ -1,0 +1,28 @@
+# Python / IDE / VCS
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.env
+.env.*
+.venv/
+venv/
+.venv
+.venv*/
+.idea/
+.vscode/
+*.swp
+
+# Git
+.git/
+.gitignore
+
+# Docker artifacts / local build files
+Docker/
+build/
+dist/
+*.egg-info/
+
+# OS
+.DS_Store

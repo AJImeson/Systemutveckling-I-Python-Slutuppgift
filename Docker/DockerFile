@@ -1,0 +1,25 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Unbuffered output so prints appear immediately
+ENV PYTHONUNBUFFERED=1
+
+# Install minimal build deps for any packages that need compilation (removed afterwards)
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends gcc libffi-dev make \
+  && rm -rf /var/lib/apt/lists/*
+
+# Install Python deps (add any libs to requirements.txt in repo root)
+COPY requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+# Copy project into image
+COPY .. /app
+
+# Use non-root user (optional). If you need host metrics or privileged, run container with flags.
+# RUN useradd -m appuser && chown -R appuser:appuser /app
+# USER appuser
+
+# Default command
+CMD ["python", "main/app.py"]
