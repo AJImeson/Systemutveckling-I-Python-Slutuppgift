@@ -19,7 +19,6 @@ venv/
 .gitignore
 
 # Docker artifacts / local build files
-Docker/
 build/
 dist/
 *.egg-info/

@@ -2,12 +2,12 @@ services:
   sysmon:
     container_name: sysmon
     build:
-      context: ..                     # project root (one level up from Docker/)
-      dockerfile: Docker/DockerFile   # path is relative to context
+      context: .                   
+      dockerfile: DockerFile
     tty: true
     stdin_open: true
     volumes:
-      - ../:/app                   # mount project root into container for dev
+      - .:/app                   # mount project root into container for dev
     environment:
       - PYTHONUNBUFFERED=1
     restart: unless-stopped
