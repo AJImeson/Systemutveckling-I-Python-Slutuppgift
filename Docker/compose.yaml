@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   sysmon:
     container_name: sysmon
@@ -9,7 +7,7 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - ../:/app:rw                   # mount project root into container for dev
+      - ../:/app                   # mount project root into container for dev
     environment:
       - PYTHONUNBUFFERED=1
     restart: unless-stopped
