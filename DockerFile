@@ -14,12 +14,14 @@ RUN apt-get update \
 COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
+EXPOSE 8080
+
 # Copy project into image
-COPY . /app
+COPY . /app/
 
 # Use non-root user (optional). If you need host metrics or privileged, run container with flags.
 # RUN useradd -m appuser && chown -R appuser:appuser /app
 # USER appuser
 
 # Default command
-CMD ["python", "main/app.py"]
+CMD ["python", "-m", "main.app"]
